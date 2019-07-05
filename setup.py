@@ -19,7 +19,7 @@ elif platform == 'Linux':
 setup(
     name = 'pyliblo3',
     python_requires='>=3.6',
-    version = '0.10.1',
+    version = '0.10.2',
     scripts = glob.glob("scripts/*.py"),
     ext_modules = [
         Extension(
