@@ -1,0 +1,14 @@
+*.egg*
+build/
+dist/
+*.o
+*.lo
+*.la
+*.cache
+*.pyc
+*.bak
+*.so
+*.whl
+.deps
+.idea
+.mypy*

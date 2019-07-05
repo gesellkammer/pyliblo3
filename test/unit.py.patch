@@ -1,0 +1,8 @@
+79c79
+<             assert list(self.cb.args[0]) == [4, 8, 15, 16, 23, 42]
+---
+>             assert self.cb.args[0] == [4, 8, 15, 16, 23, 42]
+99c99
+<             assert list(self.cb.args[6]) == [12, 34, 56]
+---
+>             assert self.cb.args[6] == [12, 34, 56]
