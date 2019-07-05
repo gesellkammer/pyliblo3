@@ -1,16 +1,6 @@
-# PYLIBLO 
+# pyliblo3 
 
 This is a fork of the original bindings for liblo, making it pip installable
-
-## Dependencies
-
-* liblo >= 0.28
-
-
-## Install
-
-`pip install pyliblo3 [--user]`
-
 
 ## Example
 
@@ -30,6 +20,37 @@ server.add_method("/test", None, test_handler)
 while True:
     server.recv(100)
 ```
+
+
+## Dependencies
+
+* liblo >= 0.28
+
+
+## Installation
+
+
+### 1. Install liblo
+
+`liblo` must be installed previously
+
+#### Linux
+
+sudo apt install liblo-dev
+
+#### macOS
+
+brew install liblo
+
+#### Windows
+
+See http://liblo.sourceforge.net/README-platforms.html
+
+
+### 2. Install pyliblo3
+
+`pip install pyliblo3`
+
 
 -------
 

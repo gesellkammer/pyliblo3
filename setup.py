@@ -3,6 +3,7 @@
 from setuptools import setup, Extension
 import platform as _platform
 import glob
+import os
 
 platform = _platform.system()
 
@@ -16,10 +17,15 @@ elif platform == 'Linux':
     library_dirs.append("/usr/local/lib")
 
 
+# read the contents of your README file
+thisdir = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(thisdir, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 setup(
     name = 'pyliblo3',
     python_requires='>=3.6',
-    version = '0.10.2',
+    version = '0.10.4',
     scripts = glob.glob("scripts/*.py"),
     ext_modules = [
         Extension(
@@ -43,6 +49,8 @@ setup(
     maintainer_email = 'eduardo.moguillansky@gmail.com',
     url = 'https://github.com/gesellkammer/pyliblo3', 
     description = 'Python bindings for the liblo OSC library',
+    long_description = long_description,
+    long_description_content_type = 'text/markdown',
     license = 'LGPL',
     
 )
