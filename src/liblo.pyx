@@ -1,54 +1,80 @@
-#cython: embedsignature=True
-"""
 #
 # pyliblo - Python bindings for the liblo OSC library
 #
-# Copyright (C) 2007-2011  Dominic Sacré  <dominic.sacre@gmx.de>
+# Copyright (C) 2007-2015  Dominic Sacré  <dominic.sacre@gmx.de>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as
 # published by the Free Software Foundation; either version 2.1 of the
 # License, or (at your option) any later version.
 #
-"""
 
-__version__ = '0.9.1b'
+__version__ = '0.10.1'
+
 
 from cpython cimport PY_VERSION_HEX
 cdef extern from 'Python.h':
     void PyEval_InitThreads()
 
 from libc.stdlib cimport malloc, free
-cdef extern from 'math.h':
-    double modf(double x, double *iptr)
+from libc.math cimport modf
+from libc.stdint cimport int32_t, int64_t
 
 from liblo cimport *
-from cpython.tuple cimport *
 
 import inspect as _inspect
 import weakref as _weakref
-from cpython cimport Py_INCREF, Py_DECREF
+
 
 class _weakref_method:
     """
-    Weak reference to a bound method.
+    Weak reference to a function, including support for bound methods.
     """
+    __slots__ = ('_func', 'obj')
+
     def __init__(self, f):
-        if PY_VERSION_HEX >= 0x03000000:
-            self.func = f.__func__
+        if _inspect.ismethod(f):
+            self._func = f.__func__
             self.obj = _weakref.ref(f.__self__)
         else:
-            self.func = f.im_func
-            self.obj = _weakref.ref(f.im_self)
-    def __call__(self):
-        return self.func.__get__(self.obj(), self.obj().__class__)
+            self._func = f
+            self.obj = None
+
+    @property
+    def func(self):
+        if self.obj:
+            return self._func.__get__(self.obj(), self.obj().__class__)
+        else:
+            return self._func
+
+    def __call__(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
+
 
 class struct:
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-cdef str _decode(s):
+
+cdef class Callback:
+    cdef object func
+    cdef object user_data
+    cdef int numargs
+    cdef int has_varargs
+
+    def __init__(self, func, user_data):
+        self.func = _weakref_method(func)
+        self.user_data = user_data,
+        spec = _inspect.getfullargspec(func)
+        numargs = len(spec.args)
+        if _inspect.ismethod(func):
+            numargs -= 1
+        self.numargs = numargs
+        self.has_varargs = 1 if spec.varargs is not None else 0
+        
+
+cdef inline str _decode(s):
     # convert to standard string type, depending on python version
     if PY_VERSION_HEX >= 0x03000000 and isinstance(s, bytes):
         return s.decode()
@@ -93,10 +119,8 @@ cdef double _timetag_to_double(lo_timetag tt):
 
 def time():
     """
-    time()
-
-    Returns the current time as a float in OSC format, that is, the number of
-    seconds since the epoch (January 1, 1900).
+    Return the current time as a floating point number (seconds since
+    January 1, 1900).
     """
     cdef lo_timetag tt
     lo_timetag_now(&tt)
@@ -152,14 +176,25 @@ cdef _send(target, _ServerBase src, args):
 
 def send(target, *args):
     """
-    send(target, message)
-    send(target, bundle)
-    send(target, path[, arg, ...])
+    send(target, *messages)
+    send(target, path, *args)
 
-    Sends a message or bundle to the the given target, without requiring a
-    server.  target may be an Address object, a port number, a (hostname, port)
-    tuple, or a URL.
-    Exceptions: AddressError, IOError
+    Send messages to the the given target, without requiring a server.
+    Arguments may be one or more :class:`Message` or :class:`Bundle` objects,
+    or a single message given by its path and optional arguments.
+
+    :param target:
+        the address to send the message to; an :class:`Address` object,
+        a port number, a ``(hostname, port)`` tuple, or a URL.
+    :param messages:
+        one or more objects of type :class:`Message` or :class:`Bundle`.
+    :param path:
+        the path of the message to be sent.
+
+    :raises AddressError:
+        if the given target is invalid.
+    :raises IOError:
+        if the message couldn't be sent.
     """
     _send(target, None, args)
 
@@ -170,7 +205,7 @@ def send(target, *args):
 
 class ServerError(Exception):
     """
-    Exception raised when creating a liblo OSC server fails.
+    Raised when creating a liblo OSC server fails.
     """
     def __init__(self, num, msg, where):
         self.num = num
@@ -183,99 +218,43 @@ class ServerError(Exception):
         return s
 
 
-cdef int _callback(const_char *path, const_char *types, lo_arg **argv, int argc,
-                   lo_message msg, void *cb_data) with gil:
+cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
+                       int argc, lo_message msg, void *cb_data) with gil:
     cdef int i
     cdef char t
     cdef unsigned char *ptr
     cdef uint32_t size, j
-    # cdef np.ndarray[unsigned char, ndim=1] blob
-    cdef object v
-    cdef tuple args = PyTuple_New(argc)
 
-    for i in range(argc):
+    args = []
+
+    for i from 0 <= i < argc:
         t = types[i]
-        if t == 105: # 'i'
-            # args[i] = argv[i].i
-            v = argv[i].i
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 104: # 'h': 
-            v = argv[i].h
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 102: # 'f': 
-            v = argv[i].f
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 100: # 'd': 
-            v = argv[i].d
-            Py_INCREF(v)            
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 99: # 'c': 
-            v = chr(argv[i].c)
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 115: # 's': 
-            v = _decode(&argv[i].s)
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 83: # 'S':         
-            v = _decode(&argv[i].s)
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 84: # 'T': 
-            v = True
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 70: # 'F': 
-            v = False
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 78: # 'N': 
-            v = None
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 73: # 'I': 
-            v = float('inf')
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 109: # 'm': 
-            v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 116: # 't': 
-            v = _timetag_to_double(argv[i].t)
-            Py_INCREF(v)
-            PyTuple_SET_ITEM(args, i, v)
-        elif t == 98: # 'b':
-            size = lo_blob_datasize(argv[i])
-            if PY_VERSION_HEX >= 0x03000000:
-                v = bytes((<unsigned char*>lo_blob_dataptr(argv[i]))[:size])
-                # v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
-                Py_INCREF(v)
-                PyTuple_SET_ITEM(args, i, v)
-            else:
-                # convert binary data to python list.
-                # TODO: this can be made faster
-                vl = []
-                ptr = <unsigned char*>lo_blob_dataptr(argv[i])
-                for j in range(size):
-                    vl.append(ptr[j])
-                Py_INCREF(vl)
-                PyTuple_SET_ITEM(args, i, vl)
+        if   t == 'i': v = argv[i].i
+        elif t == 'h': v = argv[i].h
+        elif t == 'f': v = argv[i].f
+        elif t == 'd': v = argv[i].d
+        elif t == 'c': v = chr(argv[i].c)
+        elif t == 's': v = _decode(&argv[i].s)
+        elif t == 'S': v = _decode(&argv[i].s)
+        elif t == 'T': v = True
+        elif t == 'F': v = False
+        elif t == 'N': v = None
+        elif t == 'I': v = float('inf')
+        elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
+        elif t == 't': v = _timetag_to_double(argv[i].t)
+        elif t == 'b':
+            v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
         else:
-            v = None
-            PyTuple_SET_ITEM(args, i, v)
+            v = None  # unhandled data type
+
+        args.append(v)
 
     cdef char *url = lo_address_get_url(lo_message_get_source(msg))
     src = Address(url)
     free(url)
 
-    cb = <object>cb_data
-
-    if isinstance(cb.func, _weakref_method):
-        func = cb.func()
-    else:
-        func = cb.func
-
+    cb = <Callback>cb_data
+    
     func_args = (_decode(<char*>path),
                  args,
                  _decode(<char*>types),
@@ -283,21 +262,25 @@ cdef int _callback(const_char *path, const_char *types, lo_arg **argv, int argc,
                  cb.user_data)
 
     # call function
-    spec = _inspect.getfullargspec(func)
-    if spec.varargs is None:
-        # determine number of arguments to call the function with
-        n = len(spec.args)
-        if _inspect.ismethod(func):
-            n -= 1  # self doesn't count
-        r = func(*func_args[0:n])
+    # spec = _inspect.getfullargspec(func)
+    if cb.has_varargs == 1:
+        r = cb.func(*func_args)
     else:
-        # function has argument list, pass all arguments
-        r = func(*func_args)
+        r = cb.func(*func_args[0:cb.numargs])
+    
+    return r if r is not None else 0
 
-    if r is None:
-        return 0
-    else:
-        return r
+
+cdef int _bundle_start_callback(lo_timetag t, void *cb_data) with gil:
+    cb = <object>cb_data
+    r = cb.start_func(_timetag_to_double(t), cb.user_data)
+    return r if r is not None else 0
+
+
+cdef int _bundle_end_callback(void *cb_data) with gil:
+    cb = <object>cb_data
+    r = cb.end_func(cb.user_data)
+    return r if r is not None else 0
 
 
 cdef void _err_handler(int num, const_char *msg, const_char *where) with gil:
@@ -312,16 +295,30 @@ cdef void _err_handler(int num, const_char *msg, const_char *where) with gil:
 
 class make_method:
     """
-    @make_method(path, typespec[, user_data])
-
-    Decorator that basically serves the same purpose as add_method().  Note that
-    @make_method is defined at module scope, and not a member of class Server.
+    A decorator that serves as a more convenient alternative to
+    :meth:`Server.add_method()`.
     """
     # counter to keep track of the order in which the callback functions where
     # defined
     _counter = 0
 
     def __init__(self, path, types, user_data=None):
+        """
+        make_method(path, typespec[, user_data])
+
+        Set the path and argument types for which the decorated method
+        is to be registered.
+
+        :param path:
+            the message path to be handled by the registered method.
+            ``None`` may be used as a wildcard to match any OSC message.
+        :param typespec:
+            the argument types to be handled by the registered method.
+            ``None`` may be used as a wildcard to match any OSC message.
+        :param user_data:
+            An arbitrary object that will be passed on to the decorated
+            method every time a matching message is received.
+        """
         self.spec = struct(counter=make_method._counter,
                            path=path,
                            types=types,
@@ -350,14 +347,23 @@ cdef class _ServerBase:
         if 'reg_methods' not in kwargs or kwargs['reg_methods']:
             self.register_methods()
 
+    cdef _check(self):
+        if self._server == NULL:
+            raise RuntimeError("Server method called after free()")
+
     def register_methods(self, obj=None):
         """
-        register_methods([obj])
+        register_methods(obj=None)
 
-        Calls add_method() for all methods of obj decorated with @make_method.
-        obj defaults to the Server object itself.  This function is called
-        automatically by the Server's init function, unless its reg_methods
-        parameter is False.
+        Call :meth:`add_method()` for all methods of an object that are
+        decorated with :func:`make_method`.
+
+        :param obj:
+            The object that implements the OSC callbacks to be registered.
+            By default this is the server object itself.
+
+        This function is usually called automatically by the server's
+        constructor, unless its *reg_methods* parameter was set to ``False``.
         """
         if obj == None:
             obj = self
@@ -373,35 +379,92 @@ cdef class _ServerBase:
             self.add_method(e.spec.path, e.spec.types, e.name, e.spec.user_data)
 
     def get_url(self):
+        self._check()
         cdef char *tmp = lo_server_get_url(self._server)
         cdef object r = tmp
         free(tmp)
         return _decode(r)
 
     def get_port(self):
+        self._check()
         return lo_server_get_port(self._server)
 
     def get_protocol(self):
+        self._check()
         return lo_server_get_protocol(self._server)
 
     def fileno(self):
         """
-        fileno()
-
-        Returns the file descriptor of the server socket, or -1 if not supported
-        by the underlying server protocol.
+        Return the file descriptor of the server socket, or -1 if not
+        supported by the underlying server protocol.
         """
+        self._check()
         return lo_server_get_socket_fd(self._server)
 
     def add_method(self, path, typespec, func, user_data=None):
         """
-        add_method(path, typespec, callback_func[, user_data])
+        add_method(path, typespec, func, user_data=None)
 
-        Registers a callback function for OSC messages with matching path and
-        argument types.  For both path and typespec, None may be used as a
-        wildcard.  The optional user_data will be passed on to the callback
-        function.  callback_func may be a global function or a class method,
-        pyliblo will know what to do either way.
+        Register a callback function for OSC messages with matching path and
+        argument types.
+
+        :param path:
+            the message path to be handled by the registered method.
+            ``None`` may be used as a wildcard to match any OSC message.
+
+        :param typespec:
+            the argument types to be handled by the registered method.
+            ``None`` may be used as a wildcard to match any OSC message.
+
+        :param func:
+            the callback function.  This may be a global function, a class
+            method, or any other callable object, pyliblo will know what
+            to do either way.
+
+        :param user_data:
+            An arbitrary object that will be passed on to *func* every time
+            a matching message is received.
+        """
+        cdef char *p
+        cdef char *t
+
+        if isinstance(path, (bytes, unicode)):
+            s = _encode(path)
+            p = s
+        elif path is None:
+            p = NULL
+        else:
+            raise TypeError("path must be a string or None")
+
+        if isinstance(typespec, (bytes, unicode)):
+            s2 = _encode(typespec)
+            t = s2
+        elif typespec is None:
+            t = NULL
+        else:
+            raise TypeError("typespec must be a string or None")
+
+        self._check()
+
+        # use a weak reference if func is a method, to avoid circular
+        # references in cases where func is a method of an object that also
+        # has a reference to the server (e.g. when deriving from the Server
+        # class)
+        # cb = struct(func=_weakref_method(func), user_data=user_data)
+        cb = Callback(func, user_data)
+        # keep a reference to the callback data around
+        self._keep_refs.append(cb)
+
+        lo_server_add_method(self._server, p, t, _msg_callback, <void*>cb)
+
+    def del_method(self, path, typespec):
+        """
+        del_method(path, typespec)
+
+        Delete a callback function.  For both *path* and *typespec*, ``None``
+        may be used as a wildcard.
+
+        .. versionadded:: 0.9.2
         """
         cdef char *p
         cdef char *t
@@ -422,47 +485,57 @@ cdef class _ServerBase:
         else:
             raise TypeError("typespec must be a string or None")
 
-        # use a weak reference if func is a method, to avoid circular references
-        # in cases where func is a method an object that also has a reference to
-        # the server (e.g. when deriving from the Server class)
-        if _inspect.ismethod(func):
-            func = _weakref_method(func)
-
-        cb = struct(func=func, user_data=user_data)
-        self._keep_refs.append(cb)
-        lo_server_add_method(self._server, p, t, _callback, <void*>cb)
-    def del_method(self, path, typespec):
-        cdef char *p
-        cdef char *t
-
-        if isinstance(path, (bytes, unicode)):
-            s = _encode(path)
-            p = s
-        elif path == None:
-            p = NULL
-        else:
-            raise TypeError("path must be a string or None")
-
-        if isinstance(typespec, (bytes, unicode)):
-            s2 = _encode(typespec)
-            t = s2
-        elif typespec == None:
-            t = NULL
-        else:
-            raise TypeError("typespec must be a string or None")
+        self._check()
         lo_server_del_method(self._server, p, t)
+
+    def add_bundle_handlers(self, start_handler, end_handler, user_data=None):
+        """
+        add_bundle_handlers(start_handler, end_handler, user_data=None)
+
+        Add bundle notification handlers.
+
+        :param start_handler:
+            a callback which fires when at the start of a bundle. This is
+            called with the bundle's timestamp and user_data.
+        :param end_handler:
+            a callback which fires when at the end of a bundle. This is called
+            with user_data.
+        :param user_data:
+            data to pass to the handlers.
+
+        .. versionadded:: 0.10.0
+        """
+        cb_data = struct(start_func=_weakref_method(start_handler),
+                         end_func=_weakref_method(end_handler),
+                         user_data=user_data)
+        self._keep_refs.append(cb_data)
+
+        lo_server_add_bundle_handlers(self._server, _bundle_start_callback,
+                                      _bundle_end_callback, <void*>cb_data)
 
     def send(self, target, *args):
         """
-        send(target, message)
-        send(target, bundle)
-        send(target, path[, arg, ...])
+        send(target, *messages)
+        send(target, path, *args)
 
-        Sends a message or bundle from this server to the the given target.
-        target may be an Address object, a port number, a (hostname, port)
-        tuple, or a URL.
-        Exceptions: AddressError, IOError
+        Send a message or bundle from this server to the the given target.
+        Arguments may be one or more :class:`Message` or :class:`Bundle`
+        objects, or a single message given by its path and optional arguments.
+
+        :param target:
+            the address to send the message to; an :class:`Address` object,
+            a port number, a ``(hostname, port)`` tuple, or a URL.
+        :param messages:
+            one or more objects of type :class:`Message` or :class:`Bundle`.
+        :param path:
+            the path of the message to be sent.
+
+        :raises AddressError:
+            if the given target is invalid.
+        :raises IOError:
+            if the message couldn't be sent.
         """
+        self._check()
         _send(target, self, args)
 
     property url:
@@ -481,7 +554,8 @@ cdef class _ServerBase:
 
     property protocol:
         """
-        The server's protocol (one of the constants UDP, TCP, UNIX).
+        The server's protocol (one of the constants :const:`UDP`,
+        :const:`TCP`, or :const:`UNIX`).
         """
         def __get__(self):
             return self.get_protocol()
@@ -489,20 +563,34 @@ cdef class _ServerBase:
 
 cdef class Server(_ServerBase):
     """
-    Server([port[, proto[, **kwargs]]])
-
-    Creates a new Server object, which can receive OSC messages.  port may be a
-    decimal port number or a UNIX socket path.  If omitted, an arbitrary free
-    UDP port will be used.  proto can be one of the constants UDP, TCP, UNIX.
-    Optional keyword arguments:
-    reg_methods: False if you don't want the init function to automatically
-                 register callbacks defined with the @make_method decorator.
-    Exceptions: ServerError
+    A server that can receive OSC messages using a simple single-threaded
+    polling model.
+    Use :class:`ServerThread` for an OSC server that runs in its own thread
+    and never blocks.
     """
     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):
+        """
+        Server(port[, proto])
+
+        Create a new :class:`!Server` object.
+
+        :param port:
+            a decimal port number or a UNIX socket path.  If omitted, an
+            arbitrary free UDP port will be used.
+        :param proto:
+            one of the constants :const:`UDP`, :const:`TCP`, or :const:`UNIX`;
+            default is :const:`UDP`.
+
+        :keyword reg_methods:
+            ``False`` if you don't want the init function to automatically
+            register callbacks defined with the :func:`make_method` decorator
+            (keyword argument only).
+
+        Exceptions: ServerError
+        """
         cdef char *cs
 
-        if port is not None:
+        if port != None:
             p = _encode(str(port));
             cs = p
         else:
@@ -521,10 +609,8 @@ cdef class Server(_ServerBase):
 
     def free(self):
         """
-        free()
-
-        Frees the underlying server object and closes its port.  Note that this
-        will also happen automatically when the server is garbage-collected.
+        Free the underlying server object and close its port.  Note that this
+        will also happen automatically when the server is deallocated.
         """
         if self._server:
             lo_server_free(self._server)
@@ -532,15 +618,23 @@ cdef class Server(_ServerBase):
 
     def recv(self, timeout=None):
         """
-        recv([timeout])
+        recv(timeout=None)
 
-        Receives and dispatches one OSC message.  Blocking by default, unless
-        timeout (in ms) is specified.  timeout may be 0, in which case recv()
-        returns immediately.  Returns True if a message was received, False
-        otherwise.
+        Receive and dispatch one OSC message.  Blocking by default, unless
+        *timeout* is specified.
+
+        :param timeout:
+            Time in milliseconds after which the function returns if no
+            messages have been received.
+            *timeout* may be 0, in which case the function always returns
+            immediately, whether messages have been received or not.
+
+        :return:
+            ``True`` if a message was received, otherwise ``False``.
         """
         cdef int t, r
-        if timeout is not None:
+        self._check()
+        if timeout != None:
             t = timeout
             with nogil:
                 r = lo_server_recv_noblock(self._server, t)
@@ -553,26 +647,46 @@ cdef class Server(_ServerBase):
 
 cdef class ServerThread(_ServerBase):
     """
-    ServerThread([port[, proto[, **kwargs]]])
+    Unlike :class:`Server`, :class:`!ServerThread` uses its own thread which
+    runs in the background to dispatch messages.
+    :class:`!ServerThread` has the same methods as :class:`!Server`, with the
+    exception of :meth:`Server.recv`. Instead, it defines two additional
+    methods :meth:`start` and :meth:`stop`.
 
-    Creates a new ServerThread object, which can receive OSC messages.  Unlike
-    Server, ServerThread uses its own thread which runs in the background to
-    dispatch messages.  Note that callback methods will not be run in the main
-    Python thread!
-    port may be a decimal port number or a UNIX socket path. If omitted, an
-    arbitrary free UDP port will be used.  proto can be one of the constants
-    UDP, TCP, UNIX.
-    Optional keyword arguments:
-    reg_methods: False if you don't want the init function to automatically
-                 register callbacks defined with the @make_method decorator.
-    Exceptions: ServerError
+    .. note:: Because liblo creates its own thread to receive and dispatch
+              messages, callback functions will not be run in the main Python
+              thread!
     """
     cdef lo_server_thread _server_thread
 
     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):
+        """
+        ServerThread(port[, proto])
+
+        Create a new :class:`!ServerThread` object, which can receive OSC messages.
+        Unlike :class:`Server`, :class:`ServerThread` uses its own thread which
+        runs in the background to dispatch messages.  Note that callback methods
+        will not be run in the main Python thread!
+
+        :param port:
+            a decimal port number or a UNIX socket path. If omitted, an
+            arbitrary free UDP port will be used.
+        :param proto:
+            one of the constants :const:`UDP`, :const:`TCP`, or :const:`UNIX`;
+            default is :const:`UDP`.
+
+        :keyword reg_methods:
+            ``False`` if you don't want the init function to automatically
+            register callbacks defined with the make_method decorator
+            (keyword argument only).
+
+        :raises ServerError:
+            if creating the server fails, e.g. because the given port could not
+            be opened.
+        """
         cdef char *cs
 
-        if port is not None:
+        if port != None:
             p = _encode(str(port));
             cs = p
         else:
@@ -595,10 +709,8 @@ cdef class ServerThread(_ServerBase):
 
     def free(self):
         """
-        free()
-
-        Frees the underlying server object and closes its port.  Note that this
-        will also happen automatically when the server is garbage-collected.
+        Free the underlying server object and close its port.  Note that this
+        will also happen automatically when the server is deallocated.
         """
         if self._server_thread:
             lo_server_thread_free(self._server_thread)
@@ -607,45 +719,18 @@ cdef class ServerThread(_ServerBase):
 
     def start(self):
         """
-        start()
-
-        Starts the server thread, liblo will now start to dispatch any messages
+        Start the server thread. liblo will now start to dispatch any messages
         it receives.
         """
+        self._check()
         lo_server_thread_start(self._server_thread)
 
     def stop(self):
         """
-        stop()
-
-        Stops the server thread.
+        Stop the server thread.
         """
+        self._check()
         lo_server_thread_stop(self._server_thread)
-        
-    def del_method(self, path, typespec):
-        """
-        Delete an OSC method from the specifed server thread. 
-        """
-        cdef char *p
-        cdef char *t
-
-        if isinstance(path, (bytes, unicode)):
-            s = _encode(path)
-            p = s
-        elif path == None:
-            p = NULL
-        else:
-            raise TypeError("path must be a string or None")
-
-        if isinstance(typespec, (bytes, unicode)):
-            s2 = _encode(typespec)
-            t = s2
-        elif typespec == None:
-            t = NULL
-        else:
-            raise TypeError("typespec must be a string or None")
-        lo_server_thread_del_method(self._server_thread, p, t)
-
 
 
 ################################################################################
@@ -654,7 +739,7 @@ cdef class ServerThread(_ServerBase):
 
 class AddressError(Exception):
     """
-    Exception raised when trying to create an invalid Address object.
+    Raised when trying to create an invalid :class:`Address` object.
     """
     def __init__(self, msg):
         self.msg = msg
@@ -663,18 +748,33 @@ class AddressError(Exception):
 
 
 cdef class Address:
-    """
-    Address(hostname, port[, proto])
-    Address(port)
-    Address(url)
-
-    Creates a new Address object from the given hostname/port or URL.
-    proto can be one of the constants UDP, TCP, UNIX.
-    Exceptions: AddressError
-    """
     cdef lo_address _address
 
     def __init__(self, addr, addr2=None, proto=LO_UDP):
+        """
+        Address(hostname, port[, proto])
+        Address(port)
+        Address(url)
+
+        Create a new :class:`!Address` object from the given hostname/port
+        or URL.
+
+        :param hostname:
+            the target's hostname.
+
+        :param port:
+            the port number on the target.
+
+        :param proto:
+            one of the constants :const:`UDP`, :const:`TCP`, or :const:`UNIX`.
+
+        :param url:
+            a URL in liblo notation, e.g. ``'osc.udp://hostname:1234/'``.
+
+        :raises AddressError:
+            if the given parameters do not represent a valid address.
+
+        """
         if addr2:
             # Address(host, port[, proto])
             s = _encode(addr)
@@ -718,28 +818,29 @@ cdef class Address:
 
     property url:
         """
-        The address' URL.
+        The address's URL.
         """
         def __get__(self):
             return self.get_url()
 
     property hostname:
         """
-        The address' hostname.
+        The address's hostname.
         """
         def __get__(self):
             return self.get_hostname()
 
     property port:
         """
-        The address' port number.
+        The address's port number.
         """
         def __get__(self):
             return self.get_port()
 
     property protocol:
         """
-        The address' protocol (one of the constants UDP, TCP, UNIX).
+        The address's protocol (one of the constants :const:`UDP`,
+        :const:`TCP`, or :const:`UNIX`).
         """
         def __get__(self):
             return self.get_protocol()
@@ -780,17 +881,18 @@ cdef class _Blob:
 
 cdef class Message:
     """
-    Message(path[, arg, ...])
-
-    Creates a new Message object.
-    
-    See Message.add for the syntax of each arg
+    An OSC message, consisting of a path and arbitrary arguments.
     """
     cdef bytes _path
     cdef lo_message _message
     cdef list _keep_refs
 
     def __init__(self, path, *args):
+        """
+        Message(path, *args)
+
+        Create a new :class:`!Message` object.
+        """
         self._keep_refs = []
         # encode path to bytestring if necessary
         self._path = _encode(path)
@@ -803,44 +905,17 @@ cdef class Message:
 
     def add(self, *args):
         """
-        add(arg[, ...])
+        add(*args)
 
-        Appends the given argument(s) to the message.
-        
-        Each arg can be a piece of data (an int, a float, a string, etc.),
-        in which case the most appropriate datatype is used.
-        
-        It can also be a tuple defining the type, as (typestr, data)
-        
-        Examples:
-            m = Message('/echo')
-            m.add(10)               # it will add the int 10
-            m.add(2.5)              # it will add a 64-bit float (a double)
-            m.add(('f', 2.5))       # a 32-bit float
-            m.add(('d*', range(20))   # will add the numbers from 0 to 19 as 64-bit floats
-            m.add(('d'*20, range(20)) # the same as above
-            m.add('test')           # a string
-            m.add(range(20))        # a blob containing the first 20 integers as bytes
+        Append the given arguments to the message.
+        Arguments can be single values or ``(typetag, data)`` tuples.
         """
-        cdef int i
         for arg in args:
-            if (isinstance(arg, tuple) and len(arg) <= 2) and isinstance(arg[0], (bytes, unicode)):
+            if (isinstance(arg, tuple) and len(arg) <= 2 and
+                    isinstance(arg[0], (bytes, unicode)) and len(arg[0]) == 1):
                 # type explicitly specified
                 if len(arg) == 2:
-                    t = arg[0]
-                    if len(t) == 1:
-                        self._add(t, arg[1])
-                    elif len(t) == 2:
-                        if t[1] == '*':
-                            self._add_many_same_type(t[0], arg[1])
-                        else:
-                            v = arg[1]
-                            self._add(t[0], v[0])
-                            self._add(t[1], v[1])
-                    else:
-                        v = arg[1]
-                        for i in range(len(t)):
-                            self._add(t[i], v[i])
+                    self._add(arg[0], arg[1])
                 else:
                     self._add(arg[0], None)
             else:
@@ -853,31 +928,31 @@ cdef class Message:
         # accept both bytes and unicode as type specifier
         cdef char t = ord(_decode(type)[0])
 
-        if t == 105:    # 'i':
+        if t == 'i':
             lo_message_add_int32(self._message, int(value))
-        elif t == 104:  # 'h':
+        elif t == 'h':
             lo_message_add_int64(self._message, long(value))
-        elif t == 102:  # 'f':
+        elif t == 'f':
             lo_message_add_float(self._message, float(value))
-        elif t == 100:  # 'd':
+        elif t == 'd':
             lo_message_add_double(self._message, float(value))
-        elif t == 99:   # 'c':
+        elif t == 'c':
             lo_message_add_char(self._message, ord(value))
-        elif t == 115:  # 's':
+        elif t == 's':
             s = _encode(value)
             lo_message_add_string(self._message, s)
-        elif t == 83:   # 'S':
+        elif t == 'S':
             s = _encode(value)
             lo_message_add_symbol(self._message, s)
-        elif t == 84:   # 'T':
+        elif t == 'T':
             lo_message_add_true(self._message)
-        elif t == 70:   # 'F':
+        elif t == 'F':
             lo_message_add_false(self._message)
-        elif t == 78:   # 'N':
+        elif t == 'N':
             lo_message_add_nil(self._message)
-        elif t == 73:   # 'I':
+        elif t == 'I':
             lo_message_add_infinitum(self._message)
-        elif t == 109:  # 'm':
+        elif t == 'm':
             for n from 0 <= n < 4:
                 midi[n] = value[n]
             lo_message_add_midi(self._message, midi)
@@ -897,20 +972,20 @@ cdef class Message:
             lo_message_add_true(self._message)
         elif value is False:
             lo_message_add_false(self._message)
-        elif isinstance(value, int):
-            lo_message_add_int32(self._message, int(value))
-        elif isinstance(value, long):
-            lo_message_add_int64(self._message, long(value))
+        elif isinstance(value, (int, long)):
+            try:
+                lo_message_add_int32(self._message, <int32_t>value)
+            except OverflowError:
+                lo_message_add_int64(self._message, <int64_t>value)
         elif isinstance(value, float):
-            #lo_message_add_float(self._message, float(value))
-            lo_message_add_double(self._message, float(value))
+            lo_message_add_float(self._message, float(value))
         elif isinstance(value, (bytes, unicode)):
             s = _encode(value)
             lo_message_add_string(self._message, s)
         elif value == None:
             lo_message_add_nil(self._message)
-        #elif value == float('inf'):    # this is actually dead code, since inf is a float
-        #    lo_message_add_infinitum(self._message)
+        elif value == float('inf'):
+            lo_message_add_infinitum(self._message)
         else:
             # last chance: could be a blob
             try:
@@ -918,63 +993,6 @@ cdef class Message:
             except TypeError:
                 raise TypeError("unsupported message argument type")
             self._add('b', value)
-    cdef _add_many_same_type(self, type, values):
-        cdef uint8_t midi[4]
-        # accept both bytes and unicode as type specifier
-        cdef char t = ord(_decode(type)[0])
-        cdef int i
-
-        if t == 105:    # 'i':
-            for value in values:
-                lo_message_add_int32(self._message, int(values))
-        elif t == 104:  # 'h':
-            for value in values:
-                lo_message_add_int64(self._message, long(value))
-        elif t == 102:  # 'f':
-            for value in values:
-                lo_message_add_float(self._message, float(value))
-        elif t == 100:  # 'd':
-            for value in values:
-                lo_message_add_double(self._message, float(value))
-        elif t == 99:   # 'c':
-            for value in values:
-                lo_message_add_char(self._message, ord(value))
-        elif t == 115:  # 's':
-            for value in values:
-                s = _encode(value)
-                lo_message_add_string(self._message, s)
-        elif t == 83:   # 'S':
-            for value in values:
-                s = _encode(value)
-                lo_message_add_symbol(self._message, s)
-        elif t == 84:   # 'T':
-            for value in values:
-                lo_message_add_true(self._message)
-        elif t == 70:   # 'F':
-            for value in values:
-                lo_message_add_false(self._message)
-        elif t == 78:   # 'N':
-            for value in values:
-                lo_message_add_nil(self._message)
-        elif t == 73:   # 'I':
-            for value in values:
-                lo_message_add_infinitum(self._message)
-        elif t == 109:  # 'm':
-            for value in values:
-                for n from 0 <= n < 4:
-                    midi[n] = value[n]
-                lo_message_add_midi(self._message, midi)
-        elif t == 't':
-            for value in values:
-                lo_message_add_timetag(self._message, _double_to_timetag(value))
-        elif t == 'b':
-            for value in values:
-                b = _Blob(value)
-                # make sure the blob is not deleted as long as this message exists
-                self._keep_refs.append(b)
-                lo_message_add_blob(self._message, (<_Blob>b)._blob)
-        else:
-            raise TypeError("unknown OSC data type '%c'" % t)
 
 
 ################################################################################
@@ -983,16 +1001,19 @@ cdef class Message:
 
 cdef class Bundle:
     """
-    Bundle([timetag, ][message, ...])
-
-    Creates a new Bundle object.  You can optionally specify a time at which the
-    messages should be dispatched (as an OSC timetag float), and any number of
-    messages to be included in the bundle.
+    A bundle of one or more messages to be sent and dispatched together.
     """
     cdef lo_bundle _bundle
     cdef list _keep_refs
 
     def __init__(self, *messages):
+        """
+        Bundle([timetag, ]*messages)
+
+        Create a new :class:`Bundle` object.  You can optionally specify a
+        time at which the messages should be dispatched (as an OSC timetag
+        float), and any number of messages to be included in the bundle.
+        """
         cdef lo_timetag tt
         tt.sec, tt.frac = 0, 0
         self._keep_refs = []
@@ -1017,10 +1038,10 @@ cdef class Bundle:
 
     def add(self, *args):
         """
-        add(message[, ...])
-        add(path[, arg, ...])
+        add(*messages)
+        add(path, *args)
 
-        Adds one or more messages to the bundle.
+        Add one or more messages to the bundle.
         """
         if isinstance(args[0], Message):
             # args is already a list of Messages

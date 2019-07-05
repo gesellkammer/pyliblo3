@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # pyliblo - Python bindings for the liblo OSC library
@@ -46,10 +46,10 @@ class DumpOSC:
         # create server object
         try:
             self.server = liblo.Server(port)
-        except liblo.ServerError, err:
+        except liblo.ServerError as err:
             sys.exit(str(err))
 
-        print "listening on URL: " + self.server.get_url()
+        print("listening on URL: " + self.server.get_url())
 
         # register callback function for all messages
         self.server.add_method(None, None, self.callback)

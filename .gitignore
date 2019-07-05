@@ -12,3 +12,4 @@ dist/
 .deps
 .idea
 .mypy*
+src/liblo.c

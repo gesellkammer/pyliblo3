@@ -1,11 +1,6 @@
 # PYLIBLO 
 
-This is a fork of the original bindings for liblo
-
-It implements some additional features, like removing registered methods, and
-it is installable via pip.
-
-Support for python 2 has been dropped
+This is a fork of the original bindings for liblo, making it pip installable
 
 ## Dependencies
 
