@@ -13,3 +13,4 @@ dist/
 .idea
 .mypy*
 src/liblo.c
+wheelhouse/
