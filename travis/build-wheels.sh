@@ -3,7 +3,15 @@ set -e -x
 
 # Install a system package required by our library
 # yum install -y
-yum install -y liblo-dev
+# yum install -y liblo-dev
+
+yum install -y git
+git clone https://github.com/radarsat1/liblo
+cd liblo
+./configure
+make 
+sudo make install
+
 
 # Compile wheels
 for PYBIN in /opt/python/cp37*/bin; do
