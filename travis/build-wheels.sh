@@ -3,7 +3,7 @@ set -e -x
 
 # Install a system package required by our library
 # yum install -y
-apt install -y liblo-dev
+yum install -y liblo-dev
 
 # Compile wheels
 for PYBIN in /opt/python/*/bin; do
