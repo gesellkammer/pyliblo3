@@ -54,7 +54,8 @@ See http://liblo.sourceforge.net/README-platforms.html
 
 -------
 
-Original README:
+
+## Original README
 
 
 	pyliblo - Python bindings for the liblo OSC library
