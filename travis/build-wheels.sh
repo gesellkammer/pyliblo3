@@ -10,7 +10,7 @@ git clone https://github.com/radarsat1/liblo
 cd liblo
 ./autogen.sh
 make 
-sudo make install
+make install
 
 
 # Compile wheels
