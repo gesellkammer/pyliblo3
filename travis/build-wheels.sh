@@ -8,7 +8,7 @@ set -e -x
 yum install -y git
 git clone https://github.com/radarsat1/liblo
 cd liblo
-./configure
+./autogen.sh
 make 
 sudo make install
 
