@@ -25,17 +25,9 @@ matrix:
       env: DOCKER_IMAGE=quay.io/pypa/manylinux2010_x86_64
            PLAT=manylinux2010_x86_64
 
-before_script:
-  - wget https://bootstrap.pypa.io/get-pip.py | python3
-  - python3 -m pip install twine
-
 install:
   - docker pull $DOCKER_IMAGE
 
 script:
-  - docker run --rm -e PLAT=$PLAT -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/travis/build-wheels.sh
+  - docker run --rm -e PLAT=$PLAT -v `pwd`:/io $DOCKER_IMAGE $PRE_CMD /io/docker/build-wheels.sh
   - ls wheelhouse/
-  
-after_success:
-  # if the release was tagged, upload them to PyPI
-  - if [[ $TRAVIS_TAG ]]; then python3 -m twine upload --skip-existing wheelhouse/*.whl; fi

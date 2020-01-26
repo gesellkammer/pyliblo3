@@ -1,3 +1,5 @@
+2020: pyliblo3 can build manylinux wheels
+
 2019: pyliblo3 is forked from pylibo
 
   * Add the possibility to delete previous registered /methods
