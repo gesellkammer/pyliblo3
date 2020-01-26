@@ -19,17 +19,19 @@ jobs:
 
 env:
   global:
+    # only python >= 3.7
+    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-* cp36-*"
     - TWINE_USERNAME=__token__
     - TWINE_PASSWORD="pypi-AgEIcHlwaS5vcmcCJDVmYjQ3MWVhLTJlYzUtNGQ0Ni1iNDNlLTA4ZDM5OGI5NzM5ZAACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogMX0AAAYgRZ51c6JWwr8L8fKEp03VmrbEFFpqPZDUxg8govB6b4Y"
     # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
 install:
-  - python -m pip install twine cibuildwheel==1.1.0
-
+  - python3 -m pip install twine cibuildwheel==1.1.0
+  
 script:
   # build the wheels, put them into './wheelhouse'
-  - python -m cibuildwheel --output-dir wheelhouse
+  - python3 -m cibuildwheel --output-dir wheelhouse
 
 after_success:
   # if the release was tagged, upload them to PyPI
-  - if [[ $TRAVIS_TAG ]]; then python -m twine upload wheelhouse/*.whl; fi
+  - if [[ $TRAVIS_TAG ]]; then python -m twine upload --skip-existing wheelhouse/*.whl; fi

@@ -18,13 +18,13 @@ elif platform == 'Linux':
 
 # read the contents of your README file
 thisdir = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(thisdir, 'README.md'), encoding='utf-8') as f:
+with open(os.path.join(thisdir, 'README.md')) as f:
     long_description = f.read()
 
 setup(
     name='pyliblo3',
     python_requires='>=3.7',
-    version='0.11.1',
+    version='0.11.2',
     scripts=glob.glob("scripts/*.py"),
     ext_modules=[
         Extension(
