@@ -31,7 +31,7 @@ install:
 script:
   # build the wheels, put them into './wheelhouse'
   - git clone https://github.com/radarsat1/liblo --depth 1
-  - cd liblo && ./autogen.sh && make && make install
+  - cd liblo && ./autogen.sh && make && sudo make install
   - python3 -m cibuildwheel --output-dir wheelhouse
 
 after_success:
