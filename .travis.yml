@@ -8,10 +8,6 @@ env:
 
 matrix:
   include:
-    - language: python
-      python: 
-        - 3.7
-        - 3.8
     - sudo: required
       services:
         - docker
@@ -30,7 +26,7 @@ matrix:
            PLAT=manylinux2010_x86_64
 
 before_script:
-  - python3 -m pip || wget https://bootstrap.pypa.io/get-pip.py | python3
+  - wget https://bootstrap.pypa.io/get-pip.py | python3
   - python3 -m pip install twine
 
 install:
