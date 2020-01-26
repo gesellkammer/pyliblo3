@@ -5,7 +5,7 @@ set -e -x
 # yum install -y
 # yum install -y liblo-dev
 
-yum install -y git
+# yum install -y git
 git clone https://github.com/radarsat1/liblo
 cd liblo
 ./autogen.sh
