@@ -1,20 +1,39 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from setuptools import setup, Extension
-import platform as _platform
+import platform 
 import glob
 import os
 
-platform = _platform.system()
+VERSION = '0.12.0'
+
+platform = platform.system()
 
 include_dirs, library_dirs = [], []
+compile_args = []
 
 if platform == 'Darwin':
     include_dirs.append("/usr/local/include/")
+    include_dirs.append("/opt/local/include/")
+        
     library_dirs.append("/usr/local/lib")
+    library_dirs.append("/opt/local/lib")
+        
+    compile_args += [
+        '-fno-strict-aliasing',
+        '-Werror-implicit-function-declaration',
+        '-Wfatal-errors'
+    ]
 elif platform == 'Linux':
     include_dirs.extend(['usr/include', '/usr/local/include'])
     library_dirs.append("/usr/local/lib")
+    compile_args += [
+        '-fno-strict-aliasing',
+        '-Werror-implicit-function-declaration',
+        '-Wfatal-errors'
+    ]
+else:
+    pass
 
 # read the contents of your README file
 thisdir = os.path.abspath(os.path.dirname(__file__))
@@ -23,17 +42,14 @@ with open(os.path.join(thisdir, 'README.md')) as f:
 
 setup(
     name='pyliblo3',
-    python_requires='>=3.7',
-    version='0.11.2',
+    python_requires='>=3.8',
+    version=VERSION,
     scripts=glob.glob("scripts/*.py"),
     ext_modules=[
         Extension(
             'liblo', 
             sources = ['src/liblo.pyx', 'src/liblo.pxd'],
-            extra_compile_args=[
-                '-fno-strict-aliasing',
-                '-Werror-implicit-function-declaration',
-                '-Wfatal-errors'],
+            extra_compile_args=compile_args,
             libraries=['lo'],
             library_dirs=library_dirs,
             include_dirs=include_dirs)
