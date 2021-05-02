@@ -19,7 +19,7 @@ git clone https://github.com/radarsat1/liblo
 cd liblo
 ./autogen.sh
 make
-make instal
+make install
 
 # Compile wheels. Customize the wildcard to match the desired python versions
 for PYBIN in /opt/python/cp3[8-9]*/bin; do

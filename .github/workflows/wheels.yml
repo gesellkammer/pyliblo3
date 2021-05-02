@@ -1,0 +1,66 @@
+name: Build 
+
+# on: [push, pull_request]
+
+on:
+  create
+
+jobs:
+  build_wheels:
+    name: Build python wheels on ${{ matrix.os }} 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [macOS-10.15, windows-2019]
+        # os: [windows-2019]
+        os: [macOS-10.15]
+        # os: [ubuntu-20.04]
+        # os: [ubuntu-20.04, windows-2019, macOS-10.15]
+        # python-version: [3.9]
+    steps:
+      - uses: actions/checkout@v2
+
+      # Used to host cibuildwheel
+      - name: Setup python
+        uses: actions/setup-python@v2
+        
+      - name: Install dependencies macos
+        if: runner.os == 'macos'
+        run: |
+            brew install liblo
+            
+      - name: Windows - Enable Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1.7.0    
+
+      - name: Install dependencies windowsn windows
+        if: runner.os == 'windows'
+        run: |
+            git clone https://github.com/radarsat1/liblo
+            cd liblo/cmake
+            # TODO!!
+            
+      - name: Install cibuildwheel
+        run: |
+            python -m pip install cibuildwheel==1.10.0 twine virtualenv
+
+      - name: Build wheels
+        # env: 
+        #   CIBW_SKIP: "cp38-win* *win32"
+          
+        run: |
+            # python setup.py build_ext
+            python -m cibuildwheel --output-dir wheelhouse
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./wheelhouse/*.whl
+      - name: Upload wheels
+        env:
+          #TWINE_USERNAME: __token__
+          TWINE_USERNAME: Eduardo.Moguillansky
+          #TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+          TWINE_PASSWORD: ${{ secrets.pypipass }}
+        run: |
+            echo $TWINE_USERNAME
+            echo $TWINE_PASSWORD
+            twine upload --skip-existing wheelhouse/*.whl
+        continue-on-error: true
