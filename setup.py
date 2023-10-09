@@ -42,7 +42,7 @@ with open(os.path.join(thisdir, 'README.md')) as f:
 
 setup(
     name='pyliblo3',
-    python_requires='>=3.8',
+    python_requires='>=3.9',
     version=VERSION,
     scripts=glob.glob("scripts/*.py"),
     ext_modules=[
