@@ -32,7 +32,7 @@ jobs:
         run: |
             git clone https://github.com/radarsat1/liblo
             cd liblo
-            mkdir build
+            New-Item -ItemType Directory -Force -Path "build"
             cd build
             cmake ../cmake
             cmake --build .
