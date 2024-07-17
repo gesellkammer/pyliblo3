@@ -23,10 +23,10 @@ jobs:
       - name: Windows - Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1.7.0
 
-      - name: macos dependencies
-        if: runner.os == 'macos'
-        run: |
-          brew install liblo
+      #- name: macos dependencies
+      #  if: runner.os == 'macos'
+      #  run: |
+      #    brew install liblo
 
       - name: Install dependencies windows
         if: runner.os == 'windows'
@@ -43,8 +43,8 @@ jobs:
         run: python -m cibuildwheel --output-dir wheelhouse
         # to supply options, put them in 'env', like:
         env:
-            CIBW_BUILD: 'cp39-* cp310-* cp311-*'
-            CIBW_ARCHS_MACOS: 'x86_64 arm64'            
+            CIBW_BUILD: 'cp39-* cp310-* cp311-* cp312-*'
+            CIBW_ARCHS_MACOS: 'arm64'
             CIBW_SKIP: 'pp* *686* *-musllinux_*'
             CIBW_BEFORE_ALL_LINUX: yum search liblo; yum install -y liblo-devel
             CIBW_BEFORE_ALL_MACOS: brew update; brew install liblo
