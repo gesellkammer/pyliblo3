@@ -21,7 +21,12 @@ jobs:
         run: python -m pip install cibuildwheel
 
       - name: Windows - Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1.7.0    
+        uses: ilammy/msvc-dev-cmd@v1.7.0
+
+      - name: macos dependencies
+        if: runner.os == 'macos'
+        run: |
+          brew install liblo
 
       - name: Install dependencies windows
         if: runner.os == 'windows'
