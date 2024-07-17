@@ -26,7 +26,14 @@ jobs:
       - name: macos dependencies
         if: runner.os == 'macos'
         run: |
-          brew install liblo
+          # brew install liblo
+          git clone https://github.com/radarsat1/liblo
+          cd liblo
+          mkdir macosbuild
+          cd macosbuild
+          cmake ../cmake
+          cmake --build .
+          cmake --install .
 
       - name: Install dependencies windows
         if: runner.os == 'windows'
