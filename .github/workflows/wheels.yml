@@ -32,7 +32,7 @@ jobs:
           cd macosbuild
           cmake ../cmake
           cmake --build .
-          cmake --install .
+          sudo cmake --install .
 
       - name: Install dependencies windows
         if: runner.os == 'windows'
