@@ -4,6 +4,8 @@ from setuptools import setup, Extension
 import platform 
 import glob
 import os
+import shutil
+import subprocess
 
 VERSION = '0.14.0'
 
@@ -12,12 +14,25 @@ platform = platform.system()
 include_dirs, library_dirs = [], []
 compile_args = []
 
+
+def append_if_exists(lst: list[str], path: str) -> None:
+    if os.path.exists(path):
+        lst.append(path)
+    else:
+        print(f"Path does not exists, skipping: '{path}'")
+
+
 if platform == 'Darwin':
+    brewpath = shutil.which("brew")
+    if brewpath:
+        brewprefix = subprocess.getoutput("brew --prefix")
+        append_if_exists(include_dirs, brewprefix + "/include")
+        append_if_exists(library_dirs, brewprefix + "/lib")
     include_dirs.append("/usr/local/include/")
-    include_dirs.append("/opt/local/include/")
+    append_if_exists(include_dirs, "/opt/local/include/")
         
     library_dirs.append("/usr/local/lib")
-    library_dirs.append("/opt/local/lib")
+    append_if_exists(library_dirs, "/opt/local/lib")
         
     compile_args += [
         '-fno-strict-aliasing',
