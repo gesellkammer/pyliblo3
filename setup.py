@@ -5,7 +5,7 @@ import platform
 import glob
 import os
 
-VERSION = '0.13.0'
+VERSION = '0.14.0'
 
 platform = platform.system()
 
@@ -48,7 +48,8 @@ setup(
     ext_modules=[
         Extension(
             'liblo', 
-            sources = ['src/liblo.pyx', 'src/liblo.pxd'],
+            #sources = ['src/liblo.pyx', 'src/liblo.pxd'],
+            sources = ['src/liblo.pyx'],
             extra_compile_args=compile_args,
             libraries=['lo'],
             library_dirs=library_dirs,

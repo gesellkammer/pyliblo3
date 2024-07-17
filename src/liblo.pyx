@@ -219,7 +219,7 @@ class ServerError(Exception):
 
 
 cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
-                       int argc, lo_message msg, void *cb_data) with gil:
+                       int argc, lo_message msg, void *cb_data) noexcept with gil:
     cdef int i
     cdef char t
     cdef unsigned char *ptr
@@ -271,19 +271,19 @@ cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
     return r if r is not None else 0
 
 
-cdef int _bundle_start_callback(lo_timetag t, void *cb_data) with gil:
+cdef int _bundle_start_callback(lo_timetag t, void *cb_data) noexcept with gil:
     cb = <object>cb_data
     r = cb.start_func(_timetag_to_double(t), cb.user_data)
     return r if r is not None else 0
 
 
-cdef int _bundle_end_callback(void *cb_data) with gil:
+cdef int _bundle_end_callback(void *cb_data) noexcept with gil:
     cb = <object>cb_data
     r = cb.end_func(cb.user_data)
     return r if r is not None else 0
 
 
-cdef void _err_handler(int num, const_char *msg, const_char *where) with gil:
+cdef void _err_handler(int num, const_char *msg, const_char *where) noexcept with gil:
     # can't raise exception in cdef callback function, so use a global variable
     # instead
     global __exception
