@@ -26,7 +26,6 @@ jobs:
       - name: macos dependencies
         if: runner.os == 'macos'
         run: |
-          # brew install liblo
           git clone https://github.com/radarsat1/liblo
           cd liblo
           mkdir macosbuild
