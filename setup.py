@@ -9,7 +9,7 @@ import subprocess
 
 VERSION = '0.14.0'
 
-platform = platform.system()
+platformname = platform.system()
 
 include_dirs, library_dirs = [], []
 compile_args = []
@@ -18,11 +18,13 @@ compile_args = []
 def append_if_exists(lst: list[str], path: str) -> None:
     if os.path.exists(path):
         lst.append(path)
+        print(f"~~~~~ Added path: {path}")
     else:
-        print(f"Path does not exists, skipping: '{path}'")
+        print(f"***** Path does not exists, skipping: '{path}'")
 
+print(f"**** Platform: {platformname}")
 
-if platform == 'Darwin':
+if platformname == 'Darwin':
     brewpath = shutil.which("brew")
     if brewpath:
         brewprefix = subprocess.getoutput("brew --prefix")
@@ -39,7 +41,7 @@ if platform == 'Darwin':
         '-Werror-implicit-function-declaration',
         '-Wfatal-errors'
     ]
-elif platform == 'Linux':
+elif platformname == 'Linux':
     include_dirs.extend(['usr/include', '/usr/local/include'])
     library_dirs.append("/usr/local/lib")
     compile_args += [
@@ -47,6 +49,9 @@ elif platform == 'Linux':
         '-Werror-implicit-function-declaration',
         '-Wfatal-errors'
     ]
+elif platformname == "Windows":
+    # Default install directory for liblo built from source
+    append_if_exists(include_dirs, "C:/Program Files/liblo/include")
 else:
     pass
 
