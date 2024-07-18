@@ -46,7 +46,7 @@ jobs:
             cd liblo
             New-Item -ItemType Directory -Force -Path "windowsbuild"
             cd windowsbuild
-            cmake -DWITH_TESTS=OFF -DWITH_CPP_TESTS=OFF ../cmake
+            cmake -DWITH_TESTS=OFF -DWITH_CPP_TESTS=OFF -DWITH_EXAMPLES=OFF -DWITH_TOOLS=OFF ../cmake
             cmake --build .
             cmake --install .
 
