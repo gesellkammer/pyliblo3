@@ -12,6 +12,7 @@ VERSION = '0.14.0'
 platformname = platform.system()
 
 include_dirs, library_dirs = [], []
+libraries = []
 compile_args = []
 
 
@@ -25,6 +26,7 @@ def append_if_exists(lst: list[str], path: str) -> None:
 print(f"**** Platform: {platformname}")
 
 if platformname == 'Darwin':
+    libraries.append('lo')
     brewpath = shutil.which("brew")
     if brewpath:
         brewprefix = subprocess.getoutput("brew --prefix")
@@ -42,6 +44,7 @@ if platformname == 'Darwin':
         '-Wfatal-errors'
     ]
 elif platformname == 'Linux':
+    libraries.append('lo')
     include_dirs.extend(['/usr/include', '/usr/local/include'])
     library_dirs.append("/usr/local/lib")
     compile_args += [
@@ -50,6 +53,7 @@ elif platformname == 'Linux':
         '-Wfatal-errors'
     ]
 elif platformname == "Windows":
+    libraries.append('liblo')
     # Default install directory for liblo built from source
     append_if_exists(include_dirs, "C:/Program Files/liblo/include")
     append_if_exists(library_dirs, "C:/Program Files/liblo/lib")
@@ -72,7 +76,7 @@ setup(
             #sources = ['src/liblo.pyx', 'src/liblo.pxd'],
             sources = ['src/liblo.pyx'],
             extra_compile_args=compile_args,
-            libraries=['lo'],
+            libraries=libraries,
             library_dirs=library_dirs,
             include_dirs=include_dirs)
     ],
