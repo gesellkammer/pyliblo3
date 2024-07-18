@@ -20,7 +20,7 @@ from libc.stdlib cimport malloc, free
 from libc.math cimport modf
 from libc.stdint cimport int32_t, int64_t
 
-from liblo cimport *
+from _liblo cimport *
 
 import inspect as _inspect
 import weakref as _weakref

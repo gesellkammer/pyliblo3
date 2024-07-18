@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from setuptools import setup, Extension
+
 import platform 
 import glob
 import os
@@ -11,7 +12,8 @@ VERSION = '0.14.0'
 
 platformname = platform.system()
 
-include_dirs, library_dirs = [], []
+include_dirs = ["pyliblo3"]
+library_dirs = []
 libraries = []
 compile_args = []
 
@@ -72,16 +74,15 @@ setup(
     scripts=glob.glob("scripts/*.py"),
     ext_modules=[
         Extension(
-            'liblo', 
+            'pyliblo3._liblo', 
             #sources = ['src/liblo.pyx', 'src/liblo.pxd'],
-            sources = ['src/liblo.pyx'],
+            sources = ['pyliblo3/_liblo.pyx'],
             extra_compile_args=compile_args,
             libraries=libraries,
             library_dirs=library_dirs,
             include_dirs=include_dirs)
     ],
-    setup_requires=['setuptools>=18', 'cython'],
-    install_requires=['cython'],
+    packages=['pyliblo3'],
     author='Dominic Sacre',
     author_email='dominic.sacre@gmx.de',
     maintainer='Eduardo Moguillansky',

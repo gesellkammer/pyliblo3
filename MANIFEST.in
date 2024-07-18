@@ -1,0 +1,1 @@
+recursive-include pyliblo3 *.py *.pyx *.pxd
