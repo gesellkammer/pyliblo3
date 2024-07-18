@@ -18,8 +18,9 @@ compile_args = []
 
 def append_if_exists(lst: list[str], path: str) -> None:
     if os.path.exists(path):
-        lst.append(path)
-        print(f"~~~~~ Added path: {path}")
+        if path not in lst:
+            lst.append(path)
+            print(f"~~~~~ Added path: {path}")
     else:
         print(f"***** Path does not exists, skipping: '{path}'")
 
