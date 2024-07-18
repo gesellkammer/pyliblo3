@@ -47,7 +47,7 @@ jobs:
             New-Item -ItemType Directory -Force -Path "windowsbuild"
             cd windowsbuild
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=OFF -DWITH_CPP_TESTS=OFF -DWITH_EXAMPLES=OFF -DWITH_TOOLS=OFF ../cmake
-            cmake --build .
+            cmake --build . cmake --config Release
             Get-ChildItem -Recurse
             cmake --install .
 
