@@ -36,7 +36,7 @@ jobs:
           cd liblo
           mkdir macosbuild
           cd macosbuild
-          cmake ../cmake
+          cmake -DCMAKE_OSX_ARCHITECTURES=arm64 ../cmake
           cmake --build . --config Release
           sudo cmake --install .
           file /usr/local/lib/liblo.dylib
