@@ -42,7 +42,7 @@ if platformname == 'Darwin':
         '-Wfatal-errors'
     ]
 elif platformname == 'Linux':
-    include_dirs.extend(['usr/include', '/usr/local/include'])
+    include_dirs.extend(['/usr/include', '/usr/local/include'])
     library_dirs.append("/usr/local/lib")
     compile_args += [
         '-fno-strict-aliasing',
@@ -52,6 +52,7 @@ elif platformname == 'Linux':
 elif platformname == "Windows":
     # Default install directory for liblo built from source
     append_if_exists(include_dirs, "C:/Program Files/liblo/include")
+    append_if_exists(library_dirs, "C:/Program Files/liblo/lib")
 else:
     pass
 
