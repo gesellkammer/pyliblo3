@@ -1,0 +1,32 @@
+on: [push]
+
+jobs:
+  alltest:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ "windows-latest", "ubuntu-latest", "macos-latest" ]
+        python-version: [ "3.9", "3.12" ]   # Test extremes only
+        install-method: [
+            # "git",
+            "pip"
+            ]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: install from pip
+        if: ${{ matrix.install-method == 'pip' }}
+        run: |
+          pip install pyliblo3
+
+
+      - name: run unittests
+        run: |
+          cd test
+          python unit.py

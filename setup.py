@@ -24,7 +24,6 @@ def append_if_exists(lst: list[str], path: str) -> None:
     else:
         print(f"***** Path does not exists, skipping: '{path}'")
 
-print(f"**** Platform: {platformname}")
 
 if platformname == 'Darwin':
     libraries.append('lo')
