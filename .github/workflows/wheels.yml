@@ -12,8 +12,8 @@ jobs:
       matrix:
         os: [
              macos-12,
-             windows-latest,
-             ubuntu-latest
+             #windows-latest,
+             #ubuntu-latest
              ]
 
     steps:
@@ -30,7 +30,8 @@ jobs:
       - name: macos dependencies
         if: runner.os == 'macos'
         run: |
-          brew install liblo
+          python -m pip install delocate
+          # brew install liblo
           git clone https://github.com/radarsat1/liblo
           cd liblo
           mkdir macosbuild
