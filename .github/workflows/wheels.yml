@@ -44,8 +44,8 @@ jobs:
         run: |
             git clone https://github.com/radarsat1/liblo
             cd liblo
-            New-Item -ItemType Directory -Force -Path "build"
-            cd build
+            New-Item -ItemType Directory -Force -Path "windowsbuild"
+            cd windowsbuild
             cmake ../cmake
             cmake --build .
             cmake --install .
