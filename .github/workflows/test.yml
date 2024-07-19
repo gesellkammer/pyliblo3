@@ -23,7 +23,7 @@ jobs:
       - name: install from pip
         if: ${{ matrix.install-method == 'pip' }}
         run: |
-          pip install pyliblo3
+          pip install "pyliblo3>=0.15"
 
 
       - name: run unittests
