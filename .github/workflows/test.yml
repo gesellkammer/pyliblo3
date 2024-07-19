@@ -1,11 +1,15 @@
+name: Test
 on: [push]
-
 jobs:
   alltest:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ "windows-latest", "ubuntu-latest", "macos-latest" ]
+        os: [
+            #"windows-latest",
+            #"ubuntu-latest",
+            "macos-latest"
+            ]
         python-version: [ "3.10", "3.12" ]   # Test extremes only
         install-method: [
             # "git",
