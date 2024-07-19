@@ -17,6 +17,8 @@ import time
 import sys
 import pyliblo3 as liblo
 
+portnum = 9876
+
 def approx(a, b, e = 0.0002):
     return abs(a - b) < e
 
@@ -50,30 +52,30 @@ class ServerTestCaseBase(unittest.TestCase):
 class ServerTestCase(ServerTestCaseBase):
     def setUp(self):
         ServerTestCaseBase.setUp(self)
-        self.server = liblo.Server('1234')
+        self.server = liblo.Server(str(portnum))
 
     def tearDown(self):
         del self.server
 
     def testPort(self):
-        assert self.server.get_port() == 1234
+        assert self.server.get_port() == portnum
 
     def testURL(self):
-        assert matchHost(self.server.get_url(), r'osc\.udp://.*:1234/')
+        assert matchHost(self.server.get_url(), fr'osc\.udp://.*:{portnum}/')
 
     def testSendInt(self):
         self.server.add_method('/foo', 'i', self.callback, "data")
-        self.server.send('1234', '/foo', 123)
+        self.server.send(str(portnum), '/foo', 123)
         assert self.server.recv() == True
         assert self.cb.path == '/foo'
         assert self.cb.args[0] == 123
         assert self.cb.types == 'i'
         assert self.cb.data == ("data",)
-        assert matchHost(self.cb.src.get_url(), r'osc\.udp://.*:1234/')
+        assert matchHost(self.cb.src.get_url(), fr'osc\.udp://.*:{portnum}/')
 
     def testSendBlob(self):
         self.server.add_method('/blob', 'b', self.callback)
-        self.server.send('1234', '/blob', [4, 8, 15, 16, 23, 42])
+        self.server.send(str(portnum), '/blob', [4, 8, 15, 16, 23, 42])
         assert self.server.recv() == True
         if sys.hexversion < 0x03000000:
             assert list(self.cb.args[0]) == [4, 8, 15, 16, 23, 42]
@@ -83,9 +85,9 @@ class ServerTestCase(ServerTestCaseBase):
     def testSendVarious(self):
         self.server.add_method('/blah', 'ihfdscb', self.callback)
         if sys.hexversion < 0x03000000:
-            self.server.send(1234, '/blah', 123, 2**42, 123.456, 666.666, "hello", ('c', 'x'), (12, 34, 56))
+            self.server.send(portnum, '/blah', 123, 2**42, 123.456, 666.666, "hello", ('c', 'x'), (12, 34, 56))
         else:
-            self.server.send(1234, '/blah', 123, ('h', 2**42), 123.456, 666.666, "hello", ('c', 'x'), (12, 34, 56))
+            self.server.send(portnum, '/blah', 123, ('h', 2**42), 123.456, 666.666, "hello", ('c', 'x'), (12, 34, 56))
         assert self.server.recv() == True
         assert self.cb.types == 'ihfdscb'
         assert len(self.cb.args) == len(self.cb.types)
@@ -102,7 +104,7 @@ class ServerTestCase(ServerTestCaseBase):
 
     def testSendOthers(self):
         self.server.add_method('/blubb', 'tmSTFNI', self.callback)
-        self.server.send(1234, '/blubb', ('t', 666666.666), ('m', (1, 2, 3, 4)), ('S', 'foo'), True, ('F',), None, ('I',))
+        self.server.send(portnum, '/blubb', ('t', 666666.666), ('m', (1, 2, 3, 4)), ('S', 'foo'), True, ('F',), None, ('I',))
         assert self.server.recv() == True
         assert self.cb.types == 'tmSTFNI'
         assert approx(self.cb.args[0], 666666.666)
@@ -116,7 +118,7 @@ class ServerTestCase(ServerTestCaseBase):
     def testSendMessage(self):
         self.server.add_method('/blah', 'is', self.callback)
         m = liblo.Message('/blah', 42, 'foo')
-        self.server.send(1234, m)
+        self.server.send(portnum, m)
         assert self.server.recv() == True
         assert self.cb.types == 'is'
         assert self.cb.args[0] == 42
@@ -125,7 +127,7 @@ class ServerTestCase(ServerTestCaseBase):
     def testSendBundle(self):
         self.server.add_method('/foo', 'i', self.callback_dict)
         self.server.add_method('/bar', 's', self.callback_dict)
-        self.server.send(1234, liblo.Bundle(
+        self.server.send(portnum, liblo.Bundle(
             liblo.Message('/foo', 123),
             liblo.Message('/bar', "blubb")
         ))
@@ -139,7 +141,7 @@ class ServerTestCase(ServerTestCaseBase):
         t1 = time.time()
         b = liblo.Bundle(liblo.time() + d)
         b.add('/blubb', 42)
-        self.server.send(1234, b)
+        self.server.send(portnum, b)
         while not self.cb:
             self.server.recv(1)
         t2 = time.time()
@@ -147,7 +149,7 @@ class ServerTestCase(ServerTestCaseBase):
 
     def testSendInvalid(self):
         try:
-            self.server.send(1234, '/blubb', ('x', 'y'))
+            self.server.send(portnum, '/blubb', ('x', 'y'))
         except TypeError as e:
             pass
         else:
@@ -236,7 +238,7 @@ class ServerThreadTestCase(ServerTestCaseBase):
 class DecoratorTestCase(unittest.TestCase):
     class TestServer(liblo.Server):
         def __init__(self):
-            liblo.Server.__init__(self, 1234)
+            liblo.Server.__init__(self, portnum)
 
         @liblo.make_method('/foo', 'ibm')
         def foo_cb(self, path, args, types, src, data):
@@ -249,7 +251,7 @@ class DecoratorTestCase(unittest.TestCase):
         del self.server
 
     def testSendReceive(self):
-        liblo.send(1234, '/foo', 42, ('b', [4, 8, 15, 16, 23, 42]), ('m', (6, 6, 6, 0)))
+        liblo.send(portnum, '/foo', 42, ('b', [4, 8, 15, 16, 23, 42]), ('m', (6, 6, 6, 0)))
         assert self.server.recv() == True
         assert self.server.cb.path == '/foo'
         assert len(self.server.cb.args) == 3
