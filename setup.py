@@ -8,7 +8,7 @@ import os
 import shutil
 import subprocess
 
-VERSION = '0.15.0'
+VERSION = '0.16.0'
 
 platformname = platform.system()
 
