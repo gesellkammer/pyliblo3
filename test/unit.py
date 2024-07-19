@@ -16,6 +16,7 @@ import re
 import time
 import sys
 import pyliblo3 as liblo
+import platform
 
 portnum = 9876
 
@@ -126,7 +127,7 @@ class ServerTestCase(ServerTestCaseBase):
 
     def testSendBundle(self):
         self.server.add_method('/foo', 'i', self.callback_dict)
-        self.server.add_method('/bar', 's', self.callback_dict)
+        self.se·rver.add_method('/bar', 's', self.callback_dict)
         self.server.send(portnum, liblo.Bundle(
             liblo.Message('/foo', 123),
             liblo.Message('/bar', "blubb")
@@ -174,6 +175,13 @@ class ServerCreationTestCase(unittest.TestCase):
             s = liblo.Server('22')
         except liblo.ServerError as e:
             pass
+        except OSError as e:
+            # On macos this test fails with OSError: nodename nor servname provided, or not known
+            # And it should in fact fail
+            if platform.system() == 'Darwin':
+                pass
+            else:
+                assert False
         else:
             assert False
 
