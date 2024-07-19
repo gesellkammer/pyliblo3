@@ -12,7 +12,7 @@
 #
 
 import sys
-import liblo
+import pyliblo3 as liblo
 
 
 class DumpOSC:

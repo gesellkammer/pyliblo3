@@ -7,8 +7,8 @@ jobs:
       matrix:
         os: [
             "windows-latest",
-            #"ubuntu-latest",
-            #"macos-latest"
+            "ubuntu-latest",
+            "macos-latest"
             ]
         python-version: [ "3.10", "3.12" ]   # Test extremes only
         install-method: [
@@ -32,7 +32,7 @@ jobs:
       - name: install from pip
         if: ${{ matrix.install-method == 'pip' }}
         run: |
-          pip install --verbose "pyliblo3>=0.15"
+          pip install --verbose "pyliblo3>=0.16"
 
       - name: run unittests
         run: |

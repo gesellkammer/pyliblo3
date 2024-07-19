@@ -12,7 +12,7 @@
 #
 
 import sys
-import liblo
+import pyliblo3 as liblo
 
 
 def make_message_auto(path, *args):

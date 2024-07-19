@@ -57,6 +57,10 @@ elif platformname == 'Linux':
 elif platformname == "Windows":
     libraries.append('liblo')
     # Default install directory for liblo built from source
+    # See also the wheel build script where we add the .../lib and .../bin
+    # directories so that the wheel repair script can find the liblo dll
+    # to add it to the wheel. When building from source, the user needs
+    # to install liblo and add its lib and bin directories to the path
     append_if_exists(include_dirs, "C:/Program Files/liblo/include")
     append_if_exists(library_dirs, "C:/Program Files/liblo/lib")
 else:

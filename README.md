@@ -1,15 +1,18 @@
 # pyliblo3 
 
-This is a fork of the original bindings for liblo, making it pip installable
+This is a fork of the original bindings for liblo, making it pip installable.
+
+As of version 0.16 the provided wheels include the ``liblo`` library
+and don't have any further dependencies.
+
 
 ## Example
 
-
-### Simple Server
+### Simple blocking server
 
 ```python
 
-import liblo
+import pyliblo3 as liblo
 server = liblo.Server(8080)
 
 def test_handler(path, args, types, src):
@@ -21,52 +24,82 @@ while True:
     server.recv(100)
 ```
 
+### Threaded server
 
-## Dependencies
+TODO
 
-* liblo >= 0.28
+----------------------
 
 
 ## Installation
 
 
-### 1. Install liblo
+```bash
 
-`liblo` must be installed previously
+pip install pyliblo3
+
+```
+
+## Installation from source
+
+When installing from source, ``liblo`` needs to be installed.
 
 #### Linux
 
+```bash
 sudo apt install liblo-dev
 
-#### macOS
+git clone https://github.com/gesellkammer/pyliblo3
+cd pyliblo3
+pip install .
+```
 
+#### MacOS
+
+First install liblo
+
+```bash
 brew install liblo
+
+```
+
+Or, without using brew:
+
+```bash
+git clone https://github.com/radarsat1/liblo
+cd liblo
+mkdir macosbuild
+cd macosbuild
+cmake -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" ../cmake
+cmake --build . --config Release
+sudo cmake --install .
+```
+
+Then install pyliblo3
+
+```bash
+git clone https://github.com/gesellkammer/pyliblo3
+cd pyliblo3
+pip install .
+```
 
 #### Windows
 
-See http://liblo.sourceforge.net/README-platforms.html
+```bash
+git clone https://github.com/radarsat1/liblo
+cd liblo
+New-Item -ItemType Directory -Force -Path "windowsbuild"
+cd windowsbuild
+cmake -A x64 -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=OFF -DWITH_CPP_TESTS=OFF -DWITH_EXAMPLES=OFF -DWITH_TOOLS=OFF ../cmake
+cmake --build . --config Release
+Get-ChildItem -Recurse
+cmake --install .
+```
+
+```bash
+git clone https://github.com/gesellkammer/pyliblo3
+cd pyliblo3
+pip install .
+```
 
 
-### 2. Install pyliblo3
-
-`pip install pyliblo3`
-
-
--------
-
-
-## Original README
-
-
-	pyliblo - Python bindings for the liblo OSC library
-
-	Copyright (C) 2007-2011  Dominic Sacré  <dominic.sacre@gmx.de>
-
-	http://das.nasophon.de/pyliblo/
-
-
-	To install, run "./setup.py build", followed by "./setup.py install". This
-	will install both the python module and the send_osc/dump_osc scripts.
-
-	See doc/API.html and doc/examples.html for API documentation and some
-	example code.
