@@ -127,7 +127,7 @@ class ServerTestCase(ServerTestCaseBase):
 
     def testSendBundle(self):
         self.server.add_method('/foo', 'i', self.callback_dict)
-        self.se·rver.add_method('/bar', 's', self.callback_dict)
+        self.server.add_method('/bar', 's', self.callback_dict)
         self.server.send(portnum, liblo.Bundle(
             liblo.Message('/foo', 123),
             liblo.Message('/bar', "blubb")
