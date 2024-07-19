@@ -24,6 +24,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: check macos arch
+        if: ${{ runner.os }} == macos
+        run: |
+          uname -m
+
       - name: install from pip
         if: ${{ matrix.install-method == 'pip' }}
         run: |
