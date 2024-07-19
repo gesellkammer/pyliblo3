@@ -70,7 +70,7 @@ jobs:
 
             # Use delvewheel on windows
             CIBW_BEFORE_BUILD_WINDOWS: "pip install delvewheel"
-            CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair -w {dest_dir} {wheel}"
+            CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: 'delvewheel repair --add-path "C:/Program Files/liblo/lib" -w {dest_dir} {wheel}'
         
       - name: Check wheels
         if: runner.os == 'macos'
