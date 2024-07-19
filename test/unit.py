@@ -15,7 +15,7 @@ import unittest
 import re
 import time
 import sys
-import liblo
+import pyliblo3 as liblo
 
 def approx(a, b, e = 0.0002):
     return abs(a - b) < e
