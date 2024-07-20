@@ -2,8 +2,8 @@
 
 This is a fork of the original bindings for liblo, making it pip installable.
 
-As of version 0.16 the provided wheels include the ``liblo`` library
-and don't have any further dependencies.
+The provided wheels include the ``liblo`` library and don't have any further 
+dependencies, making it completely pip installable
 
 
 ## Example
