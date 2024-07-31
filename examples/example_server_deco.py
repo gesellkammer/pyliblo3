@@ -1,33 +1,30 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
-from liblo import *
-import sys
+from pyliblo3 import *
+import time
 
-# raw_input renamed to input in python3
-try:
-    input = raw_input
-except NameError:
-    pass
 
 class MyServer(ServerThread):
-    def __init__(self):
-        ServerThread.__init__(self, 1234)
+    def __init__(self, port=1234):
+        ServerThread.__init__(self, port)
 
     @make_method('/foo', 'ifs')
     def foo_callback(self, path, args):
         i, f, s = args
-        print("received message '%s' with arguments: %d, %f, %s" % (path, i, f, s))
+        print(f"Received message '{path}' with arguments: {i=}, {f=}, {s=}")
 
     @make_method(None, None)
     def fallback(self, path, args):
-        print("received unknown message '%s'" % path)
+        print(f"received unknown message '{path}' with {args=}")
 
-try:
-    server = MyServer()
-except ServerError as err:
-    print(err)
-    sys.exit()
-
+server = MyServer()
 server.start()
-input("press enter to quit...\n")
+
+print(f"Server started in its own thread, send messages to {server.port}. Use CTRL-C to stop")
+
+
+while True:
+    send(("127.0.0.0", server.port), "/foo", 10, 1.5, "bar")
+    send(("127.0.0.0", server.port), "/unknown", (3, 4))
+    time.sleep(1)
+    

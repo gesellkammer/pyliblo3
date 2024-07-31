@@ -1583,12 +1583,12 @@ struct __pyx_opt_args_7cpython_11contextvars_get_value_no_default {
   PyObject *default_value;
 };
 
-/* "pyliblo3/_liblo.pyx":60
+/* "pyliblo3/_liblo.pyx":76
  * 
  * 
  * cdef class Callback:             # <<<<<<<<<<<<<<
- *     cdef object func
- *     cdef object user_data
+ *     """
+ *     Used internally to wrap a python function as a callback
  */
 struct __pyx_obj_8pyliblo3_6_liblo_Callback {
   PyObject_HEAD
@@ -1599,7 +1599,7 @@ struct __pyx_obj_8pyliblo3_6_liblo_Callback {
 };
 
 
-/* "pyliblo3/_liblo.pyx":93
+/* "pyliblo3/_liblo.pyx":116
  * 
  * # forward declarations
  * cdef class _ServerBase             # <<<<<<<<<<<<<<
@@ -1614,24 +1614,24 @@ struct __pyx_obj_8pyliblo3_6_liblo__ServerBase {
 };
 
 
-/* "pyliblo3/_liblo.pyx":564
+/* "pyliblo3/_liblo.pyx":589
  * 
  * 
  * cdef class Server(_ServerBase):             # <<<<<<<<<<<<<<
  *     """
- *     A server that can receive OSC messages using a simple single-threaded
+ *     A server that can receive OSC messages, blocking
  */
 struct __pyx_obj_8pyliblo3_6_liblo_Server {
   struct __pyx_obj_8pyliblo3_6_liblo__ServerBase __pyx_base;
 };
 
 
-/* "pyliblo3/_liblo.pyx":648
+/* "pyliblo3/_liblo.pyx":668
  * 
  * 
  * cdef class ServerThread(_ServerBase):             # <<<<<<<<<<<<<<
  *     """
- *     Unlike :class:`Server`, :class:`!ServerThread` uses its own thread which
+ *     Server running in a thread
  */
 struct __pyx_obj_8pyliblo3_6_liblo_ServerThread {
   struct __pyx_obj_8pyliblo3_6_liblo__ServerBase __pyx_base;
@@ -1639,7 +1639,7 @@ struct __pyx_obj_8pyliblo3_6_liblo_ServerThread {
 };
 
 
-/* "pyliblo3/_liblo.pyx":94
+/* "pyliblo3/_liblo.pyx":117
  * # forward declarations
  * cdef class _ServerBase
  * cdef class Address             # <<<<<<<<<<<<<<
@@ -1652,7 +1652,7 @@ struct __pyx_obj_8pyliblo3_6_liblo_Address {
 };
 
 
-/* "pyliblo3/_liblo.pyx":853
+/* "pyliblo3/_liblo.pyx":888
  * ################################################################################
  * 
  * cdef class _Blob:             # <<<<<<<<<<<<<<
@@ -1665,7 +1665,7 @@ struct __pyx_obj_8pyliblo3_6_liblo__Blob {
 };
 
 
-/* "pyliblo3/_liblo.pyx":95
+/* "pyliblo3/_liblo.pyx":118
  * cdef class _ServerBase
  * cdef class Address
  * cdef class Message             # <<<<<<<<<<<<<<
@@ -1681,7 +1681,7 @@ struct __pyx_obj_8pyliblo3_6_liblo_Message {
 };
 
 
-/* "pyliblo3/_liblo.pyx":96
+/* "pyliblo3/_liblo.pyx":119
  * cdef class Address
  * cdef class Message
  * cdef class Bundle             # <<<<<<<<<<<<<<
@@ -1696,7 +1696,7 @@ struct __pyx_obj_8pyliblo3_6_liblo_Bundle {
 
 
 
-/* "pyliblo3/_liblo.pyx":340
+/* "pyliblo3/_liblo.pyx":359
  * # common base class for both Server and ServerThread
  * 
  * cdef class _ServerBase:             # <<<<<<<<<<<<<<
@@ -1710,7 +1710,7 @@ struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase {
 static struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *__pyx_vtabptr_8pyliblo3_6_liblo__ServerBase;
 
 
-/* "pyliblo3/_liblo.pyx":882
+/* "pyliblo3/_liblo.pyx":917
  * 
  * 
  * cdef class Message:             # <<<<<<<<<<<<<<
@@ -1725,12 +1725,12 @@ struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message {
 static struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *__pyx_vtabptr_8pyliblo3_6_liblo_Message;
 
 
-/* "pyliblo3/_liblo.pyx":564
+/* "pyliblo3/_liblo.pyx":589
  * 
  * 
  * cdef class Server(_ServerBase):             # <<<<<<<<<<<<<<
  *     """
- *     A server that can receive OSC messages using a simple single-threaded
+ *     A server that can receive OSC messages, blocking
  */
 
 struct __pyx_vtabstruct_8pyliblo3_6_liblo_Server {
@@ -1739,12 +1739,12 @@ struct __pyx_vtabstruct_8pyliblo3_6_liblo_Server {
 static struct __pyx_vtabstruct_8pyliblo3_6_liblo_Server *__pyx_vtabptr_8pyliblo3_6_liblo_Server;
 
 
-/* "pyliblo3/_liblo.pyx":648
+/* "pyliblo3/_liblo.pyx":668
  * 
  * 
  * cdef class ServerThread(_ServerBase):             # <<<<<<<<<<<<<<
  *     """
- *     Unlike :class:`Server`, :class:`!ServerThread` uses its own thread which
+ *     Server running in a thread
  */
 
 struct __pyx_vtabstruct_8pyliblo3_6_liblo_ServerThread {
@@ -1961,10 +1961,6 @@ static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int 
 #define __Pyx_ArgsSlice_FASTCALL(args, start, stop) PyTuple_GetSlice(args, start, stop)
 #endif
 
-/* RaiseArgTupleInvalid.proto */
-static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
-    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
-
 /* RaiseDoubleKeywords.proto */
 static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
 
@@ -1974,52 +1970,48 @@ static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject *const *kwvalues
     PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,
     const char* function_name);
 
-/* PyDictVersioning.proto */
-#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
-#define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
-#define __PYX_GET_DICT_VERSION(dict)  (((PyDictObject*)(dict))->ma_version_tag)
-#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)\
-    (version_var) = __PYX_GET_DICT_VERSION(dict);\
-    (cache_var) = (value);
-#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP) {\
-    static PY_UINT64_T __pyx_dict_version = 0;\
-    static PyObject *__pyx_dict_cached_value = NULL;\
-    if (likely(__PYX_GET_DICT_VERSION(DICT) == __pyx_dict_version)) {\
-        (VAR) = __pyx_dict_cached_value;\
-    } else {\
-        (VAR) = __pyx_dict_cached_value = (LOOKUP);\
-        __pyx_dict_version = __PYX_GET_DICT_VERSION(DICT);\
-    }\
-}
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj);
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj);
-static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version);
+/* RaiseArgTupleInvalid.proto */
+static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
+    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
+
+/* ArgTypeTest.proto */
+#define __Pyx_ArgTypeTest(obj, type, none_allowed, name, exact)\
+    ((likely(__Pyx_IS_TYPE(obj, type) | (none_allowed && (obj == Py_None)))) ? 1 :\
+        __Pyx__ArgTypeTest(obj, type, name, exact))
+static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact);
+
+/* StrEquals.proto */
+#if PY_MAJOR_VERSION >= 3
+#define __Pyx_PyString_Equals __Pyx_PyUnicode_Equals
 #else
-#define __PYX_GET_DICT_VERSION(dict)  (0)
-#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)
-#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP)  (VAR) = (LOOKUP);
+#define __Pyx_PyString_Equals __Pyx_PyBytes_Equals
 #endif
 
-/* GetModuleGlobalName.proto */
-#if CYTHON_USE_DICT_VERSIONS
-#define __Pyx_GetModuleGlobalName(var, name)  do {\
-    static PY_UINT64_T __pyx_dict_version = 0;\
-    static PyObject *__pyx_dict_cached_value = NULL;\
-    (var) = (likely(__pyx_dict_version == __PYX_GET_DICT_VERSION(__pyx_d))) ?\
-        (likely(__pyx_dict_cached_value) ? __Pyx_NewRef(__pyx_dict_cached_value) : __Pyx_GetBuiltinName(name)) :\
-        __Pyx__GetModuleGlobalName(name, &__pyx_dict_version, &__pyx_dict_cached_value);\
-} while(0)
-#define __Pyx_GetModuleGlobalNameUncached(var, name)  do {\
-    PY_UINT64_T __pyx_dict_version;\
-    PyObject *__pyx_dict_cached_value;\
-    (var) = __Pyx__GetModuleGlobalName(name, &__pyx_dict_version, &__pyx_dict_cached_value);\
-} while(0)
-static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_version, PyObject **dict_cached_value);
+/* PyObjectFormatSimple.proto */
+#if CYTHON_COMPILING_IN_PYPY
+    #define __Pyx_PyObject_FormatSimple(s, f) (\
+        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
+        PyObject_Format(s, f))
+#elif PY_MAJOR_VERSION < 3
+    #define __Pyx_PyObject_FormatSimple(s, f) (\
+        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
+        likely(PyString_CheckExact(s)) ? PyUnicode_FromEncodedObject(s, NULL, "strict") :\
+        PyObject_Format(s, f))
+#elif CYTHON_USE_TYPE_SLOTS
+    #define __Pyx_PyObject_FormatSimple(s, f) (\
+        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
+        likely(PyLong_CheckExact(s)) ? PyLong_Type.tp_repr(s) :\
+        likely(PyFloat_CheckExact(s)) ? PyFloat_Type.tp_repr(s) :\
+        PyObject_Format(s, f))
 #else
-#define __Pyx_GetModuleGlobalName(var, name)  (var) = __Pyx__GetModuleGlobalName(name)
-#define __Pyx_GetModuleGlobalNameUncached(var, name)  (var) = __Pyx__GetModuleGlobalName(name)
-static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name);
+    #define __Pyx_PyObject_FormatSimple(s, f) (\
+        likely(PyUnicode_CheckExact(s)) ? (Py_INCREF(s), s) :\
+        PyObject_Format(s, f))
 #endif
+
+/* JoinPyUnicode.proto */
+static PyObject* __Pyx_PyUnicode_Join(PyObject* value_tuple, Py_ssize_t value_count, Py_ssize_t result_ulength,
+                                      Py_UCS4 max_char);
 
 /* PyFunctionFastCall.proto */
 #if CYTHON_FAST_PYCALL
@@ -2072,6 +2064,59 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject
 #define __Pyx_PyObject_FastCall(func, args, nargs)  __Pyx_PyObject_FastCallDict(func, args, (size_t)(nargs), NULL)
 static CYTHON_INLINE PyObject* __Pyx_PyObject_FastCallDict(PyObject *func, PyObject **args, size_t nargs, PyObject *kwargs);
 
+/* PyObjectCallOneArg.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
+
+/* RaiseException.proto */
+static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
+
+/* PyDictVersioning.proto */
+#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
+#define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
+#define __PYX_GET_DICT_VERSION(dict)  (((PyDictObject*)(dict))->ma_version_tag)
+#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)\
+    (version_var) = __PYX_GET_DICT_VERSION(dict);\
+    (cache_var) = (value);
+#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP) {\
+    static PY_UINT64_T __pyx_dict_version = 0;\
+    static PyObject *__pyx_dict_cached_value = NULL;\
+    if (likely(__PYX_GET_DICT_VERSION(DICT) == __pyx_dict_version)) {\
+        (VAR) = __pyx_dict_cached_value;\
+    } else {\
+        (VAR) = __pyx_dict_cached_value = (LOOKUP);\
+        __pyx_dict_version = __PYX_GET_DICT_VERSION(DICT);\
+    }\
+}
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj);
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj);
+static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version);
+#else
+#define __PYX_GET_DICT_VERSION(dict)  (0)
+#define __PYX_UPDATE_DICT_CACHE(dict, value, cache_var, version_var)
+#define __PYX_PY_DICT_LOOKUP_IF_MODIFIED(VAR, DICT, LOOKUP)  (VAR) = (LOOKUP);
+#endif
+
+/* GetModuleGlobalName.proto */
+#if CYTHON_USE_DICT_VERSIONS
+#define __Pyx_GetModuleGlobalName(var, name)  do {\
+    static PY_UINT64_T __pyx_dict_version = 0;\
+    static PyObject *__pyx_dict_cached_value = NULL;\
+    (var) = (likely(__pyx_dict_version == __PYX_GET_DICT_VERSION(__pyx_d))) ?\
+        (likely(__pyx_dict_cached_value) ? __Pyx_NewRef(__pyx_dict_cached_value) : __Pyx_GetBuiltinName(name)) :\
+        __Pyx__GetModuleGlobalName(name, &__pyx_dict_version, &__pyx_dict_cached_value);\
+} while(0)
+#define __Pyx_GetModuleGlobalNameUncached(var, name)  do {\
+    PY_UINT64_T __pyx_dict_version;\
+    PyObject *__pyx_dict_cached_value;\
+    (var) = __Pyx__GetModuleGlobalName(name, &__pyx_dict_version, &__pyx_dict_cached_value);\
+} while(0)
+static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_version, PyObject **dict_cached_value);
+#else
+#define __Pyx_GetModuleGlobalName(var, name)  (var) = __Pyx__GetModuleGlobalName(name)
+#define __Pyx_GetModuleGlobalNameUncached(var, name)  (var) = __Pyx__GetModuleGlobalName(name)
+static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name);
+#endif
+
 /* PyObjectSetAttrStr.proto */
 #if CYTHON_USE_TYPE_SLOTS
 #define __Pyx_PyObject_DelAttrStr(o,n) __Pyx_PyObject_SetAttrStr(o, n, NULL)
@@ -2086,9 +2131,6 @@ static CYTHON_INLINE int __Pyx_IterFinish(void);
 
 /* PyObjectCallNoArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
-
-/* PyObjectCallOneArg.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
 
 /* PyObjectGetMethod.proto */
 static int __Pyx_PyObject_GetMethod(PyObject *obj, PyObject *name, PyObject **method);
@@ -2170,9 +2212,6 @@ static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize
 static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
 static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
                                                      int is_list, int wraparound, int boundscheck);
-
-/* RaiseException.proto */
-static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
 /* pybytes_as_double.proto */
 static double __Pyx_SlowPyString_AsDouble(PyObject *obj);
@@ -2405,23 +2444,6 @@ static PyObject* __Pyx_PyObject_CallMethod1(PyObject* obj, PyObject* method_name
 
 /* append.proto */
 static CYTHON_INLINE int __Pyx_PyObject_Append(PyObject* L, PyObject* x);
-
-/* PyDictContains.proto */
-static CYTHON_INLINE int __Pyx_PyDict_ContainsTF(PyObject* item, PyObject* dict, int eq) {
-    int result = PyDict_Contains(dict, item);
-    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
-}
-
-/* DictGetItem.proto */
-#if PY_MAJOR_VERSION >= 3 && !CYTHON_COMPILING_IN_PYPY
-static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key);
-#define __Pyx_PyObject_Dict_GetItem(obj, name)\
-    (likely(PyDict_CheckExact(obj)) ?\
-     __Pyx_PyDict_GetItem(obj, name) : PyObject_GetItem(obj, name))
-#else
-#define __Pyx_PyDict_GetItem(d, key) PyObject_GetItem(d, key)
-#define __Pyx_PyObject_Dict_GetItem(obj, name)  PyObject_GetItem(obj, name)
-#endif
 
 /* IncludeStructmemberH.proto */
 #include <structmember.h>
@@ -3015,11 +3037,11 @@ int __pyx_module_is_main_pyliblo3___liblo = 0;
 /* Implementation of "pyliblo3._liblo" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_property;
+static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_IOError;
 static PyObject *__pyx_builtin_chr;
 static PyObject *__pyx_builtin_RuntimeError;
 static PyObject *__pyx_builtin_TypeError;
-static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_OverflowError;
 /* #### Code section: string_decls ### */
 static const char __pyx_k_b[] = "b";
@@ -3041,7 +3063,7 @@ static const char __pyx_k_TCP[] = "TCP";
 static const char __pyx_k_UDP[] = "UDP";
 static const char __pyx_k__11[] = ".";
 static const char __pyx_k__12[] = "*";
-static const char __pyx_k__86[] = "?";
+static const char __pyx_k__88[] = "?";
 static const char __pyx_k_add[] = "add";
 static const char __pyx_k_arg[] = "arg";
 static const char __pyx_k_arr[] = "arr";
@@ -3080,6 +3102,7 @@ static const char __pyx_k_spec[] = "spec";
 static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_time[] = "time";
+static const char __pyx_k_Proto[] = "Proto ";
 static const char __pyx_k_addr2[] = "addr2";
 static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_items[] = "items";
@@ -3090,7 +3113,7 @@ static const char __pyx_k_state[] = "state";
 static const char __pyx_k_super[] = "super";
 static const char __pyx_k_types[] = "types";
 static const char __pyx_k_where[] = "where";
-static const char __pyx_k_0_10_1[] = "0.10.1";
+static const char __pyx_k_0_16_1[] = "0.16.1";
 static const char __pyx_k_Bundle[] = "Bundle";
 static const char __pyx_k_Server[] = "Server";
 static const char __pyx_k_append[] = "append";
@@ -3193,6 +3216,7 @@ static const char __pyx_k_Address_get_url[] = "Address.get_url";
 static const char __pyx_k_ServerBase_send[] = "_ServerBase.send";
 static const char __pyx_k_address_error_s[] = "address error: %s";
 static const char __pyx_k_invalid_timetag[] = "invalid timetag";
+static const char __pyx_k_protostr_to_int[] = "_protostr_to_int";
 static const char __pyx_k_pyliblo3__liblo[] = "pyliblo3._liblo";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
@@ -3245,10 +3269,11 @@ static const char __pyx_k_ServerThread___reduce_cython[] = "ServerThread.__reduc
 static const char __pyx_k_path_must_be_a_string_or_None[] = "path must be a string or None";
 static const char __pyx_k_ServerBase_add_bundle_handlers[] = "_ServerBase.add_bundle_handlers";
 static const char __pyx_k_ServerThread___setstate_cython[] = "ServerThread.__setstate_cython__";
+static const char __pyx_k_not_understood_expected_one_of[] = " not understood, expected one of 'UDP', 'TCP' or 'UNIX'";
 static const char __pyx_k_register_methods_locals_lambda[] = "register_methods.<locals>.<lambda>";
-static const char __pyx_k_A_decorator_that_serves_as_a_mo[] = "\n    A decorator that serves as a more convenient alternative to\n    :meth:`Server.add_method()`.\n    ";
+static const char __pyx_k_A_decorator_that_serves_as_a_mo[] = "\n    A decorator that serves as a more convenient alternative to [Server.add_method](#add_method).\n\n    Args:\n        path (str | None): the message path to be handled by the registered method.\n            `None` may be used as a wildcard to match any OSC message.\n        types (str): the argument types to be handled by the registered method.\n            `None` may be used as a wildcard to match any OSC message.\n        user_data: An arbitrary object that will be passed on to the decorated\n            method every time a matching message is received.\n\n    ";
 static const char __pyx_k_Raised_when_creating_a_liblo_OS[] = "\n    Raised when creating a liblo OSC server fails.\n    ";
-static const char __pyx_k_Raised_when_trying_to_create_an[] = "\n    Raised when trying to create an invalid :class:`Address` object.\n    ";
+static const char __pyx_k_Raised_when_trying_to_create_an[] = "\n    Raised when trying to create an invalid `Address` object.\n    ";
 static const char __pyx_k_Server_method_called_after_free[] = "Server method called after free()";
 static const char __pyx_k_Weak_reference_to_a_function_in[] = "\n    Weak reference to a function, including support for bound methods.\n    ";
 static const char __pyx_k_Incompatible_checksums_0x_x_vs_0[] = "Incompatible checksums (0x%x vs (0xb933e34, 0x7cc8780, 0x302b03a) = (func, has_varargs, numargs, user_data))";
@@ -3261,6 +3286,7 @@ static const char __pyx_k_self__server_self__server_thread[] = "self._server,sel
 static const char __pyx_k_typespec_must_be_a_string_or_Non[] = "typespec must be a string or None";
 static const char __pyx_k_unsupported_message_argument_typ[] = "unsupported message argument type";
 /* #### Code section: decls ### */
+static PyObject *__pyx_pf_8pyliblo3_6_liblo__protostr_to_int(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_proto); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_f); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_4__call__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_args, PyObject *__pyx_v_kwargs); /* proto */
@@ -3268,13 +3294,13 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6struct___init__(CYTHON_UNUSED PyObj
 static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pyliblo3_6_liblo_Callback *__pyx_v_self, PyObject *__pyx_v_func, PyObject *__pyx_v_user_data); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_8Callback_2__reduce_cython__(struct __pyx_obj_8pyliblo3_6_liblo_Callback *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_8Callback_4__setstate_cython__(struct __pyx_obj_8pyliblo3_6_liblo_Callback *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_8pyliblo3_6_liblo_time(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_8pyliblo3_6_liblo_2send(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_target, PyObject *__pyx_v_args); /* proto */
+static PyObject *__pyx_pf_8pyliblo3_6_liblo_2time(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_8pyliblo3_6_liblo_4send(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_target, PyObject *__pyx_v_args); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11ServerError___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_num, PyObject *__pyx_v_msg, PyObject *__pyx_v_where); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11ServerError_2__str__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_path, PyObject *__pyx_v_types, PyObject *__pyx_v_user_data); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method_2__call__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_f); /* proto */
-static int __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self, PyObject *__pyx_v_kwargs); /* proto */
+static int __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self, PyObject *__pyx_v_reg_methods); /* proto */
 static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_x); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self, PyObject *__pyx_v_obj); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4get_url(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self); /* proto */
@@ -3290,13 +3316,13 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4port___get__(struct _
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_8protocol___get__(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_20__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_22__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_kwargs); /* proto */
+static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_reg_methods); /* proto */
 static void __pyx_pf_8pyliblo3_6_liblo_6Server_2__dealloc__(struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_4free(struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self, PyObject *__pyx_v_timeout); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_8__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_10__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_kwargs); /* proto */
+static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_reg_methods); /* proto */
 static void __pyx_pf_8pyliblo3_6_liblo_12ServerThread_2__dealloc__(struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_6start(struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *__pyx_v_self); /* proto */
@@ -3331,7 +3357,7 @@ static void __pyx_pf_8pyliblo3_6_liblo_6Bundle_2__dealloc__(struct __pyx_obj_8py
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pyliblo3_6_liblo_Bundle *__pyx_v_self, PyObject *__pyx_v_args); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_8pyliblo3_6_liblo_Bundle *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_8pyliblo3_6_liblo_Bundle *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_8pyliblo3_6_liblo_4__pyx_unpickle_Callback(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_8pyliblo3_6_liblo_6__pyx_unpickle_Callback(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_8pyliblo3_6_liblo_Callback(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_8pyliblo3_6_liblo__ServerBase(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_8pyliblo3_6_liblo_Address(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -3483,7 +3509,7 @@ typedef struct {
   PyTypeObject *__pyx_ptype_8pyliblo3_6_liblo_Server;
   PyTypeObject *__pyx_ptype_8pyliblo3_6_liblo_ServerThread;
   PyTypeObject *__pyx_ptype_8pyliblo3_6_liblo__Blob;
-  PyObject *__pyx_kp_s_0_10_1;
+  PyObject *__pyx_kp_s_0_16_1;
   PyObject *__pyx_kp_s_A_decorator_that_serves_as_a_mo;
   PyObject *__pyx_n_s_Address;
   PyObject *__pyx_n_s_AddressError;
@@ -3513,6 +3539,7 @@ typedef struct {
   PyObject *__pyx_n_s_Message_add;
   PyObject *__pyx_n_s_OverflowError;
   PyObject *__pyx_n_s_PickleError;
+  PyObject *__pyx_kp_u_Proto;
   PyObject *__pyx_kp_s_Raised_when_creating_a_liblo_OS;
   PyObject *__pyx_kp_s_Raised_when_trying_to_create_an;
   PyObject *__pyx_n_s_RuntimeError;
@@ -3551,7 +3578,7 @@ typedef struct {
   PyObject *__pyx_kp_s_Weak_reference_to_a_function_in;
   PyObject *__pyx_kp_u__11;
   PyObject *__pyx_n_s__12;
-  PyObject *__pyx_n_s__86;
+  PyObject *__pyx_n_s__88;
   PyObject *__pyx_n_s_add;
   PyObject *__pyx_n_s_add_bundle_handlers;
   PyObject *__pyx_n_s_add_method;
@@ -3635,6 +3662,7 @@ typedef struct {
   PyObject *__pyx_n_s_name;
   PyObject *__pyx_n_s_name_2;
   PyObject *__pyx_n_s_new;
+  PyObject *__pyx_kp_u_not_understood_expected_one_of;
   PyObject *__pyx_n_s_num;
   PyObject *__pyx_n_s_obj;
   PyObject *__pyx_n_s_p;
@@ -3645,6 +3673,7 @@ typedef struct {
   PyObject *__pyx_n_s_prepare;
   PyObject *__pyx_n_s_property;
   PyObject *__pyx_n_s_proto;
+  PyObject *__pyx_n_s_protostr_to_int;
   PyObject *__pyx_n_s_pyliblo3__liblo;
   PyObject *__pyx_kp_s_pyliblo3__liblo_pyx;
   PyObject *__pyx_n_s_pyx_PickleError;
@@ -3737,7 +3766,7 @@ typedef struct {
   PyObject *__pyx_tuple__9;
   PyObject *__pyx_tuple__10;
   PyObject *__pyx_tuple__13;
-  PyObject *__pyx_tuple__14;
+  PyObject *__pyx_tuple__15;
   PyObject *__pyx_tuple__16;
   PyObject *__pyx_tuple__18;
   PyObject *__pyx_tuple__20;
@@ -3751,16 +3780,17 @@ typedef struct {
   PyObject *__pyx_tuple__36;
   PyObject *__pyx_tuple__38;
   PyObject *__pyx_tuple__40;
-  PyObject *__pyx_tuple__45;
+  PyObject *__pyx_tuple__42;
   PyObject *__pyx_tuple__47;
   PyObject *__pyx_tuple__49;
   PyObject *__pyx_tuple__51;
-  PyObject *__pyx_tuple__56;
-  PyObject *__pyx_tuple__65;
-  PyObject *__pyx_tuple__76;
-  PyObject *__pyx_tuple__80;
-  PyObject *__pyx_tuple__84;
-  PyObject *__pyx_codeobj__15;
+  PyObject *__pyx_tuple__53;
+  PyObject *__pyx_tuple__58;
+  PyObject *__pyx_tuple__67;
+  PyObject *__pyx_tuple__78;
+  PyObject *__pyx_tuple__82;
+  PyObject *__pyx_tuple__86;
+  PyObject *__pyx_codeobj__14;
   PyObject *__pyx_codeobj__17;
   PyObject *__pyx_codeobj__19;
   PyObject *__pyx_codeobj__21;
@@ -3774,26 +3804,25 @@ typedef struct {
   PyObject *__pyx_codeobj__37;
   PyObject *__pyx_codeobj__39;
   PyObject *__pyx_codeobj__41;
-  PyObject *__pyx_codeobj__42;
   PyObject *__pyx_codeobj__43;
   PyObject *__pyx_codeobj__44;
+  PyObject *__pyx_codeobj__45;
   PyObject *__pyx_codeobj__46;
   PyObject *__pyx_codeobj__48;
   PyObject *__pyx_codeobj__50;
   PyObject *__pyx_codeobj__52;
-  PyObject *__pyx_codeobj__53;
   PyObject *__pyx_codeobj__54;
   PyObject *__pyx_codeobj__55;
+  PyObject *__pyx_codeobj__56;
   PyObject *__pyx_codeobj__57;
-  PyObject *__pyx_codeobj__58;
   PyObject *__pyx_codeobj__59;
   PyObject *__pyx_codeobj__60;
   PyObject *__pyx_codeobj__61;
   PyObject *__pyx_codeobj__62;
   PyObject *__pyx_codeobj__63;
   PyObject *__pyx_codeobj__64;
+  PyObject *__pyx_codeobj__65;
   PyObject *__pyx_codeobj__66;
-  PyObject *__pyx_codeobj__67;
   PyObject *__pyx_codeobj__68;
   PyObject *__pyx_codeobj__69;
   PyObject *__pyx_codeobj__70;
@@ -3802,13 +3831,15 @@ typedef struct {
   PyObject *__pyx_codeobj__73;
   PyObject *__pyx_codeobj__74;
   PyObject *__pyx_codeobj__75;
+  PyObject *__pyx_codeobj__76;
   PyObject *__pyx_codeobj__77;
-  PyObject *__pyx_codeobj__78;
   PyObject *__pyx_codeobj__79;
+  PyObject *__pyx_codeobj__80;
   PyObject *__pyx_codeobj__81;
-  PyObject *__pyx_codeobj__82;
   PyObject *__pyx_codeobj__83;
+  PyObject *__pyx_codeobj__84;
   PyObject *__pyx_codeobj__85;
+  PyObject *__pyx_codeobj__87;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -3870,7 +3901,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_type_8pyliblo3_6_liblo_ServerThread);
   Py_CLEAR(clear_module_state->__pyx_ptype_8pyliblo3_6_liblo__Blob);
   Py_CLEAR(clear_module_state->__pyx_type_8pyliblo3_6_liblo__Blob);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_0_10_1);
+  Py_CLEAR(clear_module_state->__pyx_kp_s_0_16_1);
   Py_CLEAR(clear_module_state->__pyx_kp_s_A_decorator_that_serves_as_a_mo);
   Py_CLEAR(clear_module_state->__pyx_n_s_Address);
   Py_CLEAR(clear_module_state->__pyx_n_s_AddressError);
@@ -3900,6 +3931,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_Message_add);
   Py_CLEAR(clear_module_state->__pyx_n_s_OverflowError);
   Py_CLEAR(clear_module_state->__pyx_n_s_PickleError);
+  Py_CLEAR(clear_module_state->__pyx_kp_u_Proto);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Raised_when_creating_a_liblo_OS);
   Py_CLEAR(clear_module_state->__pyx_kp_s_Raised_when_trying_to_create_an);
   Py_CLEAR(clear_module_state->__pyx_n_s_RuntimeError);
@@ -3938,7 +3970,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_kp_s_Weak_reference_to_a_function_in);
   Py_CLEAR(clear_module_state->__pyx_kp_u__11);
   Py_CLEAR(clear_module_state->__pyx_n_s__12);
-  Py_CLEAR(clear_module_state->__pyx_n_s__86);
+  Py_CLEAR(clear_module_state->__pyx_n_s__88);
   Py_CLEAR(clear_module_state->__pyx_n_s_add);
   Py_CLEAR(clear_module_state->__pyx_n_s_add_bundle_handlers);
   Py_CLEAR(clear_module_state->__pyx_n_s_add_method);
@@ -4022,6 +4054,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_name);
   Py_CLEAR(clear_module_state->__pyx_n_s_name_2);
   Py_CLEAR(clear_module_state->__pyx_n_s_new);
+  Py_CLEAR(clear_module_state->__pyx_kp_u_not_understood_expected_one_of);
   Py_CLEAR(clear_module_state->__pyx_n_s_num);
   Py_CLEAR(clear_module_state->__pyx_n_s_obj);
   Py_CLEAR(clear_module_state->__pyx_n_s_p);
@@ -4032,6 +4065,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_prepare);
   Py_CLEAR(clear_module_state->__pyx_n_s_property);
   Py_CLEAR(clear_module_state->__pyx_n_s_proto);
+  Py_CLEAR(clear_module_state->__pyx_n_s_protostr_to_int);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyliblo3__liblo);
   Py_CLEAR(clear_module_state->__pyx_kp_s_pyliblo3__liblo_pyx);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_PickleError);
@@ -4124,7 +4158,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__9);
   Py_CLEAR(clear_module_state->__pyx_tuple__10);
   Py_CLEAR(clear_module_state->__pyx_tuple__13);
-  Py_CLEAR(clear_module_state->__pyx_tuple__14);
+  Py_CLEAR(clear_module_state->__pyx_tuple__15);
   Py_CLEAR(clear_module_state->__pyx_tuple__16);
   Py_CLEAR(clear_module_state->__pyx_tuple__18);
   Py_CLEAR(clear_module_state->__pyx_tuple__20);
@@ -4138,16 +4172,17 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__36);
   Py_CLEAR(clear_module_state->__pyx_tuple__38);
   Py_CLEAR(clear_module_state->__pyx_tuple__40);
-  Py_CLEAR(clear_module_state->__pyx_tuple__45);
+  Py_CLEAR(clear_module_state->__pyx_tuple__42);
   Py_CLEAR(clear_module_state->__pyx_tuple__47);
   Py_CLEAR(clear_module_state->__pyx_tuple__49);
   Py_CLEAR(clear_module_state->__pyx_tuple__51);
-  Py_CLEAR(clear_module_state->__pyx_tuple__56);
-  Py_CLEAR(clear_module_state->__pyx_tuple__65);
-  Py_CLEAR(clear_module_state->__pyx_tuple__76);
-  Py_CLEAR(clear_module_state->__pyx_tuple__80);
-  Py_CLEAR(clear_module_state->__pyx_tuple__84);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__15);
+  Py_CLEAR(clear_module_state->__pyx_tuple__53);
+  Py_CLEAR(clear_module_state->__pyx_tuple__58);
+  Py_CLEAR(clear_module_state->__pyx_tuple__67);
+  Py_CLEAR(clear_module_state->__pyx_tuple__78);
+  Py_CLEAR(clear_module_state->__pyx_tuple__82);
+  Py_CLEAR(clear_module_state->__pyx_tuple__86);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__14);
   Py_CLEAR(clear_module_state->__pyx_codeobj__17);
   Py_CLEAR(clear_module_state->__pyx_codeobj__19);
   Py_CLEAR(clear_module_state->__pyx_codeobj__21);
@@ -4161,26 +4196,25 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_codeobj__37);
   Py_CLEAR(clear_module_state->__pyx_codeobj__39);
   Py_CLEAR(clear_module_state->__pyx_codeobj__41);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__42);
   Py_CLEAR(clear_module_state->__pyx_codeobj__43);
   Py_CLEAR(clear_module_state->__pyx_codeobj__44);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__45);
   Py_CLEAR(clear_module_state->__pyx_codeobj__46);
   Py_CLEAR(clear_module_state->__pyx_codeobj__48);
   Py_CLEAR(clear_module_state->__pyx_codeobj__50);
   Py_CLEAR(clear_module_state->__pyx_codeobj__52);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__53);
   Py_CLEAR(clear_module_state->__pyx_codeobj__54);
   Py_CLEAR(clear_module_state->__pyx_codeobj__55);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__56);
   Py_CLEAR(clear_module_state->__pyx_codeobj__57);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__58);
   Py_CLEAR(clear_module_state->__pyx_codeobj__59);
   Py_CLEAR(clear_module_state->__pyx_codeobj__60);
   Py_CLEAR(clear_module_state->__pyx_codeobj__61);
   Py_CLEAR(clear_module_state->__pyx_codeobj__62);
   Py_CLEAR(clear_module_state->__pyx_codeobj__63);
   Py_CLEAR(clear_module_state->__pyx_codeobj__64);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__65);
   Py_CLEAR(clear_module_state->__pyx_codeobj__66);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__67);
   Py_CLEAR(clear_module_state->__pyx_codeobj__68);
   Py_CLEAR(clear_module_state->__pyx_codeobj__69);
   Py_CLEAR(clear_module_state->__pyx_codeobj__70);
@@ -4189,13 +4223,15 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_codeobj__73);
   Py_CLEAR(clear_module_state->__pyx_codeobj__74);
   Py_CLEAR(clear_module_state->__pyx_codeobj__75);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__76);
   Py_CLEAR(clear_module_state->__pyx_codeobj__77);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__78);
   Py_CLEAR(clear_module_state->__pyx_codeobj__79);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__80);
   Py_CLEAR(clear_module_state->__pyx_codeobj__81);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__82);
   Py_CLEAR(clear_module_state->__pyx_codeobj__83);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__84);
   Py_CLEAR(clear_module_state->__pyx_codeobj__85);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__87);
   return 0;
 }
 #endif
@@ -4235,7 +4271,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_type_8pyliblo3_6_liblo_ServerThread);
   Py_VISIT(traverse_module_state->__pyx_ptype_8pyliblo3_6_liblo__Blob);
   Py_VISIT(traverse_module_state->__pyx_type_8pyliblo3_6_liblo__Blob);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_0_10_1);
+  Py_VISIT(traverse_module_state->__pyx_kp_s_0_16_1);
   Py_VISIT(traverse_module_state->__pyx_kp_s_A_decorator_that_serves_as_a_mo);
   Py_VISIT(traverse_module_state->__pyx_n_s_Address);
   Py_VISIT(traverse_module_state->__pyx_n_s_AddressError);
@@ -4265,6 +4301,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_Message_add);
   Py_VISIT(traverse_module_state->__pyx_n_s_OverflowError);
   Py_VISIT(traverse_module_state->__pyx_n_s_PickleError);
+  Py_VISIT(traverse_module_state->__pyx_kp_u_Proto);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Raised_when_creating_a_liblo_OS);
   Py_VISIT(traverse_module_state->__pyx_kp_s_Raised_when_trying_to_create_an);
   Py_VISIT(traverse_module_state->__pyx_n_s_RuntimeError);
@@ -4303,7 +4340,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_kp_s_Weak_reference_to_a_function_in);
   Py_VISIT(traverse_module_state->__pyx_kp_u__11);
   Py_VISIT(traverse_module_state->__pyx_n_s__12);
-  Py_VISIT(traverse_module_state->__pyx_n_s__86);
+  Py_VISIT(traverse_module_state->__pyx_n_s__88);
   Py_VISIT(traverse_module_state->__pyx_n_s_add);
   Py_VISIT(traverse_module_state->__pyx_n_s_add_bundle_handlers);
   Py_VISIT(traverse_module_state->__pyx_n_s_add_method);
@@ -4387,6 +4424,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_name);
   Py_VISIT(traverse_module_state->__pyx_n_s_name_2);
   Py_VISIT(traverse_module_state->__pyx_n_s_new);
+  Py_VISIT(traverse_module_state->__pyx_kp_u_not_understood_expected_one_of);
   Py_VISIT(traverse_module_state->__pyx_n_s_num);
   Py_VISIT(traverse_module_state->__pyx_n_s_obj);
   Py_VISIT(traverse_module_state->__pyx_n_s_p);
@@ -4397,6 +4435,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_prepare);
   Py_VISIT(traverse_module_state->__pyx_n_s_property);
   Py_VISIT(traverse_module_state->__pyx_n_s_proto);
+  Py_VISIT(traverse_module_state->__pyx_n_s_protostr_to_int);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyliblo3__liblo);
   Py_VISIT(traverse_module_state->__pyx_kp_s_pyliblo3__liblo_pyx);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_PickleError);
@@ -4489,7 +4528,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__9);
   Py_VISIT(traverse_module_state->__pyx_tuple__10);
   Py_VISIT(traverse_module_state->__pyx_tuple__13);
-  Py_VISIT(traverse_module_state->__pyx_tuple__14);
+  Py_VISIT(traverse_module_state->__pyx_tuple__15);
   Py_VISIT(traverse_module_state->__pyx_tuple__16);
   Py_VISIT(traverse_module_state->__pyx_tuple__18);
   Py_VISIT(traverse_module_state->__pyx_tuple__20);
@@ -4503,16 +4542,17 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__36);
   Py_VISIT(traverse_module_state->__pyx_tuple__38);
   Py_VISIT(traverse_module_state->__pyx_tuple__40);
-  Py_VISIT(traverse_module_state->__pyx_tuple__45);
+  Py_VISIT(traverse_module_state->__pyx_tuple__42);
   Py_VISIT(traverse_module_state->__pyx_tuple__47);
   Py_VISIT(traverse_module_state->__pyx_tuple__49);
   Py_VISIT(traverse_module_state->__pyx_tuple__51);
-  Py_VISIT(traverse_module_state->__pyx_tuple__56);
-  Py_VISIT(traverse_module_state->__pyx_tuple__65);
-  Py_VISIT(traverse_module_state->__pyx_tuple__76);
-  Py_VISIT(traverse_module_state->__pyx_tuple__80);
-  Py_VISIT(traverse_module_state->__pyx_tuple__84);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__15);
+  Py_VISIT(traverse_module_state->__pyx_tuple__53);
+  Py_VISIT(traverse_module_state->__pyx_tuple__58);
+  Py_VISIT(traverse_module_state->__pyx_tuple__67);
+  Py_VISIT(traverse_module_state->__pyx_tuple__78);
+  Py_VISIT(traverse_module_state->__pyx_tuple__82);
+  Py_VISIT(traverse_module_state->__pyx_tuple__86);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__14);
   Py_VISIT(traverse_module_state->__pyx_codeobj__17);
   Py_VISIT(traverse_module_state->__pyx_codeobj__19);
   Py_VISIT(traverse_module_state->__pyx_codeobj__21);
@@ -4526,26 +4566,25 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_codeobj__37);
   Py_VISIT(traverse_module_state->__pyx_codeobj__39);
   Py_VISIT(traverse_module_state->__pyx_codeobj__41);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__42);
   Py_VISIT(traverse_module_state->__pyx_codeobj__43);
   Py_VISIT(traverse_module_state->__pyx_codeobj__44);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__45);
   Py_VISIT(traverse_module_state->__pyx_codeobj__46);
   Py_VISIT(traverse_module_state->__pyx_codeobj__48);
   Py_VISIT(traverse_module_state->__pyx_codeobj__50);
   Py_VISIT(traverse_module_state->__pyx_codeobj__52);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__53);
   Py_VISIT(traverse_module_state->__pyx_codeobj__54);
   Py_VISIT(traverse_module_state->__pyx_codeobj__55);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__56);
   Py_VISIT(traverse_module_state->__pyx_codeobj__57);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__58);
   Py_VISIT(traverse_module_state->__pyx_codeobj__59);
   Py_VISIT(traverse_module_state->__pyx_codeobj__60);
   Py_VISIT(traverse_module_state->__pyx_codeobj__61);
   Py_VISIT(traverse_module_state->__pyx_codeobj__62);
   Py_VISIT(traverse_module_state->__pyx_codeobj__63);
   Py_VISIT(traverse_module_state->__pyx_codeobj__64);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__65);
   Py_VISIT(traverse_module_state->__pyx_codeobj__66);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__67);
   Py_VISIT(traverse_module_state->__pyx_codeobj__68);
   Py_VISIT(traverse_module_state->__pyx_codeobj__69);
   Py_VISIT(traverse_module_state->__pyx_codeobj__70);
@@ -4554,13 +4593,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_codeobj__73);
   Py_VISIT(traverse_module_state->__pyx_codeobj__74);
   Py_VISIT(traverse_module_state->__pyx_codeobj__75);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__76);
   Py_VISIT(traverse_module_state->__pyx_codeobj__77);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__78);
   Py_VISIT(traverse_module_state->__pyx_codeobj__79);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__80);
   Py_VISIT(traverse_module_state->__pyx_codeobj__81);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__82);
   Py_VISIT(traverse_module_state->__pyx_codeobj__83);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__84);
   Py_VISIT(traverse_module_state->__pyx_codeobj__85);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__87);
   return 0;
 }
 #endif
@@ -4704,7 +4745,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_ptype_8pyliblo3_6_liblo_Server __pyx_mstate_global->__pyx_ptype_8pyliblo3_6_liblo_Server
 #define __pyx_ptype_8pyliblo3_6_liblo_ServerThread __pyx_mstate_global->__pyx_ptype_8pyliblo3_6_liblo_ServerThread
 #define __pyx_ptype_8pyliblo3_6_liblo__Blob __pyx_mstate_global->__pyx_ptype_8pyliblo3_6_liblo__Blob
-#define __pyx_kp_s_0_10_1 __pyx_mstate_global->__pyx_kp_s_0_10_1
+#define __pyx_kp_s_0_16_1 __pyx_mstate_global->__pyx_kp_s_0_16_1
 #define __pyx_kp_s_A_decorator_that_serves_as_a_mo __pyx_mstate_global->__pyx_kp_s_A_decorator_that_serves_as_a_mo
 #define __pyx_n_s_Address __pyx_mstate_global->__pyx_n_s_Address
 #define __pyx_n_s_AddressError __pyx_mstate_global->__pyx_n_s_AddressError
@@ -4734,6 +4775,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_Message_add __pyx_mstate_global->__pyx_n_s_Message_add
 #define __pyx_n_s_OverflowError __pyx_mstate_global->__pyx_n_s_OverflowError
 #define __pyx_n_s_PickleError __pyx_mstate_global->__pyx_n_s_PickleError
+#define __pyx_kp_u_Proto __pyx_mstate_global->__pyx_kp_u_Proto
 #define __pyx_kp_s_Raised_when_creating_a_liblo_OS __pyx_mstate_global->__pyx_kp_s_Raised_when_creating_a_liblo_OS
 #define __pyx_kp_s_Raised_when_trying_to_create_an __pyx_mstate_global->__pyx_kp_s_Raised_when_trying_to_create_an
 #define __pyx_n_s_RuntimeError __pyx_mstate_global->__pyx_n_s_RuntimeError
@@ -4772,7 +4814,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_kp_s_Weak_reference_to_a_function_in __pyx_mstate_global->__pyx_kp_s_Weak_reference_to_a_function_in
 #define __pyx_kp_u__11 __pyx_mstate_global->__pyx_kp_u__11
 #define __pyx_n_s__12 __pyx_mstate_global->__pyx_n_s__12
-#define __pyx_n_s__86 __pyx_mstate_global->__pyx_n_s__86
+#define __pyx_n_s__88 __pyx_mstate_global->__pyx_n_s__88
 #define __pyx_n_s_add __pyx_mstate_global->__pyx_n_s_add
 #define __pyx_n_s_add_bundle_handlers __pyx_mstate_global->__pyx_n_s_add_bundle_handlers
 #define __pyx_n_s_add_method __pyx_mstate_global->__pyx_n_s_add_method
@@ -4856,6 +4898,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_name __pyx_mstate_global->__pyx_n_s_name
 #define __pyx_n_s_name_2 __pyx_mstate_global->__pyx_n_s_name_2
 #define __pyx_n_s_new __pyx_mstate_global->__pyx_n_s_new
+#define __pyx_kp_u_not_understood_expected_one_of __pyx_mstate_global->__pyx_kp_u_not_understood_expected_one_of
 #define __pyx_n_s_num __pyx_mstate_global->__pyx_n_s_num
 #define __pyx_n_s_obj __pyx_mstate_global->__pyx_n_s_obj
 #define __pyx_n_s_p __pyx_mstate_global->__pyx_n_s_p
@@ -4866,6 +4909,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_prepare __pyx_mstate_global->__pyx_n_s_prepare
 #define __pyx_n_s_property __pyx_mstate_global->__pyx_n_s_property
 #define __pyx_n_s_proto __pyx_mstate_global->__pyx_n_s_proto
+#define __pyx_n_s_protostr_to_int __pyx_mstate_global->__pyx_n_s_protostr_to_int
 #define __pyx_n_s_pyliblo3__liblo __pyx_mstate_global->__pyx_n_s_pyliblo3__liblo
 #define __pyx_kp_s_pyliblo3__liblo_pyx __pyx_mstate_global->__pyx_kp_s_pyliblo3__liblo_pyx
 #define __pyx_n_s_pyx_PickleError __pyx_mstate_global->__pyx_n_s_pyx_PickleError
@@ -4958,7 +5002,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__9 __pyx_mstate_global->__pyx_tuple__9
 #define __pyx_tuple__10 __pyx_mstate_global->__pyx_tuple__10
 #define __pyx_tuple__13 __pyx_mstate_global->__pyx_tuple__13
-#define __pyx_tuple__14 __pyx_mstate_global->__pyx_tuple__14
+#define __pyx_tuple__15 __pyx_mstate_global->__pyx_tuple__15
 #define __pyx_tuple__16 __pyx_mstate_global->__pyx_tuple__16
 #define __pyx_tuple__18 __pyx_mstate_global->__pyx_tuple__18
 #define __pyx_tuple__20 __pyx_mstate_global->__pyx_tuple__20
@@ -4972,16 +5016,17 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__36 __pyx_mstate_global->__pyx_tuple__36
 #define __pyx_tuple__38 __pyx_mstate_global->__pyx_tuple__38
 #define __pyx_tuple__40 __pyx_mstate_global->__pyx_tuple__40
-#define __pyx_tuple__45 __pyx_mstate_global->__pyx_tuple__45
+#define __pyx_tuple__42 __pyx_mstate_global->__pyx_tuple__42
 #define __pyx_tuple__47 __pyx_mstate_global->__pyx_tuple__47
 #define __pyx_tuple__49 __pyx_mstate_global->__pyx_tuple__49
 #define __pyx_tuple__51 __pyx_mstate_global->__pyx_tuple__51
-#define __pyx_tuple__56 __pyx_mstate_global->__pyx_tuple__56
-#define __pyx_tuple__65 __pyx_mstate_global->__pyx_tuple__65
-#define __pyx_tuple__76 __pyx_mstate_global->__pyx_tuple__76
-#define __pyx_tuple__80 __pyx_mstate_global->__pyx_tuple__80
-#define __pyx_tuple__84 __pyx_mstate_global->__pyx_tuple__84
-#define __pyx_codeobj__15 __pyx_mstate_global->__pyx_codeobj__15
+#define __pyx_tuple__53 __pyx_mstate_global->__pyx_tuple__53
+#define __pyx_tuple__58 __pyx_mstate_global->__pyx_tuple__58
+#define __pyx_tuple__67 __pyx_mstate_global->__pyx_tuple__67
+#define __pyx_tuple__78 __pyx_mstate_global->__pyx_tuple__78
+#define __pyx_tuple__82 __pyx_mstate_global->__pyx_tuple__82
+#define __pyx_tuple__86 __pyx_mstate_global->__pyx_tuple__86
+#define __pyx_codeobj__14 __pyx_mstate_global->__pyx_codeobj__14
 #define __pyx_codeobj__17 __pyx_mstate_global->__pyx_codeobj__17
 #define __pyx_codeobj__19 __pyx_mstate_global->__pyx_codeobj__19
 #define __pyx_codeobj__21 __pyx_mstate_global->__pyx_codeobj__21
@@ -4995,26 +5040,25 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_codeobj__37 __pyx_mstate_global->__pyx_codeobj__37
 #define __pyx_codeobj__39 __pyx_mstate_global->__pyx_codeobj__39
 #define __pyx_codeobj__41 __pyx_mstate_global->__pyx_codeobj__41
-#define __pyx_codeobj__42 __pyx_mstate_global->__pyx_codeobj__42
 #define __pyx_codeobj__43 __pyx_mstate_global->__pyx_codeobj__43
 #define __pyx_codeobj__44 __pyx_mstate_global->__pyx_codeobj__44
+#define __pyx_codeobj__45 __pyx_mstate_global->__pyx_codeobj__45
 #define __pyx_codeobj__46 __pyx_mstate_global->__pyx_codeobj__46
 #define __pyx_codeobj__48 __pyx_mstate_global->__pyx_codeobj__48
 #define __pyx_codeobj__50 __pyx_mstate_global->__pyx_codeobj__50
 #define __pyx_codeobj__52 __pyx_mstate_global->__pyx_codeobj__52
-#define __pyx_codeobj__53 __pyx_mstate_global->__pyx_codeobj__53
 #define __pyx_codeobj__54 __pyx_mstate_global->__pyx_codeobj__54
 #define __pyx_codeobj__55 __pyx_mstate_global->__pyx_codeobj__55
+#define __pyx_codeobj__56 __pyx_mstate_global->__pyx_codeobj__56
 #define __pyx_codeobj__57 __pyx_mstate_global->__pyx_codeobj__57
-#define __pyx_codeobj__58 __pyx_mstate_global->__pyx_codeobj__58
 #define __pyx_codeobj__59 __pyx_mstate_global->__pyx_codeobj__59
 #define __pyx_codeobj__60 __pyx_mstate_global->__pyx_codeobj__60
 #define __pyx_codeobj__61 __pyx_mstate_global->__pyx_codeobj__61
 #define __pyx_codeobj__62 __pyx_mstate_global->__pyx_codeobj__62
 #define __pyx_codeobj__63 __pyx_mstate_global->__pyx_codeobj__63
 #define __pyx_codeobj__64 __pyx_mstate_global->__pyx_codeobj__64
+#define __pyx_codeobj__65 __pyx_mstate_global->__pyx_codeobj__65
 #define __pyx_codeobj__66 __pyx_mstate_global->__pyx_codeobj__66
-#define __pyx_codeobj__67 __pyx_mstate_global->__pyx_codeobj__67
 #define __pyx_codeobj__68 __pyx_mstate_global->__pyx_codeobj__68
 #define __pyx_codeobj__69 __pyx_mstate_global->__pyx_codeobj__69
 #define __pyx_codeobj__70 __pyx_mstate_global->__pyx_codeobj__70
@@ -5023,13 +5067,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_codeobj__73 __pyx_mstate_global->__pyx_codeobj__73
 #define __pyx_codeobj__74 __pyx_mstate_global->__pyx_codeobj__74
 #define __pyx_codeobj__75 __pyx_mstate_global->__pyx_codeobj__75
+#define __pyx_codeobj__76 __pyx_mstate_global->__pyx_codeobj__76
 #define __pyx_codeobj__77 __pyx_mstate_global->__pyx_codeobj__77
-#define __pyx_codeobj__78 __pyx_mstate_global->__pyx_codeobj__78
 #define __pyx_codeobj__79 __pyx_mstate_global->__pyx_codeobj__79
+#define __pyx_codeobj__80 __pyx_mstate_global->__pyx_codeobj__80
 #define __pyx_codeobj__81 __pyx_mstate_global->__pyx_codeobj__81
-#define __pyx_codeobj__82 __pyx_mstate_global->__pyx_codeobj__82
 #define __pyx_codeobj__83 __pyx_mstate_global->__pyx_codeobj__83
+#define __pyx_codeobj__84 __pyx_mstate_global->__pyx_codeobj__84
 #define __pyx_codeobj__85 __pyx_mstate_global->__pyx_codeobj__85
+#define __pyx_codeobj__87 __pyx_mstate_global->__pyx_codeobj__87
 /* #### Code section: module_code ### */
 
 /* "cpython/complex.pxd":19
@@ -5325,7 +5371,287 @@ static CYTHON_INLINE PyObject *__pyx_f_7cpython_11contextvars_get_value_no_defau
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":35
+/* "pyliblo3/_liblo.pyx":34
+ * 
+ * 
+ * def _protostr_to_int(str proto):             # <<<<<<<<<<<<<<
+ *     if proto == 'UDP':
+ *         return LO_UDP
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_1_protostr_to_int(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo__protostr_to_int, "_protostr_to_int(str proto)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_1_protostr_to_int = {"_protostr_to_int", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_1_protostr_to_int, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo__protostr_to_int};
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_1_protostr_to_int(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_proto = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("_protostr_to_int (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_proto,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_proto)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "_protostr_to_int") < 0)) __PYX_ERR(0, 34, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v_proto = ((PyObject*)values[0]);
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("_protostr_to_int", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 34, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("pyliblo3._liblo._protostr_to_int", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_proto), (&PyString_Type), 1, "proto", 1))) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_r = __pyx_pf_8pyliblo3_6_liblo__protostr_to_int(__pyx_self, __pyx_v_proto);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_8pyliblo3_6_liblo__protostr_to_int(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_proto) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  Py_ssize_t __pyx_t_3;
+  Py_UCS4 __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_protostr_to_int", 1);
+
+  /* "pyliblo3/_liblo.pyx":35
+ * 
+ * def _protostr_to_int(str proto):
+ *     if proto == 'UDP':             # <<<<<<<<<<<<<<
+ *         return LO_UDP
+ *     elif proto == 'TCP':
+ */
+  __pyx_t_1 = (__Pyx_PyString_Equals(__pyx_v_proto, __pyx_n_s_UDP, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (__pyx_t_1) {
+
+    /* "pyliblo3/_liblo.pyx":36
+ * def _protostr_to_int(str proto):
+ *     if proto == 'UDP':
+ *         return LO_UDP             # <<<<<<<<<<<<<<
+ *     elif proto == 'TCP':
+ *         return LO_TCP
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_UDP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_r = __pyx_t_2;
+    __pyx_t_2 = 0;
+    goto __pyx_L0;
+
+    /* "pyliblo3/_liblo.pyx":35
+ * 
+ * def _protostr_to_int(str proto):
+ *     if proto == 'UDP':             # <<<<<<<<<<<<<<
+ *         return LO_UDP
+ *     elif proto == 'TCP':
+ */
+  }
+
+  /* "pyliblo3/_liblo.pyx":37
+ *     if proto == 'UDP':
+ *         return LO_UDP
+ *     elif proto == 'TCP':             # <<<<<<<<<<<<<<
+ *         return LO_TCP
+ *     elif proto == 'UNIX':
+ */
+  __pyx_t_1 = (__Pyx_PyString_Equals(__pyx_v_proto, __pyx_n_s_TCP, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 37, __pyx_L1_error)
+  if (__pyx_t_1) {
+
+    /* "pyliblo3/_liblo.pyx":38
+ *         return LO_UDP
+ *     elif proto == 'TCP':
+ *         return LO_TCP             # <<<<<<<<<<<<<<
+ *     elif proto == 'UNIX':
+ *         return LO_UNIX
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_TCP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_r = __pyx_t_2;
+    __pyx_t_2 = 0;
+    goto __pyx_L0;
+
+    /* "pyliblo3/_liblo.pyx":37
+ *     if proto == 'UDP':
+ *         return LO_UDP
+ *     elif proto == 'TCP':             # <<<<<<<<<<<<<<
+ *         return LO_TCP
+ *     elif proto == 'UNIX':
+ */
+  }
+
+  /* "pyliblo3/_liblo.pyx":39
+ *     elif proto == 'TCP':
+ *         return LO_TCP
+ *     elif proto == 'UNIX':             # <<<<<<<<<<<<<<
+ *         return LO_UNIX
+ *     else:
+ */
+  __pyx_t_1 = (__Pyx_PyString_Equals(__pyx_v_proto, __pyx_n_s_UNIX, Py_EQ)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (likely(__pyx_t_1)) {
+
+    /* "pyliblo3/_liblo.pyx":40
+ *         return LO_TCP
+ *     elif proto == 'UNIX':
+ *         return LO_UNIX             # <<<<<<<<<<<<<<
+ *     else:
+ *         raise ValueError(f"Proto {proto} not understood, expected one of 'UDP', 'TCP' or 'UNIX'")
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_UNIX); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_r = __pyx_t_2;
+    __pyx_t_2 = 0;
+    goto __pyx_L0;
+
+    /* "pyliblo3/_liblo.pyx":39
+ *     elif proto == 'TCP':
+ *         return LO_TCP
+ *     elif proto == 'UNIX':             # <<<<<<<<<<<<<<
+ *         return LO_UNIX
+ *     else:
+ */
+  }
+
+  /* "pyliblo3/_liblo.pyx":42
+ *         return LO_UNIX
+ *     else:
+ *         raise ValueError(f"Proto {proto} not understood, expected one of 'UDP', 'TCP' or 'UNIX'")             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  /*else*/ {
+    __pyx_t_2 = PyTuple_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = 0;
+    __pyx_t_4 = 127;
+    __Pyx_INCREF(__pyx_kp_u_Proto);
+    __pyx_t_3 += 6;
+    __Pyx_GIVEREF(__pyx_kp_u_Proto);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_kp_u_Proto);
+    __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_v_proto, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_4) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_4;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_5);
+    __pyx_t_5 = 0;
+    __Pyx_INCREF(__pyx_kp_u_not_understood_expected_one_of);
+    __pyx_t_3 += 55;
+    __Pyx_GIVEREF(__pyx_kp_u_not_understood_expected_one_of);
+    PyTuple_SET_ITEM(__pyx_t_2, 2, __pyx_kp_u_not_understood_expected_one_of);
+    __pyx_t_5 = __Pyx_PyUnicode_Join(__pyx_t_2, 3, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_2, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __PYX_ERR(0, 42, __pyx_L1_error)
+  }
+
+  /* "pyliblo3/_liblo.pyx":34
+ * 
+ * 
+ * def _protostr_to_int(str proto):             # <<<<<<<<<<<<<<
+ *     if proto == 'UDP':
+ *         return LO_UDP
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_AddTraceback("pyliblo3._liblo._protostr_to_int", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyliblo3/_liblo.pyx":51
  *     __slots__ = ('_func', 'obj')
  * 
  *     def __init__(self, f):             # <<<<<<<<<<<<<<
@@ -5341,7 +5667,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_15_weakref_method___init__, "_weakref_method.__init__(self, f)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_15_weakref_method___init__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_1__init__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -5389,7 +5716,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -5397,14 +5724,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 35, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 51, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 35, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 51, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -5417,7 +5744,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 35, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 51, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5458,16 +5785,16 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method___init__(CYTHON_UN
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":36
+  /* "pyliblo3/_liblo.pyx":52
  * 
  *     def __init__(self, f):
  *         if _inspect.ismethod(f):             # <<<<<<<<<<<<<<
  *             self._func = f.__func__
  *             self.obj = _weakref.ref(f.__self__)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_inspect); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_inspect); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ismethod); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ismethod); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -5488,39 +5815,39 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method___init__(CYTHON_UN
     PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_f};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_5 < 0))) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_5) {
 
-    /* "pyliblo3/_liblo.pyx":37
+    /* "pyliblo3/_liblo.pyx":53
  *     def __init__(self, f):
  *         if _inspect.ismethod(f):
  *             self._func = f.__func__             # <<<<<<<<<<<<<<
  *             self.obj = _weakref.ref(f.__self__)
  *         else:
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_func); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_func); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_func_2, __pyx_t_1) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_func_2, __pyx_t_1) < 0) __PYX_ERR(0, 53, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":38
+    /* "pyliblo3/_liblo.pyx":54
  *         if _inspect.ismethod(f):
  *             self._func = f.__func__
  *             self.obj = _weakref.ref(f.__self__)             # <<<<<<<<<<<<<<
  *         else:
  *             self._func = f
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_weakref); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_weakref); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ref); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ref); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_self_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_self_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_6 = NULL;
     __pyx_t_4 = 0;
@@ -5541,14 +5868,14 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method___init__(CYTHON_UN
       __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_obj, __pyx_t_1) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_obj, __pyx_t_1) < 0) __PYX_ERR(0, 54, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":36
+    /* "pyliblo3/_liblo.pyx":52
  * 
  *     def __init__(self, f):
  *         if _inspect.ismethod(f):             # <<<<<<<<<<<<<<
@@ -5558,7 +5885,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method___init__(CYTHON_UN
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":40
+  /* "pyliblo3/_liblo.pyx":56
  *             self.obj = _weakref.ref(f.__self__)
  *         else:
  *             self._func = f             # <<<<<<<<<<<<<<
@@ -5566,20 +5893,20 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method___init__(CYTHON_UN
  * 
  */
   /*else*/ {
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_func_2, __pyx_v_f) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_func_2, __pyx_v_f) < 0) __PYX_ERR(0, 56, __pyx_L1_error)
 
-    /* "pyliblo3/_liblo.pyx":41
+    /* "pyliblo3/_liblo.pyx":57
  *         else:
  *             self._func = f
  *             self.obj = None             # <<<<<<<<<<<<<<
  * 
  *     @property
  */
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_obj, Py_None) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_obj, Py_None) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":35
+  /* "pyliblo3/_liblo.pyx":51
  *     __slots__ = ('_func', 'obj')
  * 
  *     def __init__(self, f):             # <<<<<<<<<<<<<<
@@ -5603,7 +5930,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method___init__(CYTHON_UN
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":43
+/* "pyliblo3/_liblo.pyx":59
  *             self.obj = None
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -5619,7 +5946,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_3func = {"func", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_3func, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_15_weakref_method_2func, "_weakref_method.func(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_3func = {"func", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_3func, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_15_weakref_method_2func};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_3func(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -5664,12 +5992,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 43, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 59, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "func") < 0)) __PYX_ERR(0, 43, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "func") < 0)) __PYX_ERR(0, 59, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -5680,7 +6008,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("func", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 43, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("func", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 59, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5723,20 +6051,20 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("func", 1);
 
-  /* "pyliblo3/_liblo.pyx":45
+  /* "pyliblo3/_liblo.pyx":61
  *     @property
  *     def func(self):
  *         if self.obj:             # <<<<<<<<<<<<<<
  *             return self._func.__get__(self.obj(), self.obj().__class__)
  *         else:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_obj); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_obj); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":46
+    /* "pyliblo3/_liblo.pyx":62
  *     def func(self):
  *         if self.obj:
  *             return self._func.__get__(self.obj(), self.obj().__class__)             # <<<<<<<<<<<<<<
@@ -5744,12 +6072,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
  *             return self._func
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_func_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_func_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_get); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_get); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_obj); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_obj); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     __pyx_t_7 = 0;
@@ -5769,11 +6097,11 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
       PyObject *__pyx_callargs[2] = {__pyx_t_6, NULL};
       __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_7, 0+__pyx_t_7);
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_obj); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_obj); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_8 = NULL;
     __pyx_t_7 = 0;
@@ -5793,11 +6121,11 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
       PyObject *__pyx_callargs[2] = {__pyx_t_8, NULL};
       __pyx_t_5 = __Pyx_PyObject_FastCall(__pyx_t_6, __pyx_callargs+1-__pyx_t_7, 0+__pyx_t_7);
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_class); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_class); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_5 = NULL;
@@ -5820,7 +6148,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -5828,7 +6156,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "pyliblo3/_liblo.pyx":45
+    /* "pyliblo3/_liblo.pyx":61
  *     @property
  *     def func(self):
  *         if self.obj:             # <<<<<<<<<<<<<<
@@ -5837,7 +6165,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":48
+  /* "pyliblo3/_liblo.pyx":64
  *             return self._func.__get__(self.obj(), self.obj().__class__)
  *         else:
  *             return self._func             # <<<<<<<<<<<<<<
@@ -5846,14 +6174,14 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_func_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_func_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
   }
 
-  /* "pyliblo3/_liblo.pyx":43
+  /* "pyliblo3/_liblo.pyx":59
  *             self.obj = None
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -5877,7 +6205,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_2func(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":50
+/* "pyliblo3/_liblo.pyx":66
  *             return self._func
  * 
  *     def __call__(self, *args, **kwargs):             # <<<<<<<<<<<<<<
@@ -5893,7 +6221,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_5__call__ = {"__call__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_5__call__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_15_weakref_method_4__call__, "_weakref_method.__call__(self, *args, **kwargs)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_5__call__ = {"__call__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_5__call__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_15_weakref_method_4__call__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_15_weakref_method_5__call__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -5949,13 +6278,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
         const Py_ssize_t used_pos_args = (kwd_pos_args < 1) ? kwd_pos_args : 1;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values + 0, used_pos_args, "__call__") < 0)) __PYX_ERR(0, 50, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values + 0, used_pos_args, "__call__") < 0)) __PYX_ERR(0, 66, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs < 1)) {
       goto __pyx_L5_argtuple_error;
@@ -5966,7 +6295,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__call__", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 50, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__call__", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 66, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6008,7 +6337,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_4__call__(CYTHON_U
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__call__", 1);
 
-  /* "pyliblo3/_liblo.pyx":51
+  /* "pyliblo3/_liblo.pyx":67
  * 
  *     def __call__(self, *args, **kwargs):
  *         return self.func(*args, **kwargs)             # <<<<<<<<<<<<<<
@@ -6016,11 +6345,11 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_4__call__(CYTHON_U
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_func_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_func_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyDict_Copy(__pyx_v_kwargs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_2 = PyDict_Copy(__pyx_v_kwargs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_v_args, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_v_args, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -6028,7 +6357,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_4__call__(CYTHON_U
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":50
+  /* "pyliblo3/_liblo.pyx":66
  *             return self._func
  * 
  *     def __call__(self, *args, **kwargs):             # <<<<<<<<<<<<<<
@@ -6049,7 +6378,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_15_weakref_method_4__call__(CYTHON_U
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":55
+/* "pyliblo3/_liblo.pyx":71
  * 
  * class struct:
  *     def __init__(self, **kwargs):             # <<<<<<<<<<<<<<
@@ -6065,7 +6394,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6struct_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6struct_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6struct___init__, "struct.__init__(self, **kwargs)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6struct_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6struct_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6struct___init__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6struct_1__init__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -6113,12 +6443,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 71, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 55, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 71, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -6129,7 +6459,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 55, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 71, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6176,7 +6506,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6struct___init__(CYTHON_UNUSED PyObj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":56
+  /* "pyliblo3/_liblo.pyx":72
  * class struct:
  *     def __init__(self, **kwargs):
  *         for k, v in kwargs.items():             # <<<<<<<<<<<<<<
@@ -6184,7 +6514,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6struct___init__(CYTHON_UNUSED PyObj
  * 
  */
   __pyx_t_2 = 0;
-  __pyx_t_5 = __Pyx_dict_iterator(__pyx_v_kwargs, 1, __pyx_n_s_items, (&__pyx_t_3), (&__pyx_t_4)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_dict_iterator(__pyx_v_kwargs, 1, __pyx_n_s_items, (&__pyx_t_3), (&__pyx_t_4)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_1);
   __pyx_t_1 = __pyx_t_5;
@@ -6192,7 +6522,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6struct___init__(CYTHON_UNUSED PyObj
   while (1) {
     __pyx_t_7 = __Pyx_dict_iter_next(__pyx_t_1, __pyx_t_3, &__pyx_t_2, &__pyx_t_5, &__pyx_t_6, NULL, __pyx_t_4);
     if (unlikely(__pyx_t_7 == 0)) break;
-    if (unlikely(__pyx_t_7 == -1)) __PYX_ERR(0, 56, __pyx_L1_error)
+    if (unlikely(__pyx_t_7 == -1)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_XDECREF_SET(__pyx_v_k, __pyx_t_5);
@@ -6200,18 +6530,18 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6struct___init__(CYTHON_UNUSED PyObj
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "pyliblo3/_liblo.pyx":57
+    /* "pyliblo3/_liblo.pyx":73
  *     def __init__(self, **kwargs):
  *         for k, v in kwargs.items():
  *             setattr(self, k, v)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_8 = PyObject_SetAttr(__pyx_v_self, __pyx_v_k, __pyx_v_v); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 57, __pyx_L1_error)
+    __pyx_t_8 = PyObject_SetAttr(__pyx_v_self, __pyx_v_k, __pyx_v_v); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 73, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":55
+  /* "pyliblo3/_liblo.pyx":71
  * 
  * class struct:
  *     def __init__(self, **kwargs):             # <<<<<<<<<<<<<<
@@ -6236,7 +6566,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6struct___init__(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":66
+/* "pyliblo3/_liblo.pyx":89
  *     cdef int has_varargs
  * 
  *     def __init__(self, func, user_data):             # <<<<<<<<<<<<<<
@@ -6283,7 +6613,7 @@ static int __pyx_pw_8pyliblo3_6_liblo_8Callback_1__init__(PyObject *__pyx_v_self
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 89, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -6291,14 +6621,14 @@ static int __pyx_pw_8pyliblo3_6_liblo_8Callback_1__init__(PyObject *__pyx_v_self
           (void)__Pyx_Arg_NewRef_VARARGS(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 89, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 66, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 89, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 66, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 89, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -6311,7 +6641,7 @@ static int __pyx_pw_8pyliblo3_6_liblo_8Callback_1__init__(PyObject *__pyx_v_self
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 66, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 89, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6354,14 +6684,14 @@ static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pylib
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":67
+  /* "pyliblo3/_liblo.pyx":90
  * 
  *     def __init__(self, func, user_data):
  *         self.func = _weakref_method(func)             # <<<<<<<<<<<<<<
  *         self.user_data = user_data,
  *         spec = _inspect.getfullargspec(func)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_weakref_method); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_weakref_method); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -6381,7 +6711,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pylib
     PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_func};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -6391,34 +6721,34 @@ static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pylib
   __pyx_v_self->func = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":68
+  /* "pyliblo3/_liblo.pyx":91
  *     def __init__(self, func, user_data):
  *         self.func = _weakref_method(func)
  *         self.user_data = user_data,             # <<<<<<<<<<<<<<
  *         spec = _inspect.getfullargspec(func)
  *         numargs = len(spec.args)
  */
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_user_data);
   __Pyx_GIVEREF(__pyx_v_user_data);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_user_data)) __PYX_ERR(0, 68, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_user_data)) __PYX_ERR(0, 91, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->user_data);
   __Pyx_DECREF(__pyx_v_self->user_data);
   __pyx_v_self->user_data = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":69
+  /* "pyliblo3/_liblo.pyx":92
  *         self.func = _weakref_method(func)
  *         self.user_data = user_data,
  *         spec = _inspect.getfullargspec(func)             # <<<<<<<<<<<<<<
  *         numargs = len(spec.args)
  *         if _inspect.ismethod(func):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_inspect); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_inspect); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_getfullargspec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_getfullargspec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -6439,39 +6769,39 @@ static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pylib
     PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_func};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
   __pyx_v_spec = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":70
+  /* "pyliblo3/_liblo.pyx":93
  *         self.user_data = user_data,
  *         spec = _inspect.getfullargspec(func)
  *         numargs = len(spec.args)             # <<<<<<<<<<<<<<
  *         if _inspect.ismethod(func):
  *             numargs -= 1
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_spec, __pyx_n_s_args); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_spec, __pyx_n_s_args); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_5 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_numargs = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":71
+  /* "pyliblo3/_liblo.pyx":94
  *         spec = _inspect.getfullargspec(func)
  *         numargs = len(spec.args)
  *         if _inspect.ismethod(func):             # <<<<<<<<<<<<<<
  *             numargs -= 1
  *         self.numargs = numargs
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_inspect); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_inspect); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ismethod); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ismethod); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -6492,27 +6822,27 @@ static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pylib
     PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_func};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
-    /* "pyliblo3/_liblo.pyx":72
+    /* "pyliblo3/_liblo.pyx":95
  *         numargs = len(spec.args)
  *         if _inspect.ismethod(func):
  *             numargs -= 1             # <<<<<<<<<<<<<<
  *         self.numargs = numargs
  *         self.has_varargs = 1 if spec.varargs is not None else 0
  */
-    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_numargs, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_SubtractObjC(__pyx_v_numargs, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_numargs, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":71
+    /* "pyliblo3/_liblo.pyx":94
  *         spec = _inspect.getfullargspec(func)
  *         numargs = len(spec.args)
  *         if _inspect.ismethod(func):             # <<<<<<<<<<<<<<
@@ -6521,24 +6851,24 @@ static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pylib
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":73
+  /* "pyliblo3/_liblo.pyx":96
  *         if _inspect.ismethod(func):
  *             numargs -= 1
  *         self.numargs = numargs             # <<<<<<<<<<<<<<
  *         self.has_varargs = 1 if spec.varargs is not None else 0
  * 
  */
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_numargs); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_numargs); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 96, __pyx_L1_error)
   __pyx_v_self->numargs = __pyx_t_4;
 
-  /* "pyliblo3/_liblo.pyx":74
+  /* "pyliblo3/_liblo.pyx":97
  *             numargs -= 1
  *         self.numargs = numargs
  *         self.has_varargs = 1 if spec.varargs is not None else 0             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_spec, __pyx_n_s_varargs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_spec, __pyx_n_s_varargs); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_6 = (__pyx_t_1 != Py_None);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -6549,7 +6879,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_8Callback___init__(struct __pyx_obj_8pylib
   }
   __pyx_v_self->has_varargs = __pyx_t_4;
 
-  /* "pyliblo3/_liblo.pyx":66
+  /* "pyliblo3/_liblo.pyx":89
  *     cdef int has_varargs
  * 
  *     def __init__(self, func, user_data):             # <<<<<<<<<<<<<<
@@ -6587,7 +6917,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_8Callback_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_8Callback_2__reduce_cython__, "Callback.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_8Callback_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_8Callback_2__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_8Callback_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -6869,7 +7200,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_8Callback_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_8Callback_4__setstate_cython__, "Callback.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_8Callback_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_8Callback_4__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_8Callback_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -6996,7 +7328,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_8Callback_4__setstate_cython__(struc
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":77
+/* "pyliblo3/_liblo.pyx":100
  * 
  * 
  * cdef inline str _decode(s):             # <<<<<<<<<<<<<<
@@ -7018,7 +7350,7 @@ static CYTHON_INLINE PyObject *__pyx_f_8pyliblo3_6_liblo__decode(PyObject *__pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_decode", 1);
 
-  /* "pyliblo3/_liblo.pyx":79
+  /* "pyliblo3/_liblo.pyx":102
  * cdef inline str _decode(s):
  *     # convert to standard string type, depending on python version
  *     if PY_VERSION_HEX >= 0x03000000 and isinstance(s, bytes):             # <<<<<<<<<<<<<<
@@ -7036,7 +7368,7 @@ static CYTHON_INLINE PyObject *__pyx_f_8pyliblo3_6_liblo__decode(PyObject *__pyx
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":80
+    /* "pyliblo3/_liblo.pyx":103
  *     # convert to standard string type, depending on python version
  *     if PY_VERSION_HEX >= 0x03000000 and isinstance(s, bytes):
  *         return s.decode()             # <<<<<<<<<<<<<<
@@ -7044,7 +7376,7 @@ static CYTHON_INLINE PyObject *__pyx_f_8pyliblo3_6_liblo__decode(PyObject *__pyx
  *         return s
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_decode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_decode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 103, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     __pyx_t_6 = 0;
@@ -7064,16 +7396,16 @@ static CYTHON_INLINE PyObject *__pyx_f_8pyliblo3_6_liblo__decode(PyObject *__pyx
       PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
       __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_6, 0+__pyx_t_6);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
-    if (!(likely(PyString_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 80, __pyx_L1_error)
+    if (!(likely(PyString_CheckExact(__pyx_t_3))||((__pyx_t_3) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_t_3))) __PYX_ERR(0, 103, __pyx_L1_error)
     __pyx_r = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "pyliblo3/_liblo.pyx":79
+    /* "pyliblo3/_liblo.pyx":102
  * cdef inline str _decode(s):
  *     # convert to standard string type, depending on python version
  *     if PY_VERSION_HEX >= 0x03000000 and isinstance(s, bytes):             # <<<<<<<<<<<<<<
@@ -7082,7 +7414,7 @@ static CYTHON_INLINE PyObject *__pyx_f_8pyliblo3_6_liblo__decode(PyObject *__pyx
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":82
+  /* "pyliblo3/_liblo.pyx":105
  *         return s.decode()
  *     else:
  *         return s             # <<<<<<<<<<<<<<
@@ -7091,13 +7423,13 @@ static CYTHON_INLINE PyObject *__pyx_f_8pyliblo3_6_liblo__decode(PyObject *__pyx
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    if (!(likely(PyString_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_v_s))) __PYX_ERR(0, 82, __pyx_L1_error)
+    if (!(likely(PyString_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None) || __Pyx_RaiseUnexpectedTypeError("str", __pyx_v_s))) __PYX_ERR(0, 105, __pyx_L1_error)
     __Pyx_INCREF(__pyx_v_s);
     __pyx_r = ((PyObject*)__pyx_v_s);
     goto __pyx_L0;
   }
 
-  /* "pyliblo3/_liblo.pyx":77
+  /* "pyliblo3/_liblo.pyx":100
  * 
  * 
  * cdef inline str _decode(s):             # <<<<<<<<<<<<<<
@@ -7118,7 +7450,7 @@ static CYTHON_INLINE PyObject *__pyx_f_8pyliblo3_6_liblo__decode(PyObject *__pyx
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":84
+/* "pyliblo3/_liblo.pyx":107
  *         return s
  * 
  * cdef bytes _encode(s):             # <<<<<<<<<<<<<<
@@ -7139,7 +7471,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__encode(PyObject *__pyx_v_s) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_encode", 1);
 
-  /* "pyliblo3/_liblo.pyx":86
+  /* "pyliblo3/_liblo.pyx":109
  * cdef bytes _encode(s):
  *     # convert unicode to bytestring
  *     if isinstance(s, unicode):             # <<<<<<<<<<<<<<
@@ -7149,7 +7481,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__encode(PyObject *__pyx_v_s) {
   __pyx_t_1 = PyUnicode_Check(__pyx_v_s); 
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":87
+    /* "pyliblo3/_liblo.pyx":110
  *     # convert unicode to bytestring
  *     if isinstance(s, unicode):
  *         return s.encode()             # <<<<<<<<<<<<<<
@@ -7157,7 +7489,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__encode(PyObject *__pyx_v_s) {
  *         return s
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_encode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_s, __pyx_n_s_encode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_4 = NULL;
     __pyx_t_5 = 0;
@@ -7177,16 +7509,16 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__encode(PyObject *__pyx_v_s) {
       PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
       __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_5, 0+__pyx_t_5);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
-    if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_t_2))) __PYX_ERR(0, 87, __pyx_L1_error)
+    if (!(likely(PyBytes_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_t_2))) __PYX_ERR(0, 110, __pyx_L1_error)
     __pyx_r = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "pyliblo3/_liblo.pyx":86
+    /* "pyliblo3/_liblo.pyx":109
  * cdef bytes _encode(s):
  *     # convert unicode to bytestring
  *     if isinstance(s, unicode):             # <<<<<<<<<<<<<<
@@ -7195,7 +7527,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__encode(PyObject *__pyx_v_s) {
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":89
+  /* "pyliblo3/_liblo.pyx":112
  *         return s.encode()
  *     else:
  *         return s             # <<<<<<<<<<<<<<
@@ -7204,13 +7536,13 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__encode(PyObject *__pyx_v_s) {
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    if (!(likely(PyBytes_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_v_s))) __PYX_ERR(0, 89, __pyx_L1_error)
+    if (!(likely(PyBytes_CheckExact(__pyx_v_s))||((__pyx_v_s) == Py_None) || __Pyx_RaiseUnexpectedTypeError("bytes", __pyx_v_s))) __PYX_ERR(0, 112, __pyx_L1_error)
     __Pyx_INCREF(__pyx_v_s);
     __pyx_r = ((PyObject*)__pyx_v_s);
     goto __pyx_L0;
   }
 
-  /* "pyliblo3/_liblo.pyx":84
+  /* "pyliblo3/_liblo.pyx":107
  *         return s
  * 
  * cdef bytes _encode(s):             # <<<<<<<<<<<<<<
@@ -7231,7 +7563,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__encode(PyObject *__pyx_v_s) {
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":109
+/* "pyliblo3/_liblo.pyx":132
  * ################################################################################
  * 
  * cdef lo_timetag _double_to_timetag(double f):             # <<<<<<<<<<<<<<
@@ -7245,7 +7577,7 @@ static lo_timetag __pyx_f_8pyliblo3_6_liblo__double_to_timetag(double __pyx_v_f)
   double __pyx_v_frac;
   lo_timetag __pyx_r;
 
-  /* "pyliblo3/_liblo.pyx":112
+  /* "pyliblo3/_liblo.pyx":135
  *     cdef lo_timetag tt
  *     cdef double intr, frac
  *     frac = modf(f, &intr)             # <<<<<<<<<<<<<<
@@ -7254,7 +7586,7 @@ static lo_timetag __pyx_f_8pyliblo3_6_liblo__double_to_timetag(double __pyx_v_f)
  */
   __pyx_v_frac = modf(__pyx_v_f, (&__pyx_v_intr));
 
-  /* "pyliblo3/_liblo.pyx":113
+  /* "pyliblo3/_liblo.pyx":136
  *     cdef double intr, frac
  *     frac = modf(f, &intr)
  *     tt.sec = <uint32_t>intr             # <<<<<<<<<<<<<<
@@ -7263,7 +7595,7 @@ static lo_timetag __pyx_f_8pyliblo3_6_liblo__double_to_timetag(double __pyx_v_f)
  */
   __pyx_v_tt.sec = ((uint32_t)__pyx_v_intr);
 
-  /* "pyliblo3/_liblo.pyx":114
+  /* "pyliblo3/_liblo.pyx":137
  *     frac = modf(f, &intr)
  *     tt.sec = <uint32_t>intr
  *     tt.frac = <uint32_t>(frac * 4294967296.0)             # <<<<<<<<<<<<<<
@@ -7272,7 +7604,7 @@ static lo_timetag __pyx_f_8pyliblo3_6_liblo__double_to_timetag(double __pyx_v_f)
  */
   __pyx_v_tt.frac = ((uint32_t)(__pyx_v_frac * 4294967296.0));
 
-  /* "pyliblo3/_liblo.pyx":115
+  /* "pyliblo3/_liblo.pyx":138
  *     tt.sec = <uint32_t>intr
  *     tt.frac = <uint32_t>(frac * 4294967296.0)
  *     return tt             # <<<<<<<<<<<<<<
@@ -7282,7 +7614,7 @@ static lo_timetag __pyx_f_8pyliblo3_6_liblo__double_to_timetag(double __pyx_v_f)
   __pyx_r = __pyx_v_tt;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":109
+  /* "pyliblo3/_liblo.pyx":132
  * ################################################################################
  * 
  * cdef lo_timetag _double_to_timetag(double f):             # <<<<<<<<<<<<<<
@@ -7295,7 +7627,7 @@ static lo_timetag __pyx_f_8pyliblo3_6_liblo__double_to_timetag(double __pyx_v_f)
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":117
+/* "pyliblo3/_liblo.pyx":140
  *     return tt
  * 
  * cdef double _timetag_to_double(lo_timetag tt):             # <<<<<<<<<<<<<<
@@ -7306,7 +7638,7 @@ static lo_timetag __pyx_f_8pyliblo3_6_liblo__double_to_timetag(double __pyx_v_f)
 static double __pyx_f_8pyliblo3_6_liblo__timetag_to_double(lo_timetag __pyx_v_tt) {
   double __pyx_r;
 
-  /* "pyliblo3/_liblo.pyx":118
+  /* "pyliblo3/_liblo.pyx":141
  * 
  * cdef double _timetag_to_double(lo_timetag tt):
  *     return <double>tt.sec + (<double>(tt.frac) / 4294967296.0)             # <<<<<<<<<<<<<<
@@ -7316,7 +7648,7 @@ static double __pyx_f_8pyliblo3_6_liblo__timetag_to_double(lo_timetag __pyx_v_tt
   __pyx_r = (((double)__pyx_v_tt.sec) + (((double)__pyx_v_tt.frac) / 4294967296.0));
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":117
+  /* "pyliblo3/_liblo.pyx":140
  *     return tt
  * 
  * cdef double _timetag_to_double(lo_timetag tt):             # <<<<<<<<<<<<<<
@@ -7329,32 +7661,32 @@ static double __pyx_f_8pyliblo3_6_liblo__timetag_to_double(lo_timetag __pyx_v_tt
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":120
+/* "pyliblo3/_liblo.pyx":143
  *     return <double>tt.sec + (<double>(tt.frac) / 4294967296.0)
  * 
  * def time():             # <<<<<<<<<<<<<<
  *     """
- *     Return the current time as a floating point number (seconds since
+ *     Return the current time as a floating point number (seconds since January 1, 1900).
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8pyliblo3_6_liblo_1time(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_time, "\n    Return the current time as a floating point number (seconds since\n    January 1, 1900).\n    ");
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_1time = {"time", (PyCFunction)__pyx_pw_8pyliblo3_6_liblo_1time, METH_NOARGS, __pyx_doc_8pyliblo3_6_liblo_time};
-static PyObject *__pyx_pw_8pyliblo3_6_liblo_1time(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_3time(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_2time, "time()\n\n    Return the current time as a floating point number (seconds since January 1, 1900).\n\n    Returns:\n        (float) The liblo timetag as a float, representing seconds since 1900\n    ");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_3time = {"time", (PyCFunction)__pyx_pw_8pyliblo3_6_liblo_3time, METH_NOARGS, __pyx_doc_8pyliblo3_6_liblo_2time};
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_3time(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("time (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_time(__pyx_self);
+  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_2time(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8pyliblo3_6_liblo_time(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_8pyliblo3_6_liblo_2time(CYTHON_UNUSED PyObject *__pyx_self) {
   lo_timetag __pyx_v_tt;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -7365,7 +7697,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_time(CYTHON_UNUSED PyObject *__pyx_s
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("time", 1);
 
-  /* "pyliblo3/_liblo.pyx":126
+  /* "pyliblo3/_liblo.pyx":151
  *     """
  *     cdef lo_timetag tt
  *     lo_timetag_now(&tt)             # <<<<<<<<<<<<<<
@@ -7374,7 +7706,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_time(CYTHON_UNUSED PyObject *__pyx_s
  */
   lo_timetag_now((&__pyx_v_tt));
 
-  /* "pyliblo3/_liblo.pyx":127
+  /* "pyliblo3/_liblo.pyx":152
  *     cdef lo_timetag tt
  *     lo_timetag_now(&tt)
  *     return _timetag_to_double(tt)             # <<<<<<<<<<<<<<
@@ -7382,19 +7714,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_time(CYTHON_UNUSED PyObject *__pyx_s
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__timetag_to_double(__pyx_v_tt); if (unlikely(__pyx_t_1 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 127, __pyx_L1_error)
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__timetag_to_double(__pyx_v_tt); if (unlikely(__pyx_t_1 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":120
+  /* "pyliblo3/_liblo.pyx":143
  *     return <double>tt.sec + (<double>(tt.frac) / 4294967296.0)
  * 
  * def time():             # <<<<<<<<<<<<<<
  *     """
- *     Return the current time as a floating point number (seconds since
+ *     Return the current time as a floating point number (seconds since January 1, 1900).
  */
 
   /* function exit code */
@@ -7408,7 +7740,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_time(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":134
+/* "pyliblo3/_liblo.pyx":159
  * ################################################################################
  * 
  * cdef _send(target, _ServerBase src, args):             # <<<<<<<<<<<<<<
@@ -7440,7 +7772,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_send", 1);
 
-  /* "pyliblo3/_liblo.pyx":140
+  /* "pyliblo3/_liblo.pyx":165
  * 
  *     # convert target to Address object, if necessary
  *     if isinstance(target, Address):             # <<<<<<<<<<<<<<
@@ -7450,20 +7782,20 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
   __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_target, __pyx_ptype_8pyliblo3_6_liblo_Address); 
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":141
+    /* "pyliblo3/_liblo.pyx":166
  *     # convert target to Address object, if necessary
  *     if isinstance(target, Address):
  *         target_address = target             # <<<<<<<<<<<<<<
  *     elif isinstance(target, tuple):
  *         # unpack tuple
  */
-    if (!(likely(((__pyx_v_target) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_target, __pyx_ptype_8pyliblo3_6_liblo_Address))))) __PYX_ERR(0, 141, __pyx_L1_error)
+    if (!(likely(((__pyx_v_target) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_target, __pyx_ptype_8pyliblo3_6_liblo_Address))))) __PYX_ERR(0, 166, __pyx_L1_error)
     __pyx_t_2 = __pyx_v_target;
     __Pyx_INCREF(__pyx_t_2);
     __pyx_v_target_address = ((struct __pyx_obj_8pyliblo3_6_liblo_Address *)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "pyliblo3/_liblo.pyx":140
+    /* "pyliblo3/_liblo.pyx":165
  * 
  *     # convert target to Address object, if necessary
  *     if isinstance(target, Address):             # <<<<<<<<<<<<<<
@@ -7473,7 +7805,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":142
+  /* "pyliblo3/_liblo.pyx":167
  *     if isinstance(target, Address):
  *         target_address = target
  *     elif isinstance(target, tuple):             # <<<<<<<<<<<<<<
@@ -7483,22 +7815,22 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
   __pyx_t_1 = PyTuple_Check(__pyx_v_target); 
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":144
+    /* "pyliblo3/_liblo.pyx":169
  *     elif isinstance(target, tuple):
  *         # unpack tuple
  *         target_address = Address(*target)             # <<<<<<<<<<<<<<
  *     else:
  *         target_address = Address(target)
  */
-    __pyx_t_2 = __Pyx_PySequence_Tuple(__pyx_v_target); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PySequence_Tuple(__pyx_v_target); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address), __pyx_t_2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_target_address = ((struct __pyx_obj_8pyliblo3_6_liblo_Address *)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":142
+    /* "pyliblo3/_liblo.pyx":167
  *     if isinstance(target, Address):
  *         target_address = target
  *     elif isinstance(target, tuple):             # <<<<<<<<<<<<<<
@@ -7508,7 +7840,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":146
+  /* "pyliblo3/_liblo.pyx":171
  *         target_address = Address(*target)
  *     else:
  *         target_address = Address(target)             # <<<<<<<<<<<<<<
@@ -7516,21 +7848,21 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
  *     # 'from' parameter is NULL if no server was specified
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address), __pyx_v_target); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address), __pyx_v_target); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_target_address = ((struct __pyx_obj_8pyliblo3_6_liblo_Address *)__pyx_t_3);
     __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":149
+  /* "pyliblo3/_liblo.pyx":174
  * 
  *     # 'from' parameter is NULL if no server was specified
  *     from_server = src._server if src else NULL             # <<<<<<<<<<<<<<
  * 
  *     if isinstance(args[0], (Message, Bundle)):
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_src)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 149, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_src)); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 174, __pyx_L1_error)
   if (__pyx_t_1) {
     __pyx_t_4 = __pyx_v_src->_server;
   } else {
@@ -7538,14 +7870,14 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
   }
   __pyx_v_from_server = __pyx_t_4;
 
-  /* "pyliblo3/_liblo.pyx":151
+  /* "pyliblo3/_liblo.pyx":176
  *     from_server = src._server if src else NULL
  * 
  *     if isinstance(args[0], (Message, Bundle)):             # <<<<<<<<<<<<<<
  *         # args is already a list of Messages/Bundles
  *         packets = args
  */
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_5 = __Pyx_TypeCheck(__pyx_t_3, __pyx_ptype_8pyliblo3_6_liblo_Message); 
   if (!__pyx_t_5) {
@@ -7559,7 +7891,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":153
+    /* "pyliblo3/_liblo.pyx":178
  *     if isinstance(args[0], (Message, Bundle)):
  *         # args is already a list of Messages/Bundles
  *         packets = args             # <<<<<<<<<<<<<<
@@ -7569,7 +7901,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     __Pyx_INCREF(__pyx_v_args);
     __pyx_v_packets = __pyx_v_args;
 
-    /* "pyliblo3/_liblo.pyx":151
+    /* "pyliblo3/_liblo.pyx":176
  *     from_server = src._server if src else NULL
  * 
  *     if isinstance(args[0], (Message, Bundle)):             # <<<<<<<<<<<<<<
@@ -7579,7 +7911,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     goto __pyx_L4;
   }
 
-  /* "pyliblo3/_liblo.pyx":156
+  /* "pyliblo3/_liblo.pyx":181
  *     else:
  *         # make a single Message from all arguments
  *         packets = [Message(*args)]             # <<<<<<<<<<<<<<
@@ -7587,22 +7919,22 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
  *     # send all packets
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_v_args); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_v_args); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Message), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Message), __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_2);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error);
     __pyx_t_2 = 0;
     __pyx_v_packets = __pyx_t_3;
     __pyx_t_3 = 0;
   }
   __pyx_L4:;
 
-  /* "pyliblo3/_liblo.pyx":159
+  /* "pyliblo3/_liblo.pyx":184
  * 
  *     # send all packets
  *     for p in packets:             # <<<<<<<<<<<<<<
@@ -7614,9 +7946,9 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     __pyx_t_6 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_6 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_packets); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 159, __pyx_L1_error)
+    __pyx_t_6 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_packets); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 159, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 184, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_7)) {
@@ -7624,28 +7956,28 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_MACROS
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 159, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 184, __pyx_L1_error)
           #endif
           if (__pyx_t_6 >= __pyx_temp) break;
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 159, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 184, __pyx_L1_error)
         #else
-        __pyx_t_2 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 159, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 184, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         {
           Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_MACROS
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 159, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 184, __pyx_L1_error)
           #endif
           if (__pyx_t_6 >= __pyx_temp) break;
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 159, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 184, __pyx_L1_error)
         #else
-        __pyx_t_2 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 159, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 184, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -7655,7 +7987,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 159, __pyx_L1_error)
+          else __PYX_ERR(0, 184, __pyx_L1_error)
         }
         break;
       }
@@ -7664,7 +7996,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     __Pyx_XDECREF_SET(__pyx_v_p, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "pyliblo3/_liblo.pyx":160
+    /* "pyliblo3/_liblo.pyx":185
  *     # send all packets
  *     for p in packets:
  *         if isinstance(p, Message):             # <<<<<<<<<<<<<<
@@ -7674,7 +8006,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     __pyx_t_1 = __Pyx_TypeCheck(__pyx_v_p, __pyx_ptype_8pyliblo3_6_liblo_Message); 
     if (__pyx_t_1) {
 
-      /* "pyliblo3/_liblo.pyx":161
+      /* "pyliblo3/_liblo.pyx":186
  *     for p in packets:
  *         if isinstance(p, Message):
  *             message = <Message> p             # <<<<<<<<<<<<<<
@@ -7686,7 +8018,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
       __Pyx_XDECREF_SET(__pyx_v_message, ((struct __pyx_obj_8pyliblo3_6_liblo_Message *)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "pyliblo3/_liblo.pyx":164
+      /* "pyliblo3/_liblo.pyx":189
  *             r = lo_send_message_from(target_address._address,
  *                                      from_server,
  *                                      message._path,             # <<<<<<<<<<<<<<
@@ -7695,11 +8027,11 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
  */
       if (unlikely(__pyx_v_message->_path == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-        __PYX_ERR(0, 164, __pyx_L1_error)
+        __PYX_ERR(0, 189, __pyx_L1_error)
       }
-      __pyx_t_8 = __Pyx_PyBytes_AsWritableString(__pyx_v_message->_path); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) __PYX_ERR(0, 164, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyBytes_AsWritableString(__pyx_v_message->_path); if (unlikely((!__pyx_t_8) && PyErr_Occurred())) __PYX_ERR(0, 189, __pyx_L1_error)
 
-      /* "pyliblo3/_liblo.pyx":162
+      /* "pyliblo3/_liblo.pyx":187
  *         if isinstance(p, Message):
  *             message = <Message> p
  *             r = lo_send_message_from(target_address._address,             # <<<<<<<<<<<<<<
@@ -7708,7 +8040,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
  */
       __pyx_v_r = lo_send_message_from(__pyx_v_target_address->_address, __pyx_v_from_server, __pyx_t_8, __pyx_v_message->_message);
 
-      /* "pyliblo3/_liblo.pyx":160
+      /* "pyliblo3/_liblo.pyx":185
  *     # send all packets
  *     for p in packets:
  *         if isinstance(p, Message):             # <<<<<<<<<<<<<<
@@ -7718,7 +8050,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
       goto __pyx_L9;
     }
 
-    /* "pyliblo3/_liblo.pyx":167
+    /* "pyliblo3/_liblo.pyx":192
  *                                      message._message)
  *         else:
  *             bundle = <Bundle> p             # <<<<<<<<<<<<<<
@@ -7731,7 +8063,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
       __Pyx_XDECREF_SET(__pyx_v_bundle, ((struct __pyx_obj_8pyliblo3_6_liblo_Bundle *)__pyx_t_2));
       __pyx_t_2 = 0;
 
-      /* "pyliblo3/_liblo.pyx":168
+      /* "pyliblo3/_liblo.pyx":193
  *         else:
  *             bundle = <Bundle> p
  *             r = lo_send_bundle_from(target_address._address,             # <<<<<<<<<<<<<<
@@ -7742,7 +8074,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     }
     __pyx_L9:;
 
-    /* "pyliblo3/_liblo.pyx":172
+    /* "pyliblo3/_liblo.pyx":197
  *                                     bundle._bundle)
  * 
  *         if r == -1:             # <<<<<<<<<<<<<<
@@ -7752,34 +8084,34 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
     __pyx_t_1 = (__pyx_v_r == -1L);
     if (unlikely(__pyx_t_1)) {
 
-      /* "pyliblo3/_liblo.pyx":174
+      /* "pyliblo3/_liblo.pyx":199
  *         if r == -1:
  *             raise IOError("sending failed: %s" %
  *                           <char*>lo_address_errstr(target_address._address))             # <<<<<<<<<<<<<<
  * 
  * 
  */
-      __pyx_t_2 = __Pyx_PyBytes_FromString(((char *)lo_address_errstr(__pyx_v_target_address->_address))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyBytes_FromString(((char *)lo_address_errstr(__pyx_v_target_address->_address))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 199, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
 
-      /* "pyliblo3/_liblo.pyx":173
+      /* "pyliblo3/_liblo.pyx":198
  * 
  *         if r == -1:
  *             raise IOError("sending failed: %s" %             # <<<<<<<<<<<<<<
  *                           <char*>lo_address_errstr(target_address._address))
  * 
  */
-      __pyx_t_9 = __Pyx_PyString_Format(__pyx_kp_s_sending_failed_s, __pyx_t_2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 173, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyString_Format(__pyx_kp_s_sending_failed_s, __pyx_t_2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 198, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IOError, __pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 173, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IOError, __pyx_t_9); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_Raise(__pyx_t_2, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __PYX_ERR(0, 173, __pyx_L1_error)
+      __PYX_ERR(0, 198, __pyx_L1_error)
 
-      /* "pyliblo3/_liblo.pyx":172
+      /* "pyliblo3/_liblo.pyx":197
  *                                     bundle._bundle)
  * 
  *         if r == -1:             # <<<<<<<<<<<<<<
@@ -7788,7 +8120,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
  */
     }
 
-    /* "pyliblo3/_liblo.pyx":159
+    /* "pyliblo3/_liblo.pyx":184
  * 
  *     # send all packets
  *     for p in packets:             # <<<<<<<<<<<<<<
@@ -7798,7 +8130,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":134
+  /* "pyliblo3/_liblo.pyx":159
  * ################################################################################
  * 
  * cdef _send(target, _ServerBase src, args):             # <<<<<<<<<<<<<<
@@ -7826,25 +8158,25 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo__send(PyObject *__pyx_v_target, struc
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":177
+/* "pyliblo3/_liblo.pyx":202
  * 
  * 
  * def send(target, *args):             # <<<<<<<<<<<<<<
  *     """
- *     send(target, *messages)
+ *     Send a message without requiring a server
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8pyliblo3_6_liblo_3send(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_5send(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_2send, "\n    send(target, *messages)\n    send(target, path, *args)\n\n    Send messages to the the given target, without requiring a server.\n    Arguments may be one or more :class:`Message` or :class:`Bundle` objects,\n    or a single message given by its path and optional arguments.\n\n    :param target:\n        the address to send the message to; an :class:`Address` object,\n        a port number, a ``(hostname, port)`` tuple, or a URL.\n    :param messages:\n        one or more objects of type :class:`Message` or :class:`Bundle`.\n    :param path:\n        the path of the message to be sent.\n\n    :raises AddressError:\n        if the given target is invalid.\n    :raises IOError:\n        if the message couldn't be sent.\n    ");
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_3send = {"send", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_3send, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_2send};
-static PyObject *__pyx_pw_8pyliblo3_6_liblo_3send(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_4send, "send(target, *args)\n\n    Send a message without requiring a server\n\n    The function has two forms:\n\n    * `send(target, *messages)`\n    * `send(target, path, *args)`\n\n    Send messages to the the given target, without requiring a server.\n    Arguments may be one or more `Message` or `Bundle` objects,\n    or a single message given by its path and optional arguments.\n\n    Args:\n        target (Address | tuple[str, int] | int | str): the address to send the message to;\n            an `Address` object, a port number, a `(hostname, port)` tuple, or a URL.\n        path (str): the path of the message to be sent\n        args (Any): the information to send. These are used to construct a message\n        messages (Message | Bundle): one or more objects of type `Message` or `Bundle`.\n\n    Raises:\n        AddressError: if the given target is invalid\n        IOError: if the message couldn't be sent.\n    ");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_5send = {"send", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5send, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_4send};
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_5send(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7895,13 +8227,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 177, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 202, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
         const Py_ssize_t used_pos_args = (kwd_pos_args < 1) ? kwd_pos_args : 1;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, used_pos_args, "send") < 0)) __PYX_ERR(0, 177, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, used_pos_args, "send") < 0)) __PYX_ERR(0, 202, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs < 1)) {
       goto __pyx_L5_argtuple_error;
@@ -7912,7 +8244,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("send", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 177, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("send", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 202, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7927,7 +8259,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_2send(__pyx_self, __pyx_v_target, __pyx_v_args);
+  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_4send(__pyx_self, __pyx_v_target, __pyx_v_args);
 
   /* function exit code */
   __Pyx_DECREF(__pyx_v_args);
@@ -7941,7 +8273,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8pyliblo3_6_liblo_2send(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_target, PyObject *__pyx_v_args) {
+static PyObject *__pyx_pf_8pyliblo3_6_liblo_4send(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_target, PyObject *__pyx_v_args) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7950,23 +8282,23 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_2send(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("send", 1);
 
-  /* "pyliblo3/_liblo.pyx":199
- *         if the message couldn't be sent.
+  /* "pyliblo3/_liblo.pyx":226
+ *         IOError: if the message couldn't be sent.
  *     """
  *     _send(target, None, args)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__send(__pyx_v_target, ((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)Py_None), __pyx_v_args); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__send(__pyx_v_target, ((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)Py_None), __pyx_v_args); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 226, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":177
+  /* "pyliblo3/_liblo.pyx":202
  * 
  * 
  * def send(target, *args):             # <<<<<<<<<<<<<<
  *     """
- *     send(target, *messages)
+ *     Send a message without requiring a server
  */
 
   /* function exit code */
@@ -7982,7 +8314,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_2send(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":210
+/* "pyliblo3/_liblo.pyx":237
  *     Raised when creating a liblo OSC server fails.
  *     """
  *     def __init__(self, num, msg, where):             # <<<<<<<<<<<<<<
@@ -7998,7 +8330,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11ServerError_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11ServerError_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11ServerError___init__, "ServerError.__init__(self, num, msg, where)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11ServerError_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11ServerError_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11ServerError___init__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11ServerError_1__init__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -8052,7 +8385,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 237, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -8060,9 +8393,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 237, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, 1); __PYX_ERR(0, 210, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, 1); __PYX_ERR(0, 237, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -8070,9 +8403,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 237, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, 2); __PYX_ERR(0, 210, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, 2); __PYX_ERR(0, 237, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
@@ -8080,14 +8413,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[3]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 237, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, 3); __PYX_ERR(0, 210, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, 3); __PYX_ERR(0, 237, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 210, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 237, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 4)) {
       goto __pyx_L5_argtuple_error;
@@ -8104,7 +8437,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, __pyx_nargs); __PYX_ERR(0, 210, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 4, 4, __pyx_nargs); __PYX_ERR(0, 237, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8139,34 +8472,34 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11ServerError___init__(CYTHON_UNUSED
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":211
+  /* "pyliblo3/_liblo.pyx":238
  *     """
  *     def __init__(self, num, msg, where):
  *         self.num = num             # <<<<<<<<<<<<<<
  *         self.msg = msg
  *         self.where = where
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_num, __pyx_v_num) < 0) __PYX_ERR(0, 211, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_num, __pyx_v_num) < 0) __PYX_ERR(0, 238, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":212
+  /* "pyliblo3/_liblo.pyx":239
  *     def __init__(self, num, msg, where):
  *         self.num = num
  *         self.msg = msg             # <<<<<<<<<<<<<<
  *         self.where = where
  *     def __str__(self):
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_msg, __pyx_v_msg) < 0) __PYX_ERR(0, 212, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_msg, __pyx_v_msg) < 0) __PYX_ERR(0, 239, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":213
+  /* "pyliblo3/_liblo.pyx":240
  *         self.num = num
  *         self.msg = msg
  *         self.where = where             # <<<<<<<<<<<<<<
  *     def __str__(self):
  *         s = "server error %d" % self.num
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_where, __pyx_v_where) < 0) __PYX_ERR(0, 213, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_where, __pyx_v_where) < 0) __PYX_ERR(0, 240, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":210
+  /* "pyliblo3/_liblo.pyx":237
  *     Raised when creating a liblo OSC server fails.
  *     """
  *     def __init__(self, num, msg, where):             # <<<<<<<<<<<<<<
@@ -8186,7 +8519,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11ServerError___init__(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":214
+/* "pyliblo3/_liblo.pyx":241
  *         self.msg = msg
  *         self.where = where
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -8202,7 +8535,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11ServerError_3__str__ = {"__str__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11ServerError_3__str__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11ServerError_2__str__, "ServerError.__str__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11ServerError_3__str__ = {"__str__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11ServerError_3__str__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11ServerError_2__str__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11ServerError_3__str__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -8247,12 +8581,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 241, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__str__") < 0)) __PYX_ERR(0, 214, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__str__") < 0)) __PYX_ERR(0, 241, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -8263,7 +8597,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__str__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 214, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__str__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 241, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8302,64 +8636,64 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11ServerError_2__str__(CYTHON_UNUSED
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__str__", 1);
 
-  /* "pyliblo3/_liblo.pyx":215
+  /* "pyliblo3/_liblo.pyx":242
  *         self.where = where
  *     def __str__(self):
  *         s = "server error %d" % self.num             # <<<<<<<<<<<<<<
  *         if self.where: s += " in %s" % self.where
  *         s += ": %s" % self.msg
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_num); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_num); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyString_FormatSafe(__pyx_kp_s_server_error_d, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyString_FormatSafe(__pyx_kp_s_server_error_d, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_s = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":216
+  /* "pyliblo3/_liblo.pyx":243
  *     def __str__(self):
  *         s = "server error %d" % self.num
  *         if self.where: s += " in %s" % self.where             # <<<<<<<<<<<<<<
  *         s += ": %s" % self.msg
  *         return s
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_where); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_where); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 243, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 243, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_where); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_where); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 243, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyString_FormatSafe(__pyx_kp_s_in_s, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyString_FormatSafe(__pyx_kp_s_in_s, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_s, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_s, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 243, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF_SET(__pyx_v_s, __pyx_t_2);
     __pyx_t_2 = 0;
   }
 
-  /* "pyliblo3/_liblo.pyx":217
+  /* "pyliblo3/_liblo.pyx":244
  *         s = "server error %d" % self.num
  *         if self.where: s += " in %s" % self.where
  *         s += ": %s" % self.msg             # <<<<<<<<<<<<<<
  *         return s
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_msg); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_msg); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyString_FormatSafe(__pyx_kp_s_s, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyString_FormatSafe(__pyx_kp_s_s, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 244, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_s, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_s, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF_SET(__pyx_v_s, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":218
+  /* "pyliblo3/_liblo.pyx":245
  *         if self.where: s += " in %s" % self.where
  *         s += ": %s" % self.msg
  *         return s             # <<<<<<<<<<<<<<
@@ -8371,7 +8705,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11ServerError_2__str__(CYTHON_UNUSED
   __pyx_r = __pyx_v_s;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":214
+  /* "pyliblo3/_liblo.pyx":241
  *         self.msg = msg
  *         self.where = where
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -8392,7 +8726,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11ServerError_2__str__(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":221
+/* "pyliblo3/_liblo.pyx":248
  * 
  * 
  * cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,             # <<<<<<<<<<<<<<
@@ -8430,19 +8764,19 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
   #endif
   __Pyx_RefNannySetupContext("_msg_callback", 0);
 
-  /* "pyliblo3/_liblo.pyx":228
+  /* "pyliblo3/_liblo.pyx":255
  *     cdef uint32_t size, j
  * 
  *     args = []             # <<<<<<<<<<<<<<
  * 
  *     for i from 0 <= i < argc:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 255, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_args = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":230
+  /* "pyliblo3/_liblo.pyx":257
  *     args = []
  * 
  *     for i from 0 <= i < argc:             # <<<<<<<<<<<<<<
@@ -8452,7 +8786,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
   __pyx_t_2 = __pyx_v_argc;
   for (__pyx_v_i = 0; __pyx_v_i < __pyx_t_2; __pyx_v_i++) {
 
-    /* "pyliblo3/_liblo.pyx":231
+    /* "pyliblo3/_liblo.pyx":258
  * 
  *     for i from 0 <= i < argc:
  *         t = types[i]             # <<<<<<<<<<<<<<
@@ -8461,7 +8795,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
  */
     __pyx_v_t = (__pyx_v_types[__pyx_v_i]);
 
-    /* "pyliblo3/_liblo.pyx":232
+    /* "pyliblo3/_liblo.pyx":259
  *     for i from 0 <= i < argc:
  *         t = types[i]
  *         if   t == 'i': v = argv[i].i             # <<<<<<<<<<<<<<
@@ -8470,65 +8804,65 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
  */
     switch (__pyx_v_t) {
       case 'i':
-      __pyx_t_1 = __Pyx_PyInt_From_int32_t((__pyx_v_argv[__pyx_v_i])->i); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_int32_t((__pyx_v_argv[__pyx_v_i])->i); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 259, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
       __pyx_t_1 = 0;
       break;
       case 'h':
 
-      /* "pyliblo3/_liblo.pyx":233
+      /* "pyliblo3/_liblo.pyx":260
  *         t = types[i]
  *         if   t == 'i': v = argv[i].i
  *         elif t == 'h': v = argv[i].h             # <<<<<<<<<<<<<<
  *         elif t == 'f': v = argv[i].f
  *         elif t == 'd': v = argv[i].d
  */
-      __pyx_t_1 = __Pyx_PyInt_From_int64_t((__pyx_v_argv[__pyx_v_i])->h); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_int64_t((__pyx_v_argv[__pyx_v_i])->h); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 260, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
       __pyx_t_1 = 0;
       break;
       case 'f':
 
-      /* "pyliblo3/_liblo.pyx":234
+      /* "pyliblo3/_liblo.pyx":261
  *         if   t == 'i': v = argv[i].i
  *         elif t == 'h': v = argv[i].h
  *         elif t == 'f': v = argv[i].f             # <<<<<<<<<<<<<<
  *         elif t == 'd': v = argv[i].d
  *         elif t == 'c': v = chr(argv[i].c)
  */
-      __pyx_t_1 = PyFloat_FromDouble((__pyx_v_argv[__pyx_v_i])->f); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 234, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble((__pyx_v_argv[__pyx_v_i])->f); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 261, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
       __pyx_t_1 = 0;
       break;
       case 'd':
 
-      /* "pyliblo3/_liblo.pyx":235
+      /* "pyliblo3/_liblo.pyx":262
  *         elif t == 'h': v = argv[i].h
  *         elif t == 'f': v = argv[i].f
  *         elif t == 'd': v = argv[i].d             # <<<<<<<<<<<<<<
  *         elif t == 'c': v = chr(argv[i].c)
  *         elif t == 's': v = _decode(&argv[i].s)
  */
-      __pyx_t_1 = PyFloat_FromDouble((__pyx_v_argv[__pyx_v_i])->d); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble((__pyx_v_argv[__pyx_v_i])->d); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
       __pyx_t_1 = 0;
       break;
       case 'c':
 
-      /* "pyliblo3/_liblo.pyx":236
+      /* "pyliblo3/_liblo.pyx":263
  *         elif t == 'f': v = argv[i].f
  *         elif t == 'd': v = argv[i].d
  *         elif t == 'c': v = chr(argv[i].c)             # <<<<<<<<<<<<<<
  *         elif t == 's': v = _decode(&argv[i].s)
  *         elif t == 'S': v = _decode(&argv[i].s)
  */
-      __pyx_t_1 = __Pyx_PyInt_From_unsigned_char((__pyx_v_argv[__pyx_v_i])->c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 236, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_unsigned_char((__pyx_v_argv[__pyx_v_i])->c); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_chr, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 236, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_chr, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 263, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_3);
@@ -8536,16 +8870,16 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       case 's':
 
-      /* "pyliblo3/_liblo.pyx":237
+      /* "pyliblo3/_liblo.pyx":264
  *         elif t == 'd': v = argv[i].d
  *         elif t == 'c': v = chr(argv[i].c)
  *         elif t == 's': v = _decode(&argv[i].s)             # <<<<<<<<<<<<<<
  *         elif t == 'S': v = _decode(&argv[i].s)
  *         elif t == 'T': v = True
  */
-      __pyx_t_3 = __Pyx_PyBytes_FromString((&(__pyx_v_argv[__pyx_v_i])->s)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 237, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyBytes_FromString((&(__pyx_v_argv[__pyx_v_i])->s)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 264, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
+      __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 264, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_1);
@@ -8553,16 +8887,16 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       case 'S':
 
-      /* "pyliblo3/_liblo.pyx":238
+      /* "pyliblo3/_liblo.pyx":265
  *         elif t == 'c': v = chr(argv[i].c)
  *         elif t == 's': v = _decode(&argv[i].s)
  *         elif t == 'S': v = _decode(&argv[i].s)             # <<<<<<<<<<<<<<
  *         elif t == 'T': v = True
  *         elif t == 'F': v = False
  */
-      __pyx_t_1 = __Pyx_PyBytes_FromString((&(__pyx_v_argv[__pyx_v_i])->s)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyBytes_FromString((&(__pyx_v_argv[__pyx_v_i])->s)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 265, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_3);
@@ -8570,7 +8904,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       case 'T':
 
-      /* "pyliblo3/_liblo.pyx":239
+      /* "pyliblo3/_liblo.pyx":266
  *         elif t == 's': v = _decode(&argv[i].s)
  *         elif t == 'S': v = _decode(&argv[i].s)
  *         elif t == 'T': v = True             # <<<<<<<<<<<<<<
@@ -8582,7 +8916,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       case 'F':
 
-      /* "pyliblo3/_liblo.pyx":240
+      /* "pyliblo3/_liblo.pyx":267
  *         elif t == 'S': v = _decode(&argv[i].s)
  *         elif t == 'T': v = True
  *         elif t == 'F': v = False             # <<<<<<<<<<<<<<
@@ -8594,7 +8928,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       case 'N':
 
-      /* "pyliblo3/_liblo.pyx":241
+      /* "pyliblo3/_liblo.pyx":268
  *         elif t == 'T': v = True
  *         elif t == 'F': v = False
  *         elif t == 'N': v = None             # <<<<<<<<<<<<<<
@@ -8606,46 +8940,46 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       case 'I':
 
-      /* "pyliblo3/_liblo.pyx":242
+      /* "pyliblo3/_liblo.pyx":269
  *         elif t == 'F': v = False
  *         elif t == 'N': v = None
  *         elif t == 'I': v = float('inf')             # <<<<<<<<<<<<<<
  *         elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
  *         elif t == 't': v = _timetag_to_double(argv[i].t)
  */
-      __pyx_t_4 = __Pyx_PyString_AsDouble(__pyx_n_s_inf); if (unlikely(__pyx_t_4 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 242, __pyx_L1_error)
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyString_AsDouble(__pyx_n_s_inf); if (unlikely(__pyx_t_4 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 269, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 269, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_3);
       __pyx_t_3 = 0;
       break;
       case 'm':
 
-      /* "pyliblo3/_liblo.pyx":243
+      /* "pyliblo3/_liblo.pyx":270
  *         elif t == 'N': v = None
  *         elif t == 'I': v = float('inf')
  *         elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])             # <<<<<<<<<<<<<<
  *         elif t == 't': v = _timetag_to_double(argv[i].t)
  *         elif t == 'b':
  */
-      __pyx_t_3 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 243, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[0])); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[1])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[1])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_5 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[2])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 243, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[2])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[3])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 243, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_From_uint8_t(((__pyx_v_argv[__pyx_v_i])->m[3])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 243, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GIVEREF(__pyx_t_3);
-      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3)) __PYX_ERR(0, 243, __pyx_L1_error);
+      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3)) __PYX_ERR(0, 270, __pyx_L1_error);
       __Pyx_GIVEREF(__pyx_t_1);
-      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error);
+      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error);
       __Pyx_GIVEREF(__pyx_t_5);
-      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_5)) __PYX_ERR(0, 243, __pyx_L1_error);
+      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_5)) __PYX_ERR(0, 270, __pyx_L1_error);
       __Pyx_GIVEREF(__pyx_t_6);
-      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 3, __pyx_t_6)) __PYX_ERR(0, 243, __pyx_L1_error);
+      if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 3, __pyx_t_6)) __PYX_ERR(0, 270, __pyx_L1_error);
       __pyx_t_3 = 0;
       __pyx_t_1 = 0;
       __pyx_t_5 = 0;
@@ -8655,37 +8989,37 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       case 't':
 
-      /* "pyliblo3/_liblo.pyx":244
+      /* "pyliblo3/_liblo.pyx":271
  *         elif t == 'I': v = float('inf')
  *         elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
  *         elif t == 't': v = _timetag_to_double(argv[i].t)             # <<<<<<<<<<<<<<
  *         elif t == 'b':
  *             v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
  */
-      __pyx_t_4 = __pyx_f_8pyliblo3_6_liblo__timetag_to_double((__pyx_v_argv[__pyx_v_i])->t); if (unlikely(__pyx_t_4 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 244, __pyx_L1_error)
-      __pyx_t_7 = PyFloat_FromDouble(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 244, __pyx_L1_error)
+      __pyx_t_4 = __pyx_f_8pyliblo3_6_liblo__timetag_to_double((__pyx_v_argv[__pyx_v_i])->t); if (unlikely(__pyx_t_4 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 271, __pyx_L1_error)
+      __pyx_t_7 = PyFloat_FromDouble(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 271, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_7);
       __pyx_t_7 = 0;
       break;
       case 'b':
 
-      /* "pyliblo3/_liblo.pyx":246
+      /* "pyliblo3/_liblo.pyx":273
  *         elif t == 't': v = _timetag_to_double(argv[i].t)
  *         elif t == 'b':
  *             v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))             # <<<<<<<<<<<<<<
  *         else:
  *             v = None  # unhandled data type
  */
-      __pyx_t_7 = __Pyx_PyBytes_FromCString(((unsigned char *)lo_blob_dataptr((__pyx_v_argv[__pyx_v_i])))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 246, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyBytes_FromCString(((unsigned char *)lo_blob_dataptr((__pyx_v_argv[__pyx_v_i])))); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 273, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 246, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyBytes_Type)), __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 273, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_6);
       __pyx_t_6 = 0;
 
-      /* "pyliblo3/_liblo.pyx":245
+      /* "pyliblo3/_liblo.pyx":272
  *         elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
  *         elif t == 't': v = _timetag_to_double(argv[i].t)
  *         elif t == 'b':             # <<<<<<<<<<<<<<
@@ -8695,7 +9029,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
       default:
 
-      /* "pyliblo3/_liblo.pyx":248
+      /* "pyliblo3/_liblo.pyx":275
  *             v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
  *         else:
  *             v = None  # unhandled data type             # <<<<<<<<<<<<<<
@@ -8707,17 +9041,17 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
       break;
     }
 
-    /* "pyliblo3/_liblo.pyx":250
+    /* "pyliblo3/_liblo.pyx":277
  *             v = None  # unhandled data type
  * 
  *         args.append(v)             # <<<<<<<<<<<<<<
  * 
  *     cdef char *url = lo_address_get_url(lo_message_get_source(msg))
  */
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_args, __pyx_v_v); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 250, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_args, __pyx_v_v); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 277, __pyx_L1_error)
   }
 
-  /* "pyliblo3/_liblo.pyx":252
+  /* "pyliblo3/_liblo.pyx":279
  *         args.append(v)
  * 
  *     cdef char *url = lo_address_get_url(lo_message_get_source(msg))             # <<<<<<<<<<<<<<
@@ -8726,22 +9060,22 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
  */
   __pyx_v_url = lo_address_get_url(lo_message_get_source(__pyx_v_msg));
 
-  /* "pyliblo3/_liblo.pyx":253
+  /* "pyliblo3/_liblo.pyx":280
  * 
  *     cdef char *url = lo_address_get_url(lo_message_get_source(msg))
  *     src = Address(url)             # <<<<<<<<<<<<<<
  *     free(url)
  * 
  */
-  __pyx_t_6 = __Pyx_PyBytes_FromString(__pyx_v_url); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyBytes_FromString(__pyx_v_url); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 280, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address), __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address), __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 280, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_v_src = ((struct __pyx_obj_8pyliblo3_6_liblo_Address *)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "pyliblo3/_liblo.pyx":254
+  /* "pyliblo3/_liblo.pyx":281
  *     cdef char *url = lo_address_get_url(lo_message_get_source(msg))
  *     src = Address(url)
  *     free(url)             # <<<<<<<<<<<<<<
@@ -8750,7 +9084,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
  */
   free(__pyx_v_url);
 
-  /* "pyliblo3/_liblo.pyx":256
+  /* "pyliblo3/_liblo.pyx":283
  *     free(url)
  * 
  *     cb = <Callback>cb_data             # <<<<<<<<<<<<<<
@@ -8762,60 +9096,60 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
   __pyx_v_cb = ((struct __pyx_obj_8pyliblo3_6_liblo_Callback *)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "pyliblo3/_liblo.pyx":258
+  /* "pyliblo3/_liblo.pyx":285
  *     cb = <Callback>cb_data
  * 
  *     func_args = (_decode(<char*>path),             # <<<<<<<<<<<<<<
  *                  args,
  *                  _decode(<char*>types),
  */
-  __pyx_t_7 = __Pyx_PyBytes_FromString(((char *)__pyx_v_path)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyBytes_FromString(((char *)__pyx_v_path)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 285, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_t_6 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 285, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "pyliblo3/_liblo.pyx":260
+  /* "pyliblo3/_liblo.pyx":287
  *     func_args = (_decode(<char*>path),
  *                  args,
  *                  _decode(<char*>types),             # <<<<<<<<<<<<<<
  *                  src,
  *                  cb.user_data)
  */
-  __pyx_t_7 = __Pyx_PyBytes_FromString(((char *)__pyx_v_types)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyBytes_FromString(((char *)__pyx_v_types)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_5 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "pyliblo3/_liblo.pyx":258
+  /* "pyliblo3/_liblo.pyx":285
  *     cb = <Callback>cb_data
  * 
  *     func_args = (_decode(<char*>path),             # <<<<<<<<<<<<<<
  *                  args,
  *                  _decode(<char*>types),
  */
-  __pyx_t_7 = PyTuple_New(5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 285, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_6);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6)) __PYX_ERR(0, 258, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6)) __PYX_ERR(0, 285, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_args);
   __Pyx_GIVEREF(__pyx_v_args);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_v_args)) __PYX_ERR(0, 258, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_v_args)) __PYX_ERR(0, 285, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_5)) __PYX_ERR(0, 258, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_5)) __PYX_ERR(0, 285, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_src);
   __Pyx_GIVEREF((PyObject *)__pyx_v_src);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 3, ((PyObject *)__pyx_v_src))) __PYX_ERR(0, 258, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 3, ((PyObject *)__pyx_v_src))) __PYX_ERR(0, 285, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_cb->user_data);
   __Pyx_GIVEREF(__pyx_v_cb->user_data);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 4, __pyx_v_cb->user_data)) __PYX_ERR(0, 258, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 4, __pyx_v_cb->user_data)) __PYX_ERR(0, 285, __pyx_L1_error);
   __pyx_t_6 = 0;
   __pyx_t_5 = 0;
   __pyx_v_func_args = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "pyliblo3/_liblo.pyx":266
+  /* "pyliblo3/_liblo.pyx":293
  *     # call function
  *     # spec = _inspect.getfullargspec(func)
  *     if cb.has_varargs == 1:             # <<<<<<<<<<<<<<
@@ -8825,19 +9159,19 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
   __pyx_t_9 = (__pyx_v_cb->has_varargs == 1);
   if (__pyx_t_9) {
 
-    /* "pyliblo3/_liblo.pyx":267
+    /* "pyliblo3/_liblo.pyx":294
  *     # spec = _inspect.getfullargspec(func)
  *     if cb.has_varargs == 1:
  *         r = cb.func(*func_args)             # <<<<<<<<<<<<<<
  *     else:
  *         r = cb.func(*func_args[0:cb.numargs])
  */
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_v_cb->func, __pyx_v_func_args, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 267, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_v_cb->func, __pyx_v_func_args, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 294, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_v_r = __pyx_t_7;
     __pyx_t_7 = 0;
 
-    /* "pyliblo3/_liblo.pyx":266
+    /* "pyliblo3/_liblo.pyx":293
  *     # call function
  *     # spec = _inspect.getfullargspec(func)
  *     if cb.has_varargs == 1:             # <<<<<<<<<<<<<<
@@ -8847,7 +9181,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
     goto __pyx_L5;
   }
 
-  /* "pyliblo3/_liblo.pyx":269
+  /* "pyliblo3/_liblo.pyx":296
  *         r = cb.func(*func_args)
  *     else:
  *         r = cb.func(*func_args[0:cb.numargs])             # <<<<<<<<<<<<<<
@@ -8855,9 +9189,9 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
  *     return r if r is not None else 0
  */
   /*else*/ {
-    __pyx_t_7 = __Pyx_PyTuple_GetSlice(__pyx_v_func_args, 0, __pyx_v_cb->numargs); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 269, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyTuple_GetSlice(__pyx_v_func_args, 0, __pyx_v_cb->numargs); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 296, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_v_cb->func, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 269, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_v_cb->func, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 296, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_v_r = __pyx_t_5;
@@ -8865,7 +9199,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
   }
   __pyx_L5:;
 
-  /* "pyliblo3/_liblo.pyx":271
+  /* "pyliblo3/_liblo.pyx":298
  *         r = cb.func(*func_args[0:cb.numargs])
  * 
  *     return r if r is not None else 0             # <<<<<<<<<<<<<<
@@ -8874,7 +9208,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
  */
   __pyx_t_9 = (__pyx_v_r != Py_None);
   if (__pyx_t_9) {
-    __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_v_r); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 271, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_v_r); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 298, __pyx_L1_error)
     __pyx_t_2 = __pyx_t_10;
   } else {
     __pyx_t_2 = 0;
@@ -8882,7 +9216,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
   __pyx_r = __pyx_t_2;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":221
+  /* "pyliblo3/_liblo.pyx":248
  * 
  * 
  * cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,             # <<<<<<<<<<<<<<
@@ -8913,7 +9247,7 @@ static int __pyx_f_8pyliblo3_6_liblo__msg_callback(const char *__pyx_v_path, con
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":274
+/* "pyliblo3/_liblo.pyx":301
  * 
  * 
  * cdef int _bundle_start_callback(lo_timetag t, void *cb_data) noexcept with gil:             # <<<<<<<<<<<<<<
@@ -8943,7 +9277,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_start_callback(lo_timetag __pyx_v_t
   #endif
   __Pyx_RefNannySetupContext("_bundle_start_callback", 0);
 
-  /* "pyliblo3/_liblo.pyx":275
+  /* "pyliblo3/_liblo.pyx":302
  * 
  * cdef int _bundle_start_callback(lo_timetag t, void *cb_data) noexcept with gil:
  *     cb = <object>cb_data             # <<<<<<<<<<<<<<
@@ -8955,19 +9289,19 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_start_callback(lo_timetag __pyx_v_t
   __pyx_v_cb = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":276
+  /* "pyliblo3/_liblo.pyx":303
  * cdef int _bundle_start_callback(lo_timetag t, void *cb_data) noexcept with gil:
  *     cb = <object>cb_data
  *     r = cb.start_func(_timetag_to_double(t), cb.user_data)             # <<<<<<<<<<<<<<
  *     return r if r is not None else 0
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_start_func); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_start_func); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__timetag_to_double(__pyx_v_t); if (unlikely(__pyx_t_3 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 276, __pyx_L1_error)
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__timetag_to_double(__pyx_v_t); if (unlikely(__pyx_t_3 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_user_data); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_user_data); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_t_6 = NULL;
   __pyx_t_7 = 0;
@@ -8989,14 +9323,14 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_start_callback(lo_timetag __pyx_v_t
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 276, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __pyx_v_r = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":277
+  /* "pyliblo3/_liblo.pyx":304
  *     cb = <object>cb_data
  *     r = cb.start_func(_timetag_to_double(t), cb.user_data)
  *     return r if r is not None else 0             # <<<<<<<<<<<<<<
@@ -9005,7 +9339,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_start_callback(lo_timetag __pyx_v_t
  */
   __pyx_t_8 = (__pyx_v_r != Py_None);
   if (__pyx_t_8) {
-    __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_v_r); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyInt_As_int(__pyx_v_r); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 304, __pyx_L1_error)
     __pyx_t_7 = __pyx_t_9;
   } else {
     __pyx_t_7 = 0;
@@ -9013,7 +9347,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_start_callback(lo_timetag __pyx_v_t
   __pyx_r = __pyx_t_7;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":274
+  /* "pyliblo3/_liblo.pyx":301
  * 
  * 
  * cdef int _bundle_start_callback(lo_timetag t, void *cb_data) noexcept with gil:             # <<<<<<<<<<<<<<
@@ -9040,7 +9374,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_start_callback(lo_timetag __pyx_v_t
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":280
+/* "pyliblo3/_liblo.pyx":307
  * 
  * 
  * cdef int _bundle_end_callback(void *cb_data) noexcept with gil:             # <<<<<<<<<<<<<<
@@ -9068,7 +9402,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_end_callback(void *__pyx_v_cb_data)
   #endif
   __Pyx_RefNannySetupContext("_bundle_end_callback", 0);
 
-  /* "pyliblo3/_liblo.pyx":281
+  /* "pyliblo3/_liblo.pyx":308
  * 
  * cdef int _bundle_end_callback(void *cb_data) noexcept with gil:
  *     cb = <object>cb_data             # <<<<<<<<<<<<<<
@@ -9080,16 +9414,16 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_end_callback(void *__pyx_v_cb_data)
   __pyx_v_cb = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":282
+  /* "pyliblo3/_liblo.pyx":309
  * cdef int _bundle_end_callback(void *cb_data) noexcept with gil:
  *     cb = <object>cb_data
  *     r = cb.end_func(cb.user_data)             # <<<<<<<<<<<<<<
  *     return r if r is not None else 0
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_end_func); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 282, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_end_func); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_user_data); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 282, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_cb, __pyx_n_s_user_data); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -9110,14 +9444,14 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_end_callback(void *__pyx_v_cb_data)
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_5, 1+__pyx_t_5);
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 282, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __pyx_v_r = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":283
+  /* "pyliblo3/_liblo.pyx":310
  *     cb = <object>cb_data
  *     r = cb.end_func(cb.user_data)
  *     return r if r is not None else 0             # <<<<<<<<<<<<<<
@@ -9126,7 +9460,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_end_callback(void *__pyx_v_cb_data)
  */
   __pyx_t_6 = (__pyx_v_r != Py_None);
   if (__pyx_t_6) {
-    __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_v_r); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 283, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_v_r); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 310, __pyx_L1_error)
     __pyx_t_5 = __pyx_t_7;
   } else {
     __pyx_t_5 = 0;
@@ -9134,7 +9468,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_end_callback(void *__pyx_v_cb_data)
   __pyx_r = __pyx_t_5;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":280
+  /* "pyliblo3/_liblo.pyx":307
  * 
  * 
  * cdef int _bundle_end_callback(void *cb_data) noexcept with gil:             # <<<<<<<<<<<<<<
@@ -9160,7 +9494,7 @@ static int __pyx_f_8pyliblo3_6_liblo__bundle_end_callback(void *__pyx_v_cb_data)
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":286
+/* "pyliblo3/_liblo.pyx":313
  * 
  * 
  * cdef void _err_handler(int num, const_char *msg, const_char *where) noexcept with gil:             # <<<<<<<<<<<<<<
@@ -9185,18 +9519,18 @@ static void __pyx_f_8pyliblo3_6_liblo__err_handler(int __pyx_v_num, const char *
   #endif
   __Pyx_RefNannySetupContext("_err_handler", 0);
 
-  /* "pyliblo3/_liblo.pyx":290
+  /* "pyliblo3/_liblo.pyx":317
  *     # instead
  *     global __exception
  *     __exception = ServerError(num, <char*>msg, None)             # <<<<<<<<<<<<<<
  *     if where: __exception.where = <char*>where
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_ServerError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 290, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_ServerError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_num); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 290, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_num); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyBytes_FromString(((char *)__pyx_v_msg)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 290, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyBytes_FromString(((char *)__pyx_v_msg)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -9218,14 +9552,14 @@ static void __pyx_f_8pyliblo3_6_liblo__err_handler(int __pyx_v_num, const char *
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 317, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exception, __pyx_t_1) < 0) __PYX_ERR(0, 290, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exception, __pyx_t_1) < 0) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":291
+  /* "pyliblo3/_liblo.pyx":318
  *     global __exception
  *     __exception = ServerError(num, <char*>msg, None)
  *     if where: __exception.where = <char*>where             # <<<<<<<<<<<<<<
@@ -9234,16 +9568,16 @@ static void __pyx_f_8pyliblo3_6_liblo__err_handler(int __pyx_v_num, const char *
  */
   __pyx_t_7 = (__pyx_v_where != 0);
   if (__pyx_t_7) {
-    __pyx_t_1 = __Pyx_PyBytes_FromString(((char *)__pyx_v_where)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyBytes_FromString(((char *)__pyx_v_where)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_exception); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_exception); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 318, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_where, __pyx_t_1) < 0) __PYX_ERR(0, 291, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_where, __pyx_t_1) < 0) __PYX_ERR(0, 318, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
 
-  /* "pyliblo3/_liblo.pyx":286
+  /* "pyliblo3/_liblo.pyx":313
  * 
  * 
  * cdef void _err_handler(int num, const_char *msg, const_char *where) noexcept with gil:             # <<<<<<<<<<<<<<
@@ -9267,12 +9601,12 @@ static void __pyx_f_8pyliblo3_6_liblo__err_handler(int __pyx_v_num, const char *
   #endif
 }
 
-/* "pyliblo3/_liblo.pyx":305
+/* "pyliblo3/_liblo.pyx":340
  *     _counter = 0
  * 
  *     def __init__(self, path, types, user_data=None):             # <<<<<<<<<<<<<<
- *         """
- *         make_method(path, typespec[, user_data])
+ *         self.spec = struct(counter=make_method._counter,
+ *                            path=path,
  */
 
 /* Python wrapper */
@@ -9283,7 +9617,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11make_method___init__, "\n        make_method(path, typespec[, user_data])\n\n        Set the path and argument types for which the decorated method\n        is to be registered.\n\n        :param path:\n            the message path to be handled by the registered method.\n            ``None`` may be used as a wildcard to match any OSC message.\n        :param typespec:\n            the argument types to be handled by the registered method.\n            ``None`` may be used as a wildcard to match any OSC message.\n        :param user_data:\n            An arbitrary object that will be passed on to the decorated\n            method every time a matching message is received.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11make_method___init__, "make_method.__init__(self, path, types, user_data=None)");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11make_method_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11make_method_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11make_method___init__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11make_method_1__init__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
@@ -9339,7 +9673,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 305, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 340, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -9347,9 +9681,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 305, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 340, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 1); __PYX_ERR(0, 305, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 1); __PYX_ERR(0, 340, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -9357,21 +9691,21 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 305, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 340, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 2); __PYX_ERR(0, 305, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, 2); __PYX_ERR(0, 340, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_user_data);
           if (value) { values[3] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 305, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 340, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 305, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 340, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
@@ -9391,7 +9725,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 305, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 340, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -9430,93 +9764,93 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method___init__(CYTHON_UNUSED
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":322
- *             method every time a matching message is received.
- *         """
+  /* "pyliblo3/_liblo.pyx":341
+ * 
+ *     def __init__(self, path, types, user_data=None):
  *         self.spec = struct(counter=make_method._counter,             # <<<<<<<<<<<<<<
  *                            path=path,
  *                            types=types,
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_struct); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_struct); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 341, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 341, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_make_method); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_make_method); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 341, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_counter_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_counter_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 341, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_counter, __pyx_t_4) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_counter, __pyx_t_4) < 0) __PYX_ERR(0, 341, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":323
- *         """
+  /* "pyliblo3/_liblo.pyx":342
+ *     def __init__(self, path, types, user_data=None):
  *         self.spec = struct(counter=make_method._counter,
  *                            path=path,             # <<<<<<<<<<<<<<
  *                            types=types,
  *                            user_data=user_data)
  */
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_path, __pyx_v_path) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_path, __pyx_v_path) < 0) __PYX_ERR(0, 341, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":324
+  /* "pyliblo3/_liblo.pyx":343
  *         self.spec = struct(counter=make_method._counter,
  *                            path=path,
  *                            types=types,             # <<<<<<<<<<<<<<
  *                            user_data=user_data)
  *         make_method._counter += 1
  */
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_types, __pyx_v_types) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_types, __pyx_v_types) < 0) __PYX_ERR(0, 341, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":325
+  /* "pyliblo3/_liblo.pyx":344
  *                            path=path,
  *                            types=types,
  *                            user_data=user_data)             # <<<<<<<<<<<<<<
  *         make_method._counter += 1
  * 
  */
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_user_data, __pyx_v_user_data) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_user_data, __pyx_v_user_data) < 0) __PYX_ERR(0, 341, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":322
- *             method every time a matching message is received.
- *         """
+  /* "pyliblo3/_liblo.pyx":341
+ * 
+ *     def __init__(self, path, types, user_data=None):
  *         self.spec = struct(counter=make_method._counter,             # <<<<<<<<<<<<<<
  *                            path=path,
  *                            types=types,
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 341, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_spec, __pyx_t_4) < 0) __PYX_ERR(0, 322, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_spec, __pyx_t_4) < 0) __PYX_ERR(0, 341, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":326
+  /* "pyliblo3/_liblo.pyx":345
  *                            types=types,
  *                            user_data=user_data)
  *         make_method._counter += 1             # <<<<<<<<<<<<<<
  * 
  *     def __call__(self, f):
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_make_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 326, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_make_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_counter_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 326, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_counter_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_t_2, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 326, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_t_2, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_make_method); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 326, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_make_method); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_counter_2, __pyx_t_4) < 0) __PYX_ERR(0, 326, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_t_2, __pyx_n_s_counter_2, __pyx_t_4) < 0) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":305
+  /* "pyliblo3/_liblo.pyx":340
  *     _counter = 0
  * 
  *     def __init__(self, path, types, user_data=None):             # <<<<<<<<<<<<<<
- *         """
- *         make_method(path, typespec[, user_data])
+ *         self.spec = struct(counter=make_method._counter,
+ *                            path=path,
  */
 
   /* function exit code */
@@ -9535,7 +9869,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method___init__(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":328
+/* "pyliblo3/_liblo.pyx":347
  *         make_method._counter += 1
  * 
  *     def __call__(self, f):             # <<<<<<<<<<<<<<
@@ -9551,7 +9885,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11make_method_3__call__ = {"__call__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11make_method_3__call__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11make_method_2__call__, "make_method.__call__(self, f)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11make_method_3__call__ = {"__call__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11make_method_3__call__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11make_method_2__call__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11make_method_3__call__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -9599,7 +9934,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 328, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 347, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -9607,14 +9942,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 328, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 347, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__call__", 1, 2, 2, 1); __PYX_ERR(0, 328, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__call__", 1, 2, 2, 1); __PYX_ERR(0, 347, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__call__") < 0)) __PYX_ERR(0, 328, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__call__") < 0)) __PYX_ERR(0, 347, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -9627,7 +9962,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__call__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 328, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__call__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 347, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -9667,30 +10002,30 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method_2__call__(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__call__", 1);
 
-  /* "pyliblo3/_liblo.pyx":332
+  /* "pyliblo3/_liblo.pyx":351
  *         # decorator is run it doesn't even exist yet, so we store the
  *         # path/typespec in the function object instead...
  *         if not hasattr(f, '_method_spec'):             # <<<<<<<<<<<<<<
  *             f._method_spec = []
  *         f._method_spec.append(self.spec)
  */
-  __pyx_t_1 = __Pyx_HasAttr(__pyx_v_f, __pyx_n_s_method_spec); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_HasAttr(__pyx_v_f, __pyx_n_s_method_spec); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(0, 351, __pyx_L1_error)
   __pyx_t_2 = (!__pyx_t_1);
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":333
+    /* "pyliblo3/_liblo.pyx":352
  *         # path/typespec in the function object instead...
  *         if not hasattr(f, '_method_spec'):
  *             f._method_spec = []             # <<<<<<<<<<<<<<
  *         f._method_spec.append(self.spec)
  *         return f
  */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 333, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 352, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_f, __pyx_n_s_method_spec, __pyx_t_3) < 0) __PYX_ERR(0, 333, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_f, __pyx_n_s_method_spec, __pyx_t_3) < 0) __PYX_ERR(0, 352, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":332
+    /* "pyliblo3/_liblo.pyx":351
  *         # decorator is run it doesn't even exist yet, so we store the
  *         # path/typespec in the function object instead...
  *         if not hasattr(f, '_method_spec'):             # <<<<<<<<<<<<<<
@@ -9699,22 +10034,22 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method_2__call__(CYTHON_UNUSE
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":334
+  /* "pyliblo3/_liblo.pyx":353
  *         if not hasattr(f, '_method_spec'):
  *             f._method_spec = []
  *         f._method_spec.append(self.spec)             # <<<<<<<<<<<<<<
  *         return f
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_method_spec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_f, __pyx_n_s_method_spec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_spec); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_spec); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_Append(__pyx_t_3, __pyx_t_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 334, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Append(__pyx_t_3, __pyx_t_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 353, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":335
+  /* "pyliblo3/_liblo.pyx":354
  *             f._method_spec = []
  *         f._method_spec.append(self.spec)
  *         return f             # <<<<<<<<<<<<<<
@@ -9726,7 +10061,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method_2__call__(CYTHON_UNUSE
   __pyx_r = __pyx_v_f;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":328
+  /* "pyliblo3/_liblo.pyx":347
  *         make_method._counter += 1
  * 
  *     def __call__(self, f):             # <<<<<<<<<<<<<<
@@ -9746,10 +10081,10 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method_2__call__(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":344
+/* "pyliblo3/_liblo.pyx":363
  *     cdef list _keep_refs
  * 
- *     def __init__(self, **kwargs):             # <<<<<<<<<<<<<<
+ *     def __init__(self, reg_methods=True):             # <<<<<<<<<<<<<<
  *         self._keep_refs = []
  * 
  */
@@ -9757,9 +10092,13 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11make_method_2__call__(CYTHON_UNUSE
 /* Python wrapper */
 static int __pyx_pw_8pyliblo3_6_liblo_11_ServerBase_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_8pyliblo3_6_liblo_11_ServerBase_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_kwargs = 0;
+  PyObject *__pyx_v_reg_methods = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[1] = {0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
@@ -9769,48 +10108,90 @@ static int __pyx_pw_8pyliblo3_6_liblo_11_ServerBase_1__init__(PyObject *__pyx_v_
   __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return -1;
   #endif
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  if (unlikely(__pyx_nargs > 0)) {
-    __Pyx_RaiseArgtupleInvalid("__init__", 1, 0, 0, __pyx_nargs); return -1;}
-  if (__pyx_kwds && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__init__", 1))) return -1;
-  if (__pyx_kwds) {
-    __pyx_v_kwargs = __Pyx_KwargsAsDict_VARARGS(__pyx_kwds, __pyx_kwvalues);
-    if (unlikely(!__pyx_v_kwargs)) return -1;
-    __Pyx_GOTREF(__pyx_v_kwargs);
-  } else {
-    __pyx_v_kwargs = PyDict_New();
-    if (unlikely(!__pyx_v_kwargs)) return -1;
-    __Pyx_GOTREF(__pyx_v_kwargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_reg_methods,0};
+    values[0] = __Pyx_Arg_NewRef_VARARGS(((PyObject *)Py_True));
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_VARARGS(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_reg_methods);
+          if (value) { values[0] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 363, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 363, __pyx_L3_error)
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_reg_methods = values[0];
   }
-  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self), __pyx_v_kwargs);
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 363, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
+    }
+  }
+  __Pyx_AddTraceback("pyliblo3._liblo._ServerBase.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return -1;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self), __pyx_v_reg_methods);
 
   /* function exit code */
-  __Pyx_DECREF(__pyx_v_kwargs);
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
+    }
+  }
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self, PyObject *__pyx_v_kwargs) {
+static int __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self, PyObject *__pyx_v_reg_methods) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
-  int __pyx_t_3;
+  PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
+  int __pyx_t_5;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":345
+  /* "pyliblo3/_liblo.pyx":364
  * 
- *     def __init__(self, **kwargs):
+ *     def __init__(self, reg_methods=True):
  *         self._keep_refs = []             # <<<<<<<<<<<<<<
  * 
- *         if 'reg_methods' not in kwargs or kwargs['reg_methods']:
+ *         if reg_methods:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 364, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->_keep_refs);
@@ -9818,73 +10199,62 @@ static int __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(struct __pyx_obj_8p
   __pyx_v_self->_keep_refs = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":347
+  /* "pyliblo3/_liblo.pyx":366
  *         self._keep_refs = []
  * 
- *         if 'reg_methods' not in kwargs or kwargs['reg_methods']:             # <<<<<<<<<<<<<<
+ *         if reg_methods:             # <<<<<<<<<<<<<<
  *             self.register_methods()
  * 
  */
-  __pyx_t_3 = (__Pyx_PyDict_ContainsTF(__pyx_n_s_reg_methods, __pyx_v_kwargs, Py_NE)); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 347, __pyx_L1_error)
-  if (!__pyx_t_3) {
-  } else {
-    __pyx_t_2 = __pyx_t_3;
-    goto __pyx_L4_bool_binop_done;
-  }
-  __pyx_t_1 = __Pyx_PyDict_GetItem(__pyx_v_kwargs, __pyx_n_s_reg_methods); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 347, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 347, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_2 = __pyx_t_3;
-  __pyx_L4_bool_binop_done:;
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_reg_methods); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 366, __pyx_L1_error)
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":348
+    /* "pyliblo3/_liblo.pyx":367
  * 
- *         if 'reg_methods' not in kwargs or kwargs['reg_methods']:
+ *         if reg_methods:
  *             self.register_methods()             # <<<<<<<<<<<<<<
  * 
  *     cdef _check(self):
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_register_methods); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 348, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = NULL;
-    __pyx_t_6 = 0;
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_register_methods); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 367, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = NULL;
+    __pyx_t_5 = 0;
     #if CYTHON_UNPACK_METHODS
-    if (likely(PyMethod_Check(__pyx_t_4))) {
-      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
-      if (likely(__pyx_t_5)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-        __Pyx_INCREF(__pyx_t_5);
+    if (likely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+      if (likely(__pyx_t_4)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        __Pyx_INCREF(__pyx_t_4);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_4, function);
-        __pyx_t_6 = 1;
+        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __pyx_t_5 = 1;
       }
     }
     #endif
     {
-      PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
-      __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_6, 0+__pyx_t_6);
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 348, __pyx_L1_error)
+      PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
+      __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_5, 0+__pyx_t_5);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 367, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":347
+    /* "pyliblo3/_liblo.pyx":366
  *         self._keep_refs = []
  * 
- *         if 'reg_methods' not in kwargs or kwargs['reg_methods']:             # <<<<<<<<<<<<<<
+ *         if reg_methods:             # <<<<<<<<<<<<<<
  *             self.register_methods()
  * 
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":344
+  /* "pyliblo3/_liblo.pyx":363
  *     cdef list _keep_refs
  * 
- *     def __init__(self, **kwargs):             # <<<<<<<<<<<<<<
+ *     def __init__(self, reg_methods=True):             # <<<<<<<<<<<<<<
  *         self._keep_refs = []
  * 
  */
@@ -9894,8 +10264,8 @@ static int __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(struct __pyx_obj_8p
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_AddTraceback("pyliblo3._liblo._ServerBase.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -9903,7 +10273,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_11_ServerBase___init__(struct __pyx_obj_8p
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":350
+/* "pyliblo3/_liblo.pyx":369
  *             self.register_methods()
  * 
  *     cdef _check(self):             # <<<<<<<<<<<<<<
@@ -9921,7 +10291,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_11_ServerBase__check(struct __pyx_obj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_check", 1);
 
-  /* "pyliblo3/_liblo.pyx":351
+  /* "pyliblo3/_liblo.pyx":370
  * 
  *     cdef _check(self):
  *         if self._server == NULL:             # <<<<<<<<<<<<<<
@@ -9931,20 +10301,20 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_11_ServerBase__check(struct __pyx_obj
   __pyx_t_1 = (__pyx_v_self->_server == NULL);
   if (unlikely(__pyx_t_1)) {
 
-    /* "pyliblo3/_liblo.pyx":352
+    /* "pyliblo3/_liblo.pyx":371
  *     cdef _check(self):
  *         if self._server == NULL:
  *             raise RuntimeError("Server method called after free()")             # <<<<<<<<<<<<<<
  * 
  *     def register_methods(self, obj=None):
  */
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 352, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_RuntimeError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 371, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 352, __pyx_L1_error)
+    __PYX_ERR(0, 371, __pyx_L1_error)
 
-    /* "pyliblo3/_liblo.pyx":351
+    /* "pyliblo3/_liblo.pyx":370
  * 
  *     cdef _check(self):
  *         if self._server == NULL:             # <<<<<<<<<<<<<<
@@ -9953,7 +10323,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_11_ServerBase__check(struct __pyx_obj
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":350
+  /* "pyliblo3/_liblo.pyx":369
  *             self.register_methods()
  * 
  *     cdef _check(self):             # <<<<<<<<<<<<<<
@@ -9974,12 +10344,12 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_11_ServerBase__check(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":354
+/* "pyliblo3/_liblo.pyx":373
  *             raise RuntimeError("Server method called after free()")
  * 
  *     def register_methods(self, obj=None):             # <<<<<<<<<<<<<<
  *         """
- *         register_methods(obj=None)
+ *         Called internally during init if reg_methods is True
  */
 
 /* Python wrapper */
@@ -9990,7 +10360,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_2register_methods, "\n        register_methods(obj=None)\n\n        Call :meth:`add_method()` for all methods of an object that are\n        decorated with :func:`make_method`.\n\n        :param obj:\n            The object that implements the OSC callbacks to be registered.\n            By default this is the server object itself.\n\n        This function is usually called automatically by the server's\n        constructor, unless its *reg_methods* parameter was set to ``False``.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_2register_methods, "_ServerBase.register_methods(self, obj=None)\n\n        Called internally during init if reg_methods is True\n\n        Args:\n            obj: The object that implements the OSC callbacks to be registered.\n                By default this is the server object itself.\n\n        This function is usually called automatically by the server's\n        constructor, unless its *reg_methods* parameter was set to `False`.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_3register_methods = {"register_methods", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_3register_methods, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_2register_methods};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_3register_methods(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -10036,12 +10406,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_obj);
           if (value) { values[0] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 373, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "register_methods") < 0)) __PYX_ERR(0, 354, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "register_methods") < 0)) __PYX_ERR(0, 373, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
@@ -10055,7 +10425,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("register_methods", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 354, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("register_methods", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 373, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -10082,7 +10452,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":377
+/* "pyliblo3/_liblo.pyx":393
  *                     methods.append(struct(spec=spec, name=m[1]))
  *         # sort by counter
  *         methods.sort(key=lambda x: x.spec.counter)             # <<<<<<<<<<<<<<
@@ -10143,12 +10513,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 377, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "lambda") < 0)) __PYX_ERR(0, 377, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "lambda") < 0)) __PYX_ERR(0, 393, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -10159,7 +10529,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("lambda", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 377, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("lambda", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 393, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -10196,9 +10566,9 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("lambda", 1);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_spec); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 377, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_spec); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_counter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 377, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_counter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
@@ -10217,12 +10587,12 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":354
+/* "pyliblo3/_liblo.pyx":373
  *             raise RuntimeError("Server method called after free()")
  * 
  *     def register_methods(self, obj=None):             # <<<<<<<<<<<<<<
  *         """
- *         register_methods(obj=None)
+ *         Called internally during init if reg_methods is True
  */
 
 static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *__pyx_v_self, PyObject *__pyx_v_obj) {
@@ -10253,19 +10623,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
   __Pyx_RefNannySetupContext("register_methods", 0);
   __Pyx_INCREF(__pyx_v_obj);
 
-  /* "pyliblo3/_liblo.pyx":368
- *         constructor, unless its *reg_methods* parameter was set to ``False``.
+  /* "pyliblo3/_liblo.pyx":384
+ *         constructor, unless its *reg_methods* parameter was set to `False`.
  *         """
  *         if obj == None:             # <<<<<<<<<<<<<<
  *             obj = self
  *         # find and register methods that were defined using decorators
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_obj, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 368, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 368, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_obj, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 384, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 384, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":369
+    /* "pyliblo3/_liblo.pyx":385
  *         """
  *         if obj == None:
  *             obj = self             # <<<<<<<<<<<<<<
@@ -10275,8 +10645,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
     __Pyx_INCREF((PyObject *)__pyx_v_self);
     __Pyx_DECREF_SET(__pyx_v_obj, ((PyObject *)__pyx_v_self));
 
-    /* "pyliblo3/_liblo.pyx":368
- *         constructor, unless its *reg_methods* parameter was set to ``False``.
+    /* "pyliblo3/_liblo.pyx":384
+ *         constructor, unless its *reg_methods* parameter was set to `False`.
  *         """
  *         if obj == None:             # <<<<<<<<<<<<<<
  *             obj = self
@@ -10284,28 +10654,28 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":371
+  /* "pyliblo3/_liblo.pyx":387
  *             obj = self
  *         # find and register methods that were defined using decorators
  *         methods = []             # <<<<<<<<<<<<<<
  *         for m in _inspect.getmembers(obj):
  *             if hasattr(m[1], '_method_spec'):
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 371, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 387, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_methods = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":372
+  /* "pyliblo3/_liblo.pyx":388
  *         # find and register methods that were defined using decorators
  *         methods = []
  *         for m in _inspect.getmembers(obj):             # <<<<<<<<<<<<<<
  *             if hasattr(m[1], '_method_spec'):
  *                 for spec in m[1]._method_spec:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_inspect); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 372, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_inspect); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 388, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_getmembers); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 372, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_getmembers); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 388, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -10326,7 +10696,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
     PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_obj};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_5, 1+__pyx_t_5);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 388, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
@@ -10335,9 +10705,9 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
     __pyx_t_6 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_6 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 372, __pyx_L1_error)
+    __pyx_t_6 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 388, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_7 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 372, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 388, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -10346,28 +10716,28 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_4);
           #if !CYTHON_ASSUME_SAFE_MACROS
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 372, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 388, __pyx_L1_error)
           #endif
           if (__pyx_t_6 >= __pyx_temp) break;
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 372, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 388, __pyx_L1_error)
         #else
-        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 388, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         {
           Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_4);
           #if !CYTHON_ASSUME_SAFE_MACROS
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 372, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 388, __pyx_L1_error)
           #endif
           if (__pyx_t_6 >= __pyx_temp) break;
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 372, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 388, __pyx_L1_error)
         #else
-        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 388, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -10377,7 +10747,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 372, __pyx_L1_error)
+          else __PYX_ERR(0, 388, __pyx_L1_error)
         }
         break;
       }
@@ -10386,29 +10756,29 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
     __Pyx_XDECREF_SET(__pyx_v_m, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":373
+    /* "pyliblo3/_liblo.pyx":389
  *         methods = []
  *         for m in _inspect.getmembers(obj):
  *             if hasattr(m[1], '_method_spec'):             # <<<<<<<<<<<<<<
  *                 for spec in m[1]._method_spec:
  *                     methods.append(struct(spec=spec, name=m[1]))
  */
-    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_m, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 373, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_m, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 389, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_HasAttr(__pyx_t_1, __pyx_n_s_method_spec); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 373, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_HasAttr(__pyx_t_1, __pyx_n_s_method_spec); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 389, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_2) {
 
-      /* "pyliblo3/_liblo.pyx":374
+      /* "pyliblo3/_liblo.pyx":390
  *         for m in _inspect.getmembers(obj):
  *             if hasattr(m[1], '_method_spec'):
  *                 for spec in m[1]._method_spec:             # <<<<<<<<<<<<<<
  *                     methods.append(struct(spec=spec, name=m[1]))
  *         # sort by counter
  */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_m, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 374, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_m, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 390, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_method_spec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 374, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_method_spec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 390, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (likely(PyList_CheckExact(__pyx_t_3)) || PyTuple_CheckExact(__pyx_t_3)) {
@@ -10416,9 +10786,9 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
         __pyx_t_8 = 0;
         __pyx_t_9 = NULL;
       } else {
-        __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 374, __pyx_L1_error)
+        __pyx_t_8 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 390, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_9 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 374, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 390, __pyx_L1_error)
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       for (;;) {
@@ -10427,28 +10797,28 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
             {
               Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
               #if !CYTHON_ASSUME_SAFE_MACROS
-              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 374, __pyx_L1_error)
+              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 390, __pyx_L1_error)
               #endif
               if (__pyx_t_8 >= __pyx_temp) break;
             }
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 374, __pyx_L1_error)
+            __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 390, __pyx_L1_error)
             #else
-            __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 374, __pyx_L1_error)
+            __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 390, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
             #endif
           } else {
             {
               Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
               #if !CYTHON_ASSUME_SAFE_MACROS
-              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 374, __pyx_L1_error)
+              if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 390, __pyx_L1_error)
               #endif
               if (__pyx_t_8 >= __pyx_temp) break;
             }
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 374, __pyx_L1_error)
+            __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 390, __pyx_L1_error)
             #else
-            __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 374, __pyx_L1_error)
+            __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 390, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
             #endif
           }
@@ -10458,7 +10828,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 374, __pyx_L1_error)
+              else __PYX_ERR(0, 390, __pyx_L1_error)
             }
             break;
           }
@@ -10467,30 +10837,30 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
         __Pyx_XDECREF_SET(__pyx_v_spec, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "pyliblo3/_liblo.pyx":375
+        /* "pyliblo3/_liblo.pyx":391
  *             if hasattr(m[1], '_method_spec'):
  *                 for spec in m[1]._method_spec:
  *                     methods.append(struct(spec=spec, name=m[1]))             # <<<<<<<<<<<<<<
  *         # sort by counter
  *         methods.sort(key=lambda x: x.spec.counter)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_struct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 375, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_struct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 391, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 375, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 391, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
-        if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_spec, __pyx_v_spec) < 0) __PYX_ERR(0, 375, __pyx_L1_error)
-        __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_m, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 375, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_spec, __pyx_v_spec) < 0) __PYX_ERR(0, 391, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_GetItemInt(__pyx_v_m, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 391, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
-        if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_name, __pyx_t_11) < 0) __PYX_ERR(0, 375, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_name, __pyx_t_11) < 0) __PYX_ERR(0, 391, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 375, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 391, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_methods, __pyx_t_11); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 375, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_methods, __pyx_t_11); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 391, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-        /* "pyliblo3/_liblo.pyx":374
+        /* "pyliblo3/_liblo.pyx":390
  *         for m in _inspect.getmembers(obj):
  *             if hasattr(m[1], '_method_spec'):
  *                 for spec in m[1]._method_spec:             # <<<<<<<<<<<<<<
@@ -10500,7 +10870,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "pyliblo3/_liblo.pyx":373
+      /* "pyliblo3/_liblo.pyx":389
  *         methods = []
  *         for m in _inspect.getmembers(obj):
  *             if hasattr(m[1], '_method_spec'):             # <<<<<<<<<<<<<<
@@ -10509,7 +10879,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
  */
     }
 
-    /* "pyliblo3/_liblo.pyx":372
+    /* "pyliblo3/_liblo.pyx":388
  *         # find and register methods that were defined using decorators
  *         methods = []
  *         for m in _inspect.getmembers(obj):             # <<<<<<<<<<<<<<
@@ -10519,28 +10889,28 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":377
+  /* "pyliblo3/_liblo.pyx":393
  *                     methods.append(struct(spec=spec, name=m[1]))
  *         # sort by counter
  *         methods.sort(key=lambda x: x.spec.counter)             # <<<<<<<<<<<<<<
  *         for e in methods:
  *             self.add_method(e.spec.path, e.spec.types, e.name, e.spec.user_data)
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_methods, __pyx_n_s_sort); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 377, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_methods, __pyx_n_s_sort); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 377, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_11 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_16register_methods_lambda, 0, __pyx_n_s_register_methods_locals_lambda, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 377, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_16register_methods_lambda, 0, __pyx_n_s_register_methods_locals_lambda, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_key, __pyx_t_11) < 0) __PYX_ERR(0, 377, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_key, __pyx_t_11) < 0) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 377, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-  /* "pyliblo3/_liblo.pyx":378
+  /* "pyliblo3/_liblo.pyx":394
  *         # sort by counter
  *         methods.sort(key=lambda x: x.spec.counter)
  *         for e in methods:             # <<<<<<<<<<<<<<
@@ -10553,43 +10923,43 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
     {
       Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_11);
       #if !CYTHON_ASSUME_SAFE_MACROS
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 378, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 394, __pyx_L1_error)
       #endif
       if (__pyx_t_6 >= __pyx_temp) break;
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_1 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 378, __pyx_L1_error)
+    __pyx_t_1 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely((0 < 0))) __PYX_ERR(0, 394, __pyx_L1_error)
     #else
-    __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_11, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_11, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 394, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":379
+    /* "pyliblo3/_liblo.pyx":395
  *         methods.sort(key=lambda x: x.spec.counter)
  *         for e in methods:
  *             self.add_method(e.spec.path, e.spec.types, e.name, e.spec.user_data)             # <<<<<<<<<<<<<<
  * 
  *     def get_url(self):
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_spec); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_spec); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_spec); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_spec); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_types); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_types); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_13);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_name); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_name); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_spec); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_v_e, __pyx_n_s_spec); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_14);
-    __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_user_data); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 379, __pyx_L1_error)
+    __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_user_data); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 395, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
     __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
     __pyx_t_14 = NULL;
@@ -10614,13 +10984,13 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
       __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 379, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 395, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":378
+    /* "pyliblo3/_liblo.pyx":394
  *         # sort by counter
  *         methods.sort(key=lambda x: x.spec.counter)
  *         for e in methods:             # <<<<<<<<<<<<<<
@@ -10630,12 +11000,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
   }
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-  /* "pyliblo3/_liblo.pyx":354
+  /* "pyliblo3/_liblo.pyx":373
  *             raise RuntimeError("Server method called after free()")
  * 
  *     def register_methods(self, obj=None):             # <<<<<<<<<<<<<<
  *         """
- *         register_methods(obj=None)
+ *         Called internally during init if reg_methods is True
  */
 
   /* function exit code */
@@ -10663,12 +11033,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_2register_methods(stru
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":381
+/* "pyliblo3/_liblo.pyx":397
  *             self.add_method(e.spec.path, e.spec.types, e.name, e.spec.user_data)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         cdef char *tmp = lo_server_get_url(self._server)
+ *         """
+ *         Returns the url of the server
  */
 
 /* Python wrapper */
@@ -10679,7 +11049,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_5get_url = {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_4get_url, "_ServerBase.get_url(self)\n\n        Returns the url of the server\n\n        Returns:\n            (str) url of the server\n        ");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_5get_url = {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_4get_url};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_5get_url(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -10723,19 +11094,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4get_url(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_url", 1);
 
-  /* "pyliblo3/_liblo.pyx":382
- * 
- *     def get_url(self):
+  /* "pyliblo3/_liblo.pyx":404
+ *             (str) url of the server
+ *         """
  *         self._check()             # <<<<<<<<<<<<<<
  *         cdef char *tmp = lo_server_get_url(self._server)
  *         cdef object r = tmp
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 382, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 404, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":383
- *     def get_url(self):
+  /* "pyliblo3/_liblo.pyx":405
+ *         """
  *         self._check()
  *         cdef char *tmp = lo_server_get_url(self._server)             # <<<<<<<<<<<<<<
  *         cdef object r = tmp
@@ -10743,19 +11114,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4get_url(struct __pyx_
  */
   __pyx_v_tmp = lo_server_get_url(__pyx_v_self->_server);
 
-  /* "pyliblo3/_liblo.pyx":384
+  /* "pyliblo3/_liblo.pyx":406
  *         self._check()
  *         cdef char *tmp = lo_server_get_url(self._server)
  *         cdef object r = tmp             # <<<<<<<<<<<<<<
  *         free(tmp)
  *         return _decode(r)
  */
-  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_tmp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 384, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_tmp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_r = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":385
+  /* "pyliblo3/_liblo.pyx":407
  *         cdef char *tmp = lo_server_get_url(self._server)
  *         cdef object r = tmp
  *         free(tmp)             # <<<<<<<<<<<<<<
@@ -10764,7 +11135,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4get_url(struct __pyx_
  */
   free(__pyx_v_tmp);
 
-  /* "pyliblo3/_liblo.pyx":386
+  /* "pyliblo3/_liblo.pyx":408
  *         cdef object r = tmp
  *         free(tmp)
  *         return _decode(r)             # <<<<<<<<<<<<<<
@@ -10772,18 +11143,18 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4get_url(struct __pyx_
  *     def get_port(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_r); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 386, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_r); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 408, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":381
+  /* "pyliblo3/_liblo.pyx":397
  *             self.add_method(e.spec.path, e.spec.types, e.name, e.spec.user_data)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         cdef char *tmp = lo_server_get_url(self._server)
+ *         """
+ *         Returns the url of the server
  */
 
   /* function exit code */
@@ -10798,12 +11169,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4get_url(struct __pyx_
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":388
+/* "pyliblo3/_liblo.pyx":410
  *         return _decode(r)
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_port(self._server)
+ *         """
+ *         Returns the port number of this server
  */
 
 /* Python wrapper */
@@ -10814,7 +11185,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_7get_port = {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_7get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_6get_port, "_ServerBase.get_port(self)\n\n        Returns the port number of this server\n\n        Returns:\n            (int) port number\n        ");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_7get_port = {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_7get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_6get_port};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_7get_port(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -10856,37 +11228,37 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_6get_port(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_port", 1);
 
-  /* "pyliblo3/_liblo.pyx":389
- * 
- *     def get_port(self):
+  /* "pyliblo3/_liblo.pyx":417
+ *             (int) port number
+ *         """
  *         self._check()             # <<<<<<<<<<<<<<
  *         return lo_server_get_port(self._server)
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 389, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":390
- *     def get_port(self):
+  /* "pyliblo3/_liblo.pyx":418
+ *         """
  *         self._check()
  *         return lo_server_get_port(self._server)             # <<<<<<<<<<<<<<
  * 
  *     def get_protocol(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(lo_server_get_port(__pyx_v_self->_server)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 390, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(lo_server_get_port(__pyx_v_self->_server)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":388
+  /* "pyliblo3/_liblo.pyx":410
  *         return _decode(r)
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_port(self._server)
+ *         """
+ *         Returns the port number of this server
  */
 
   /* function exit code */
@@ -10900,12 +11272,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_6get_port(struct __pyx
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":392
+/* "pyliblo3/_liblo.pyx":420
  *         return lo_server_get_port(self._server)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_protocol(self._server)
+ *         """
+ *         Returns the protocol of this server, as an int
  */
 
 /* Python wrapper */
@@ -10916,7 +11288,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_9get_protocol = {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_9get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_8get_protocol, "_ServerBase.get_protocol(self)\n\n        Returns the protocol of this server, as an int\n\n        This will be one of `LO_TCP`, `LO_TCP` or `LO_UNIX`\n\n        Returns:\n            (int) the protocol as an int\n        ");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_9get_protocol = {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_9get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_8get_protocol};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_9get_protocol(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -10958,37 +11331,37 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_8get_protocol(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_protocol", 1);
 
-  /* "pyliblo3/_liblo.pyx":393
- * 
- *     def get_protocol(self):
+  /* "pyliblo3/_liblo.pyx":429
+ *             (int) the protocol as an int
+ *         """
  *         self._check()             # <<<<<<<<<<<<<<
  *         return lo_server_get_protocol(self._server)
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":394
- *     def get_protocol(self):
+  /* "pyliblo3/_liblo.pyx":430
+ *         """
  *         self._check()
  *         return lo_server_get_protocol(self._server)             # <<<<<<<<<<<<<<
  * 
  *     def fileno(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(lo_server_get_protocol(__pyx_v_self->_server)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 394, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(lo_server_get_protocol(__pyx_v_self->_server)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":392
+  /* "pyliblo3/_liblo.pyx":420
  *         return lo_server_get_port(self._server)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_protocol(self._server)
+ *         """
+ *         Returns the protocol of this server, as an int
  */
 
   /* function exit code */
@@ -11002,12 +11375,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_8get_protocol(struct _
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":396
+/* "pyliblo3/_liblo.pyx":432
  *         return lo_server_get_protocol(self._server)
  * 
  *     def fileno(self):             # <<<<<<<<<<<<<<
  *         """
- *         Return the file descriptor of the server socket, or -1 if not
+ *         Return the file descriptor of the server socket
  */
 
 /* Python wrapper */
@@ -11018,7 +11391,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_10fileno, "\n        Return the file descriptor of the server socket, or -1 if not\n        supported by the underlying server protocol.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_10fileno, "_ServerBase.fileno(self)\n\n        Return the file descriptor of the server socket\n\n        Returns:\n            (int) the file descriptor, or -1 if not supported by the underlying server protocol\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_11fileno = {"fileno", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_11fileno, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_10fileno};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_11fileno(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -11061,37 +11434,37 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_10fileno(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("fileno", 1);
 
-  /* "pyliblo3/_liblo.pyx":401
- *         supported by the underlying server protocol.
+  /* "pyliblo3/_liblo.pyx":439
+ *             (int) the file descriptor, or -1 if not supported by the underlying server protocol
  *         """
  *         self._check()             # <<<<<<<<<<<<<<
  *         return lo_server_get_socket_fd(self._server)
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 401, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 439, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":402
+  /* "pyliblo3/_liblo.pyx":440
  *         """
  *         self._check()
  *         return lo_server_get_socket_fd(self._server)             # <<<<<<<<<<<<<<
  * 
- *     def add_method(self, path, typespec, func, user_data=None):
+ *     def add_method(self, str path, str typespec, func, user_data=None):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(lo_server_get_socket_fd(__pyx_v_self->_server)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(lo_server_get_socket_fd(__pyx_v_self->_server)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 440, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":396
+  /* "pyliblo3/_liblo.pyx":432
  *         return lo_server_get_protocol(self._server)
  * 
  *     def fileno(self):             # <<<<<<<<<<<<<<
  *         """
- *         Return the file descriptor of the server socket, or -1 if not
+ *         Return the file descriptor of the server socket
  */
 
   /* function exit code */
@@ -11105,12 +11478,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_10fileno(struct __pyx_
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":404
+/* "pyliblo3/_liblo.pyx":442
  *         return lo_server_get_socket_fd(self._server)
  * 
- *     def add_method(self, path, typespec, func, user_data=None):             # <<<<<<<<<<<<<<
+ *     def add_method(self, str path, str typespec, func, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_method(path, typespec, func, user_data=None)
+ *         Register a callback for OSC messages with matching path and argument types.
  */
 
 /* Python wrapper */
@@ -11121,7 +11494,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_12add_method, "\n        add_method(path, typespec, func, user_data=None)\n\n        Register a callback function for OSC messages with matching path and\n        argument types.\n\n        :param path:\n            the message path to be handled by the registered method.\n            ``None`` may be used as a wildcard to match any OSC message.\n\n        :param typespec:\n            the argument types to be handled by the registered method.\n            ``None`` may be used as a wildcard to match any OSC message.\n\n        :param func:\n            the callback function.  This may be a global function, a class\n            method, or any other callable object, pyliblo will know what\n            to do either way.\n\n        :param user_data:\n            An arbitrary object that will be passed on to *func* every time\n            a matching message is received.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_12add_method, "_ServerBase.add_method(self, str path, str typespec, func, user_data=None)\n\n        Register a callback for OSC messages with matching path and argument types.\n\n        Args:\n            path (str): the message path to be handled by the registered method.\n                `None` may be used as a wildcard to match any OSC message.\n            typespec (str): the argument types to be handled by the registered method.\n                `None` may be used as a wildcard to match any OSC message.\n            func: the callback function.  This may be a global function, a class\n                method, or any other callable object, pyliblo will know what\n                to do either way.\n            user_data: An arbitrary object that will be passed on to *func* every time\n                a matching message is received.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_13add_method = {"add_method", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_13add_method, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_12add_method};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_13add_method(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -11177,7 +11550,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 404, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 442, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -11185,9 +11558,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 404, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 442, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("add_method", 0, 3, 4, 1); __PYX_ERR(0, 404, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("add_method", 0, 3, 4, 1); __PYX_ERR(0, 442, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -11195,21 +11568,21 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 404, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 442, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("add_method", 0, 3, 4, 2); __PYX_ERR(0, 404, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("add_method", 0, 3, 4, 2); __PYX_ERR(0, 442, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_user_data);
           if (value) { values[3] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 404, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 442, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "add_method") < 0)) __PYX_ERR(0, 404, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "add_method") < 0)) __PYX_ERR(0, 442, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
@@ -11222,14 +11595,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_path = values[0];
-    __pyx_v_typespec = values[1];
+    __pyx_v_path = ((PyObject*)values[0]);
+    __pyx_v_typespec = ((PyObject*)values[1]);
     __pyx_v_func = values[2];
     __pyx_v_user_data = values[3];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("add_method", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 404, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("add_method", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 442, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -11243,9 +11616,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_path), (&PyString_Type), 1, "path", 1))) __PYX_ERR(0, 442, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_typespec), (&PyString_Type), 1, "typespec", 1))) __PYX_ERR(0, 442, __pyx_L1_error)
   __pyx_r = __pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self), __pyx_v_path, __pyx_v_typespec, __pyx_v_func, __pyx_v_user_data);
 
   /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
   {
     Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -11275,7 +11654,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add_method", 1);
 
-  /* "pyliblo3/_liblo.pyx":431
+  /* "pyliblo3/_liblo.pyx":460
  *         cdef char *t
  * 
  *         if isinstance(path, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11293,19 +11672,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":432
+    /* "pyliblo3/_liblo.pyx":461
  * 
  *         if isinstance(path, (bytes, unicode)):
  *             s = _encode(path)             # <<<<<<<<<<<<<<
  *             p = s
  *         elif path is None:
  */
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 432, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 461, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_s = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":433
+    /* "pyliblo3/_liblo.pyx":462
  *         if isinstance(path, (bytes, unicode)):
  *             s = _encode(path)
  *             p = s             # <<<<<<<<<<<<<<
@@ -11314,12 +11693,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
  */
     if (unlikely(__pyx_v_s == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 433, __pyx_L1_error)
+      __PYX_ERR(0, 462, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 433, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 462, __pyx_L1_error)
     __pyx_v_p = __pyx_t_4;
 
-    /* "pyliblo3/_liblo.pyx":431
+    /* "pyliblo3/_liblo.pyx":460
  *         cdef char *t
  * 
  *         if isinstance(path, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11329,17 +11708,17 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":434
+  /* "pyliblo3/_liblo.pyx":463
  *             s = _encode(path)
  *             p = s
  *         elif path is None:             # <<<<<<<<<<<<<<
  *             p = NULL
  *         else:
  */
-  __pyx_t_1 = (__pyx_v_path == Py_None);
+  __pyx_t_1 = (__pyx_v_path == ((PyObject*)Py_None));
   if (likely(__pyx_t_1)) {
 
-    /* "pyliblo3/_liblo.pyx":435
+    /* "pyliblo3/_liblo.pyx":464
  *             p = s
  *         elif path is None:
  *             p = NULL             # <<<<<<<<<<<<<<
@@ -11348,7 +11727,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
  */
     __pyx_v_p = NULL;
 
-    /* "pyliblo3/_liblo.pyx":434
+    /* "pyliblo3/_liblo.pyx":463
  *             s = _encode(path)
  *             p = s
  *         elif path is None:             # <<<<<<<<<<<<<<
@@ -11358,7 +11737,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":437
+  /* "pyliblo3/_liblo.pyx":466
  *             p = NULL
  *         else:
  *             raise TypeError("path must be a string or None")             # <<<<<<<<<<<<<<
@@ -11366,15 +11745,15 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
  *         if isinstance(typespec, (bytes, unicode)):
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 437, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 466, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 437, __pyx_L1_error)
+    __PYX_ERR(0, 466, __pyx_L1_error)
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":439
+  /* "pyliblo3/_liblo.pyx":468
  *             raise TypeError("path must be a string or None")
  * 
  *         if isinstance(typespec, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11392,19 +11771,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
   __pyx_L7_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":440
+    /* "pyliblo3/_liblo.pyx":469
  * 
  *         if isinstance(typespec, (bytes, unicode)):
  *             s2 = _encode(typespec)             # <<<<<<<<<<<<<<
  *             t = s2
  *         elif typespec is None:
  */
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_typespec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 440, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_typespec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 469, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_s2 = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":441
+    /* "pyliblo3/_liblo.pyx":470
  *         if isinstance(typespec, (bytes, unicode)):
  *             s2 = _encode(typespec)
  *             t = s2             # <<<<<<<<<<<<<<
@@ -11413,12 +11792,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
  */
     if (unlikely(__pyx_v_s2 == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 441, __pyx_L1_error)
+      __PYX_ERR(0, 470, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s2); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 441, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s2); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 470, __pyx_L1_error)
     __pyx_v_t = __pyx_t_4;
 
-    /* "pyliblo3/_liblo.pyx":439
+    /* "pyliblo3/_liblo.pyx":468
  *             raise TypeError("path must be a string or None")
  * 
  *         if isinstance(typespec, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11428,17 +11807,17 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
     goto __pyx_L6;
   }
 
-  /* "pyliblo3/_liblo.pyx":442
+  /* "pyliblo3/_liblo.pyx":471
  *             s2 = _encode(typespec)
  *             t = s2
  *         elif typespec is None:             # <<<<<<<<<<<<<<
  *             t = NULL
  *         else:
  */
-  __pyx_t_1 = (__pyx_v_typespec == Py_None);
+  __pyx_t_1 = (__pyx_v_typespec == ((PyObject*)Py_None));
   if (likely(__pyx_t_1)) {
 
-    /* "pyliblo3/_liblo.pyx":443
+    /* "pyliblo3/_liblo.pyx":472
  *             t = s2
  *         elif typespec is None:
  *             t = NULL             # <<<<<<<<<<<<<<
@@ -11447,7 +11826,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
  */
     __pyx_v_t = NULL;
 
-    /* "pyliblo3/_liblo.pyx":442
+    /* "pyliblo3/_liblo.pyx":471
  *             s2 = _encode(typespec)
  *             t = s2
  *         elif typespec is None:             # <<<<<<<<<<<<<<
@@ -11457,7 +11836,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
     goto __pyx_L6;
   }
 
-  /* "pyliblo3/_liblo.pyx":445
+  /* "pyliblo3/_liblo.pyx":474
  *             t = NULL
  *         else:
  *             raise TypeError("typespec must be a string or None")             # <<<<<<<<<<<<<<
@@ -11465,47 +11844,47 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
  *         self._check()
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 445, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 474, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 445, __pyx_L1_error)
+    __PYX_ERR(0, 474, __pyx_L1_error)
   }
   __pyx_L6:;
 
-  /* "pyliblo3/_liblo.pyx":447
+  /* "pyliblo3/_liblo.pyx":476
  *             raise TypeError("typespec must be a string or None")
  * 
  *         self._check()             # <<<<<<<<<<<<<<
  * 
  *         # use a weak reference if func is a method, to avoid circular
  */
-  __pyx_t_3 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 447, __pyx_L1_error)
+  __pyx_t_3 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 476, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":454
+  /* "pyliblo3/_liblo.pyx":483
  *         # class)
  *         # cb = struct(func=_weakref_method(func), user_data=user_data)
  *         cb = Callback(func, user_data)             # <<<<<<<<<<<<<<
  *         # keep a reference to the callback data around
  *         self._keep_refs.append(cb)
  */
-  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 454, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 483, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_v_func);
   __Pyx_GIVEREF(__pyx_v_func);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_func)) __PYX_ERR(0, 454, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_func)) __PYX_ERR(0, 483, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_user_data);
   __Pyx_GIVEREF(__pyx_v_user_data);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_user_data)) __PYX_ERR(0, 454, __pyx_L1_error);
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Callback), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 454, __pyx_L1_error)
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_user_data)) __PYX_ERR(0, 483, __pyx_L1_error);
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Callback), __pyx_t_3, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 483, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_cb = ((struct __pyx_obj_8pyliblo3_6_liblo_Callback *)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "pyliblo3/_liblo.pyx":456
+  /* "pyliblo3/_liblo.pyx":485
  *         cb = Callback(func, user_data)
  *         # keep a reference to the callback data around
  *         self._keep_refs.append(cb)             # <<<<<<<<<<<<<<
@@ -11514,25 +11893,25 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
  */
   if (unlikely(__pyx_v_self->_keep_refs == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "append");
-    __PYX_ERR(0, 456, __pyx_L1_error)
+    __PYX_ERR(0, 485, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, ((PyObject *)__pyx_v_cb)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 456, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, ((PyObject *)__pyx_v_cb)); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 485, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":458
+  /* "pyliblo3/_liblo.pyx":487
  *         self._keep_refs.append(cb)
  * 
  *         lo_server_add_method(self._server, p, t, _msg_callback, <void*>cb)             # <<<<<<<<<<<<<<
  * 
- *     def del_method(self, path, typespec):
+ *     def del_method(self, path, typespec=None):
  */
   (void)(lo_server_add_method(__pyx_v_self->_server, __pyx_v_p, __pyx_v_t, __pyx_f_8pyliblo3_6_liblo__msg_callback, ((void *)__pyx_v_cb)));
 
-  /* "pyliblo3/_liblo.pyx":404
+  /* "pyliblo3/_liblo.pyx":442
  *         return lo_server_get_socket_fd(self._server)
  * 
- *     def add_method(self, path, typespec, func, user_data=None):             # <<<<<<<<<<<<<<
+ *     def add_method(self, str path, str typespec, func, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_method(path, typespec, func, user_data=None)
+ *         Register a callback for OSC messages with matching path and argument types.
  */
 
   /* function exit code */
@@ -11552,12 +11931,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_12add_method(struct __
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":460
+/* "pyliblo3/_liblo.pyx":489
  *         lo_server_add_method(self._server, p, t, _msg_callback, <void*>cb)
  * 
- *     def del_method(self, path, typespec):             # <<<<<<<<<<<<<<
+ *     def del_method(self, path, typespec=None):             # <<<<<<<<<<<<<<
  *         """
- *         del_method(path, typespec)
+ *         Delete a callback function
  */
 
 /* Python wrapper */
@@ -11568,7 +11947,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_14del_method, "\n        del_method(path, typespec)\n\n        Delete a callback function.  For both *path* and *typespec*, ``None``\n        may be used as a wildcard.\n\n        .. versionadded:: 0.9.2\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_14del_method, "_ServerBase.del_method(self, path, typespec=None)\n\n        Delete a callback function\n\n        Delete a callback function.  For both *path* and *typespec*, `None`\n        may be used as a wildcard.\n\n        Args:\n            path (str | None): the method to delete\n            typespec (str | None): the typespec to match, or None to delete any\n                method matching the given path\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_15del_method = {"del_method", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_15del_method, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_14del_method};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_15del_method(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -11600,6 +11979,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
   {
     PyObject **__pyx_pyargnames[] = {&__pyx_n_s_path,&__pyx_n_s_typespec,0};
+    values[1] = __Pyx_Arg_NewRef_FASTCALL(((PyObject *)Py_None));
     if (__pyx_kwds) {
       Py_ssize_t kw_args;
       switch (__pyx_nargs) {
@@ -11617,35 +11997,35 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 460, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 489, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
-        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_typespec)) != 0)) {
-          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
-          kw_args--;
-        }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 460, __pyx_L3_error)
-        else {
-          __Pyx_RaiseArgtupleInvalid("del_method", 1, 2, 2, 1); __PYX_ERR(0, 460, __pyx_L3_error)
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_typespec);
+          if (value) { values[1] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 489, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "del_method") < 0)) __PYX_ERR(0, 460, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "del_method") < 0)) __PYX_ERR(0, 489, __pyx_L3_error)
       }
-    } else if (unlikely(__pyx_nargs != 2)) {
-      goto __pyx_L5_argtuple_error;
     } else {
-      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
-      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      switch (__pyx_nargs) {
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
     }
     __pyx_v_path = values[0];
     __pyx_v_typespec = values[1];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("del_method", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 460, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("del_method", 0, 1, 2, __pyx_nargs); __PYX_ERR(0, 489, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -11688,7 +12068,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("del_method", 1);
 
-  /* "pyliblo3/_liblo.pyx":472
+  /* "pyliblo3/_liblo.pyx":504
  *         cdef char *t
  * 
  *         if isinstance(path, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11706,19 +12086,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":473
+    /* "pyliblo3/_liblo.pyx":505
  * 
  *         if isinstance(path, (bytes, unicode)):
  *             s = _encode(path)             # <<<<<<<<<<<<<<
  *             p = s
  *         elif path == None:
  */
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 473, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_path); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 505, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_s = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":474
+    /* "pyliblo3/_liblo.pyx":506
  *         if isinstance(path, (bytes, unicode)):
  *             s = _encode(path)
  *             p = s             # <<<<<<<<<<<<<<
@@ -11727,12 +12107,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
  */
     if (unlikely(__pyx_v_s == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 474, __pyx_L1_error)
+      __PYX_ERR(0, 506, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 474, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 506, __pyx_L1_error)
     __pyx_v_p = __pyx_t_4;
 
-    /* "pyliblo3/_liblo.pyx":472
+    /* "pyliblo3/_liblo.pyx":504
  *         cdef char *t
  * 
  *         if isinstance(path, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11742,19 +12122,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":475
+  /* "pyliblo3/_liblo.pyx":507
  *             s = _encode(path)
  *             p = s
  *         elif path == None:             # <<<<<<<<<<<<<<
  *             p = NULL
  *         else:
  */
-  __pyx_t_3 = PyObject_RichCompare(__pyx_v_path, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 475, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 475, __pyx_L1_error)
+  __pyx_t_3 = PyObject_RichCompare(__pyx_v_path, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 507, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 507, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (likely(__pyx_t_1)) {
 
-    /* "pyliblo3/_liblo.pyx":476
+    /* "pyliblo3/_liblo.pyx":508
  *             p = s
  *         elif path == None:
  *             p = NULL             # <<<<<<<<<<<<<<
@@ -11763,7 +12143,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
  */
     __pyx_v_p = NULL;
 
-    /* "pyliblo3/_liblo.pyx":475
+    /* "pyliblo3/_liblo.pyx":507
  *             s = _encode(path)
  *             p = s
  *         elif path == None:             # <<<<<<<<<<<<<<
@@ -11773,7 +12153,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":478
+  /* "pyliblo3/_liblo.pyx":510
  *             p = NULL
  *         else:
  *             raise TypeError("path must be a string or None")             # <<<<<<<<<<<<<<
@@ -11781,15 +12161,15 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
  *         if isinstance(typespec, (bytes, unicode)):
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 478, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 510, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 478, __pyx_L1_error)
+    __PYX_ERR(0, 510, __pyx_L1_error)
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":480
+  /* "pyliblo3/_liblo.pyx":512
  *             raise TypeError("path must be a string or None")
  * 
  *         if isinstance(typespec, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11807,19 +12187,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
   __pyx_L7_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":481
+    /* "pyliblo3/_liblo.pyx":513
  * 
  *         if isinstance(typespec, (bytes, unicode)):
  *             s2 = _encode(typespec)             # <<<<<<<<<<<<<<
  *             t = s2
  *         elif typespec == None:
  */
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_typespec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 481, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_typespec); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 513, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_s2 = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":482
+    /* "pyliblo3/_liblo.pyx":514
  *         if isinstance(typespec, (bytes, unicode)):
  *             s2 = _encode(typespec)
  *             t = s2             # <<<<<<<<<<<<<<
@@ -11828,12 +12208,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
  */
     if (unlikely(__pyx_v_s2 == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 482, __pyx_L1_error)
+      __PYX_ERR(0, 514, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s2); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 482, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_s2); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 514, __pyx_L1_error)
     __pyx_v_t = __pyx_t_4;
 
-    /* "pyliblo3/_liblo.pyx":480
+    /* "pyliblo3/_liblo.pyx":512
  *             raise TypeError("path must be a string or None")
  * 
  *         if isinstance(typespec, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -11843,19 +12223,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
     goto __pyx_L6;
   }
 
-  /* "pyliblo3/_liblo.pyx":483
+  /* "pyliblo3/_liblo.pyx":515
  *             s2 = _encode(typespec)
  *             t = s2
  *         elif typespec == None:             # <<<<<<<<<<<<<<
  *             t = NULL
  *         else:
  */
-  __pyx_t_3 = PyObject_RichCompare(__pyx_v_typespec, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 483, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 483, __pyx_L1_error)
+  __pyx_t_3 = PyObject_RichCompare(__pyx_v_typespec, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 515, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 515, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (likely(__pyx_t_1)) {
 
-    /* "pyliblo3/_liblo.pyx":484
+    /* "pyliblo3/_liblo.pyx":516
  *             t = s2
  *         elif typespec == None:
  *             t = NULL             # <<<<<<<<<<<<<<
@@ -11864,7 +12244,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
  */
     __pyx_v_t = NULL;
 
-    /* "pyliblo3/_liblo.pyx":483
+    /* "pyliblo3/_liblo.pyx":515
  *             s2 = _encode(typespec)
  *             t = s2
  *         elif typespec == None:             # <<<<<<<<<<<<<<
@@ -11874,7 +12254,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
     goto __pyx_L6;
   }
 
-  /* "pyliblo3/_liblo.pyx":486
+  /* "pyliblo3/_liblo.pyx":518
  *             t = NULL
  *         else:
  *             raise TypeError("typespec must be a string or None")             # <<<<<<<<<<<<<<
@@ -11882,26 +12262,26 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
  *         self._check()
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 486, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 486, __pyx_L1_error)
+    __PYX_ERR(0, 518, __pyx_L1_error)
   }
   __pyx_L6:;
 
-  /* "pyliblo3/_liblo.pyx":488
+  /* "pyliblo3/_liblo.pyx":520
  *             raise TypeError("typespec must be a string or None")
  * 
  *         self._check()             # <<<<<<<<<<<<<<
  *         lo_server_del_method(self._server, p, t)
  * 
  */
-  __pyx_t_3 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 488, __pyx_L1_error)
+  __pyx_t_3 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 520, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":489
+  /* "pyliblo3/_liblo.pyx":521
  * 
  *         self._check()
  *         lo_server_del_method(self._server, p, t)             # <<<<<<<<<<<<<<
@@ -11910,12 +12290,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
  */
   lo_server_del_method(__pyx_v_self->_server, __pyx_v_p, __pyx_v_t);
 
-  /* "pyliblo3/_liblo.pyx":460
+  /* "pyliblo3/_liblo.pyx":489
  *         lo_server_add_method(self._server, p, t, _msg_callback, <void*>cb)
  * 
- *     def del_method(self, path, typespec):             # <<<<<<<<<<<<<<
+ *     def del_method(self, path, typespec=None):             # <<<<<<<<<<<<<<
  *         """
- *         del_method(path, typespec)
+ *         Delete a callback function
  */
 
   /* function exit code */
@@ -11933,12 +12313,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_14del_method(struct __
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":491
+/* "pyliblo3/_liblo.pyx":523
  *         lo_server_del_method(self._server, p, t)
  * 
  *     def add_bundle_handlers(self, start_handler, end_handler, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_bundle_handlers(start_handler, end_handler, user_data=None)
+ *         Add bundle notification handlers.
  */
 
 /* Python wrapper */
@@ -11949,7 +12329,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers, "\n        add_bundle_handlers(start_handler, end_handler, user_data=None)\n\n        Add bundle notification handlers.\n\n        :param start_handler:\n            a callback which fires when at the start of a bundle. This is\n            called with the bundle's timestamp and user_data.\n        :param end_handler:\n            a callback which fires when at the end of a bundle. This is called\n            with user_data.\n        :param user_data:\n            data to pass to the handlers.\n\n        .. versionadded:: 0.10.0\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers, "_ServerBase.add_bundle_handlers(self, start_handler, end_handler, user_data=None)\n\n        Add bundle notification handlers.\n\n        Args:\n            start_handler: a callback which fires when at the start of a bundle. This is\n                called with the bundle's timestamp and user_data.\n            end_handler: a callback which fires when at the end of a bundle. This is called\n                with user_data.\n            user_data: data to pass to the handlers.\n\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_17add_bundle_handlers = {"add_bundle_handlers", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_17add_bundle_handlers, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_17add_bundle_handlers(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -12002,7 +12382,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 491, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -12010,21 +12390,21 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 491, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("add_bundle_handlers", 0, 2, 3, 1); __PYX_ERR(0, 491, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("add_bundle_handlers", 0, 2, 3, 1); __PYX_ERR(0, 523, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_user_data);
           if (value) { values[2] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 491, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "add_bundle_handlers") < 0)) __PYX_ERR(0, 491, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "add_bundle_handlers") < 0)) __PYX_ERR(0, 523, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
@@ -12042,7 +12422,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("add_bundle_handlers", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 491, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("add_bundle_handlers", 0, 2, 3, __pyx_nargs); __PYX_ERR(0, 523, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -12085,18 +12465,18 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers(
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add_bundle_handlers", 1);
 
-  /* "pyliblo3/_liblo.pyx":508
- *         .. versionadded:: 0.10.0
+  /* "pyliblo3/_liblo.pyx":535
+ * 
  *         """
  *         cb_data = struct(start_func=_weakref_method(start_handler),             # <<<<<<<<<<<<<<
  *                          end_func=_weakref_method(end_handler),
  *                          user_data=user_data)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_struct); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 508, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_struct); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 535, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 508, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 535, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_weakref_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 508, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_weakref_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 535, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -12116,21 +12496,21 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers(
     PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_start_handler};
     __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 508, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 535, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_start_func, __pyx_t_3) < 0) __PYX_ERR(0, 508, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_start_func, __pyx_t_3) < 0) __PYX_ERR(0, 535, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":509
+  /* "pyliblo3/_liblo.pyx":536
  *         """
  *         cb_data = struct(start_func=_weakref_method(start_handler),
  *                          end_func=_weakref_method(end_handler),             # <<<<<<<<<<<<<<
  *                          user_data=user_data)
  *         self._keep_refs.append(cb_data)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_weakref_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 509, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_weakref_method); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 536, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_6 = 0;
@@ -12150,37 +12530,37 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers(
     PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_end_handler};
     __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 509, __pyx_L1_error)
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 536, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_end_func, __pyx_t_3) < 0) __PYX_ERR(0, 508, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_end_func, __pyx_t_3) < 0) __PYX_ERR(0, 535, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":510
+  /* "pyliblo3/_liblo.pyx":537
  *         cb_data = struct(start_func=_weakref_method(start_handler),
  *                          end_func=_weakref_method(end_handler),
  *                          user_data=user_data)             # <<<<<<<<<<<<<<
  *         self._keep_refs.append(cb_data)
  * 
  */
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_user_data, __pyx_v_user_data) < 0) __PYX_ERR(0, 508, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_user_data, __pyx_v_user_data) < 0) __PYX_ERR(0, 535, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":508
- *         .. versionadded:: 0.10.0
+  /* "pyliblo3/_liblo.pyx":535
+ * 
  *         """
  *         cb_data = struct(start_func=_weakref_method(start_handler),             # <<<<<<<<<<<<<<
  *                          end_func=_weakref_method(end_handler),
  *                          user_data=user_data)
  */
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 508, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 535, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_cb_data = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":511
+  /* "pyliblo3/_liblo.pyx":538
  *                          end_func=_weakref_method(end_handler),
  *                          user_data=user_data)
  *         self._keep_refs.append(cb_data)             # <<<<<<<<<<<<<<
@@ -12189,11 +12569,11 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers(
  */
   if (unlikely(__pyx_v_self->_keep_refs == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "append");
-    __PYX_ERR(0, 511, __pyx_L1_error)
+    __PYX_ERR(0, 538, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, __pyx_v_cb_data); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 511, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, __pyx_v_cb_data); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(0, 538, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":513
+  /* "pyliblo3/_liblo.pyx":540
  *         self._keep_refs.append(cb_data)
  * 
  *         lo_server_add_bundle_handlers(self._server, _bundle_start_callback,             # <<<<<<<<<<<<<<
@@ -12202,12 +12582,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers(
  */
   (void)(lo_server_add_bundle_handlers(__pyx_v_self->_server, __pyx_f_8pyliblo3_6_liblo__bundle_start_callback, __pyx_f_8pyliblo3_6_liblo__bundle_end_callback, ((void *)__pyx_v_cb_data)));
 
-  /* "pyliblo3/_liblo.pyx":491
+  /* "pyliblo3/_liblo.pyx":523
  *         lo_server_del_method(self._server, p, t)
  * 
  *     def add_bundle_handlers(self, start_handler, end_handler, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_bundle_handlers(start_handler, end_handler, user_data=None)
+ *         Add bundle notification handlers.
  */
 
   /* function exit code */
@@ -12228,12 +12608,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers(
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":516
+/* "pyliblo3/_liblo.pyx":543
  *                                       _bundle_end_callback, <void*>cb_data)
  * 
  *     def send(self, target, *args):             # <<<<<<<<<<<<<<
  *         """
- *         send(target, *messages)
+ *         Send a message or bundle from this server to the the given target.
  */
 
 /* Python wrapper */
@@ -12244,7 +12624,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_18send, "\n        send(target, *messages)\n        send(target, path, *args)\n\n        Send a message or bundle from this server to the the given target.\n        Arguments may be one or more :class:`Message` or :class:`Bundle`\n        objects, or a single message given by its path and optional arguments.\n\n        :param target:\n            the address to send the message to; an :class:`Address` object,\n            a port number, a ``(hostname, port)`` tuple, or a URL.\n        :param messages:\n            one or more objects of type :class:`Message` or :class:`Bundle`.\n        :param path:\n            the path of the message to be sent.\n\n        :raises AddressError:\n            if the given target is invalid.\n        :raises IOError:\n            if the message couldn't be sent.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_18send, "_ServerBase.send(self, target, *args)\n\n        Send a message or bundle from this server to the the given target.\n\n        * `send(target, *messages)`\n        * `send(target, path, *args)`\n\n        Send a message or bundle from this server to the the given target.\n        Arguments may be one or more `Message` or `Bundle`\n        objects, or a single message given by its path and optional arguments.\n\n        Args:\n            target (Address | tuple[str, int] | str): the address to send the message to;\n                an `Address` object, a port number, a `(hostname, port)` tuple, or a URL.\n            messages (Message | Bundle): one or more objects of type `Message` or `Bundle`.\n            path (str): the path of the message to be sent.\n\n        Raises:\n            AddressError: if the given target is invalid.\n            IOError: if the message couldn't be sent.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_19send = {"send", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_19send, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_18send};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_19send(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -12297,13 +12677,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 516, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 543, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
         const Py_ssize_t used_pos_args = (kwd_pos_args < 1) ? kwd_pos_args : 1;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, used_pos_args, "send") < 0)) __PYX_ERR(0, 516, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, used_pos_args, "send") < 0)) __PYX_ERR(0, 543, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs < 1)) {
       goto __pyx_L5_argtuple_error;
@@ -12314,7 +12694,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("send", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 516, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("send", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 543, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -12352,34 +12732,34 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_18send(struct __pyx_ob
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("send", 1);
 
-  /* "pyliblo3/_liblo.pyx":538
- *             if the message couldn't be sent.
+  /* "pyliblo3/_liblo.pyx":564
+ *             IOError: if the message couldn't be sent.
  *         """
  *         self._check()             # <<<<<<<<<<<<<<
  *         _send(target, self, args)
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 538, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self->__pyx_vtab)->_check(__pyx_v_self); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 564, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":539
+  /* "pyliblo3/_liblo.pyx":565
  *         """
  *         self._check()
  *         _send(target, self, args)             # <<<<<<<<<<<<<<
  * 
  *     property url:
  */
-  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__send(__pyx_v_target, __pyx_v_self, __pyx_v_args); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 539, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__send(__pyx_v_target, __pyx_v_self, __pyx_v_args); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 565, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":516
+  /* "pyliblo3/_liblo.pyx":543
  *                                       _bundle_end_callback, <void*>cb_data)
  * 
  *     def send(self, target, *args):             # <<<<<<<<<<<<<<
  *         """
- *         send(target, *messages)
+ *         Send a message or bundle from this server to the the given target.
  */
 
   /* function exit code */
@@ -12395,7 +12775,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_18send(struct __pyx_ob
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":545
+/* "pyliblo3/_liblo.pyx":571
  *         The server's URL.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -12430,7 +12810,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_3url___get__(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 1);
 
-  /* "pyliblo3/_liblo.pyx":546
+  /* "pyliblo3/_liblo.pyx":572
  *         """
  *         def __get__(self):
  *             return self.get_url()             # <<<<<<<<<<<<<<
@@ -12438,7 +12818,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_3url___get__(struct __
  *     property port:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_url); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 546, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_url); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 572, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -12458,7 +12838,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_3url___get__(struct __
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 546, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 572, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -12466,7 +12846,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_3url___get__(struct __
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":545
+  /* "pyliblo3/_liblo.pyx":571
  *         The server's URL.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -12487,8 +12867,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_3url___get__(struct __
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":552
- *         The server's port number.
+/* "pyliblo3/_liblo.pyx":578
+ *         The server's port number (int)
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return self.get_port()
@@ -12522,7 +12902,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4port___get__(struct _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 1);
 
-  /* "pyliblo3/_liblo.pyx":553
+  /* "pyliblo3/_liblo.pyx":579
  *         """
  *         def __get__(self):
  *             return self.get_port()             # <<<<<<<<<<<<<<
@@ -12530,7 +12910,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4port___get__(struct _
  *     property protocol:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_port); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 553, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_port); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 579, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -12550,7 +12930,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4port___get__(struct _
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 553, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 579, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -12558,8 +12938,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4port___get__(struct _
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":552
- *         The server's port number.
+  /* "pyliblo3/_liblo.pyx":578
+ *         The server's port number (int)
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return self.get_port()
@@ -12579,8 +12959,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_4port___get__(struct _
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":560
- *         :const:`TCP`, or :const:`UNIX`).
+/* "pyliblo3/_liblo.pyx":585
+ *         The server's protocol (one of the constants `LO_UDP`, `LO_TCP` or `LO_UNIX`).
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return self.get_protocol()
@@ -12614,7 +12994,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_8protocol___get__(stru
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 1);
 
-  /* "pyliblo3/_liblo.pyx":561
+  /* "pyliblo3/_liblo.pyx":586
  *         """
  *         def __get__(self):
  *             return self.get_protocol()             # <<<<<<<<<<<<<<
@@ -12622,7 +13002,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_8protocol___get__(stru
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_protocol); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 561, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_protocol); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 586, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -12642,7 +13022,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_8protocol___get__(stru
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 561, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 586, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -12650,8 +13030,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_8protocol___get__(stru
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":560
- *         :const:`TCP`, or :const:`UNIX`).
+  /* "pyliblo3/_liblo.pyx":585
+ *         The server's protocol (one of the constants `LO_UDP`, `LO_TCP` or `LO_UNIX`).
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
  *             return self.get_protocol()
@@ -12685,7 +13065,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_20__reduce_cython__, "_ServerBase.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_20__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -12765,7 +13146,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_11_ServerBase_22__setstate_cython__, "_ServerBase.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_22__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -12885,27 +13267,23 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_11_ServerBase_22__setstate_cython__(
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":571
- *     and never blocks.
+/* "pyliblo3/_liblo.pyx":608
+ * 
  *     """
- *     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):             # <<<<<<<<<<<<<<
- *         """
- *         Server(port[, proto])
+ *     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):             # <<<<<<<<<<<<<<
+ *         cdef char *cs
+ * 
  */
 
 /* Python wrapper */
 static int __pyx_pw_8pyliblo3_6_liblo_6Server_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Server___init__, "\n        Server(port[, proto])\n\n        Create a new :class:`!Server` object.\n\n        :param port:\n            a decimal port number or a UNIX socket path.  If omitted, an\n            arbitrary free UDP port will be used.\n        :param proto:\n            one of the constants :const:`UDP`, :const:`TCP`, or :const:`UNIX`;\n            default is :const:`UDP`.\n\n        :keyword reg_methods:\n            ``False`` if you don't want the init function to automatically\n            register callbacks defined with the :func:`make_method` decorator\n            (keyword argument only).\n\n        Exceptions: ServerError\n        ");
-#if CYTHON_UPDATE_DESCRIPTOR_DOC
-struct wrapperbase __pyx_wrapperbase_8pyliblo3_6_liblo_6Server___init__;
-#endif
 static int __pyx_pw_8pyliblo3_6_liblo_6Server_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_port = 0;
   PyObject *__pyx_v_proto = 0;
-  PyObject *__pyx_v_kwargs = 0;
+  PyObject *__pyx_v_reg_methods = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[2] = {0,0};
+  PyObject* values[3] = {0,0,0};
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -12918,15 +13296,16 @@ static int __pyx_pw_8pyliblo3_6_liblo_6Server_1__init__(PyObject *__pyx_v_self, 
   __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return -1;
   #endif
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_v_kwargs = PyDict_New(); if (unlikely(!__pyx_v_kwargs)) return -1;
-  __Pyx_GOTREF(__pyx_v_kwargs);
   {
-    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_port,&__pyx_n_s_proto,0};
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_port,&__pyx_n_s_proto,&__pyx_n_s_reg_methods,0};
     values[0] = __Pyx_Arg_NewRef_VARARGS(((PyObject *)Py_None));
     values[1] = __Pyx_Arg_NewRef_VARARGS(__pyx_k__4);
+    values[2] = __Pyx_Arg_NewRef_VARARGS(((PyObject *)Py_True));
     if (__pyx_kwds) {
       Py_ssize_t kw_args;
       switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_VARARGS(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
         case  2: values[1] = __Pyx_Arg_VARARGS(__pyx_args, 1);
         CYTHON_FALLTHROUGH;
         case  1: values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
@@ -12940,22 +13319,31 @@ static int __pyx_pw_8pyliblo3_6_liblo_6Server_1__init__(PyObject *__pyx_v_self, 
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_port);
           if (value) { values[0] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 571, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 608, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  1:
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_proto);
           if (value) { values[1] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 571, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 608, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_reg_methods);
+          if (value) { values[2] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 608, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 571, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 608, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_VARARGS(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
         case  2: values[1] = __Pyx_Arg_VARARGS(__pyx_args, 1);
         CYTHON_FALLTHROUGH;
         case  1: values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
@@ -12966,10 +13354,11 @@ static int __pyx_pw_8pyliblo3_6_liblo_6Server_1__init__(PyObject *__pyx_v_self, 
     }
     __pyx_v_port = values[0];
     __pyx_v_proto = values[1];
+    __pyx_v_reg_methods = values[2];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 2, __pyx_nargs); __PYX_ERR(0, 571, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 3, __pyx_nargs); __PYX_ERR(0, 608, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -12979,15 +13368,13 @@ static int __pyx_pw_8pyliblo3_6_liblo_6Server_1__init__(PyObject *__pyx_v_self, 
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_DECREF(__pyx_v_kwargs); __pyx_v_kwargs = 0;
   __Pyx_AddTraceback("pyliblo3._liblo.Server.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_6Server___init__(((struct __pyx_obj_8pyliblo3_6_liblo_Server *)__pyx_v_self), __pyx_v_port, __pyx_v_proto, __pyx_v_kwargs);
+  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_6Server___init__(((struct __pyx_obj_8pyliblo3_6_liblo_Server *)__pyx_v_self), __pyx_v_port, __pyx_v_proto, __pyx_v_reg_methods);
 
   /* function exit code */
-  __Pyx_DECREF(__pyx_v_kwargs);
   {
     Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -12998,7 +13385,7 @@ static int __pyx_pw_8pyliblo3_6_liblo_6Server_1__init__(PyObject *__pyx_v_self, 
   return __pyx_r;
 }
 
-static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_kwargs) {
+static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo3_6_liblo_Server *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_reg_methods) {
   char *__pyx_v_cs;
   PyObject *__pyx_v_p = NULL;
   int __pyx_r;
@@ -13007,42 +13394,43 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo
   int __pyx_t_2;
   PyObject *__pyx_t_3 = NULL;
   char *__pyx_t_4;
-  int __pyx_t_5;
-  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
   PyObject *__pyx_t_7 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__init__", 1);
+  __Pyx_RefNannySetupContext("__init__", 0);
+  __Pyx_INCREF(__pyx_v_proto);
 
-  /* "pyliblo3/_liblo.pyx":593
+  /* "pyliblo3/_liblo.pyx":611
  *         cdef char *cs
  * 
  *         if port != None:             # <<<<<<<<<<<<<<
  *             p = _encode(str(port));
  *             cs = p
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_port, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 593, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 593, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_port, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 611, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 611, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":594
+    /* "pyliblo3/_liblo.pyx":612
  * 
  *         if port != None:
  *             p = _encode(str(port));             # <<<<<<<<<<<<<<
  *             cs = p
  *         else:
  */
-    __pyx_t_1 = __Pyx_PyObject_Str(__pyx_v_port); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 594, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Str(__pyx_v_port); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 612, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 594, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 612, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_p = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":595
+    /* "pyliblo3/_liblo.pyx":613
  *         if port != None:
  *             p = _encode(str(port));
  *             cs = p             # <<<<<<<<<<<<<<
@@ -13051,12 +13439,12 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo
  */
     if (unlikely(__pyx_v_p == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 595, __pyx_L1_error)
+      __PYX_ERR(0, 613, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_p); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 595, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_p); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 613, __pyx_L1_error)
     __pyx_v_cs = __pyx_t_4;
 
-    /* "pyliblo3/_liblo.pyx":593
+    /* "pyliblo3/_liblo.pyx":611
  *         cdef char *cs
  * 
  *         if port != None:             # <<<<<<<<<<<<<<
@@ -13066,64 +13454,117 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":597
+  /* "pyliblo3/_liblo.pyx":615
  *             cs = p
  *         else:
  *             cs = NULL             # <<<<<<<<<<<<<<
  * 
- *         global __exception
+ *         if isinstance(proto, str):
  */
   /*else*/ {
     __pyx_v_cs = NULL;
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":600
+  /* "pyliblo3/_liblo.pyx":617
+ *             cs = NULL
+ * 
+ *         if isinstance(proto, str):             # <<<<<<<<<<<<<<
+ *             proto = _protostr_to_int(proto)
+ * 
+ */
+  __pyx_t_2 = PyString_Check(__pyx_v_proto); 
+  if (__pyx_t_2) {
+
+    /* "pyliblo3/_liblo.pyx":618
+ * 
+ *         if isinstance(proto, str):
+ *             proto = _protostr_to_int(proto)             # <<<<<<<<<<<<<<
+ * 
+ *         global __exception
+ */
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_protostr_to_int); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 618, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_5 = NULL;
+    __pyx_t_6 = 0;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_1))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_1);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_1, function);
+        __pyx_t_6 = 1;
+      }
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_proto};
+      __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_1, __pyx_callargs+1-__pyx_t_6, 1+__pyx_t_6);
+      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 618, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    }
+    __Pyx_DECREF_SET(__pyx_v_proto, __pyx_t_3);
+    __pyx_t_3 = 0;
+
+    /* "pyliblo3/_liblo.pyx":617
+ *             cs = NULL
+ * 
+ *         if isinstance(proto, str):             # <<<<<<<<<<<<<<
+ *             proto = _protostr_to_int(proto)
+ * 
+ */
+  }
+
+  /* "pyliblo3/_liblo.pyx":621
  * 
  *         global __exception
  *         __exception = None             # <<<<<<<<<<<<<<
  *         self._server = lo_server_new_with_proto(cs, proto, _err_handler)
  *         if __exception:
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exception, Py_None) < 0) __PYX_ERR(0, 600, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exception, Py_None) < 0) __PYX_ERR(0, 621, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":601
+  /* "pyliblo3/_liblo.pyx":622
  *         global __exception
  *         __exception = None
  *         self._server = lo_server_new_with_proto(cs, proto, _err_handler)             # <<<<<<<<<<<<<<
  *         if __exception:
  *             raise __exception
  */
-  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_proto); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 601, __pyx_L1_error)
-  __pyx_v_self->__pyx_base._server = lo_server_new_with_proto(__pyx_v_cs, __pyx_t_5, __pyx_f_8pyliblo3_6_liblo__err_handler);
+  __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_v_proto); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 622, __pyx_L1_error)
+  __pyx_v_self->__pyx_base._server = lo_server_new_with_proto(__pyx_v_cs, __pyx_t_6, __pyx_f_8pyliblo3_6_liblo__err_handler);
 
-  /* "pyliblo3/_liblo.pyx":602
+  /* "pyliblo3/_liblo.pyx":623
  *         __exception = None
  *         self._server = lo_server_new_with_proto(cs, proto, _err_handler)
  *         if __exception:             # <<<<<<<<<<<<<<
  *             raise __exception
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 602, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 623, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 602, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 623, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (unlikely(__pyx_t_2)) {
 
-    /* "pyliblo3/_liblo.pyx":603
+    /* "pyliblo3/_liblo.pyx":624
  *         self._server = lo_server_new_with_proto(cs, proto, _err_handler)
  *         if __exception:
  *             raise __exception             # <<<<<<<<<<<<<<
  * 
- *         _ServerBase.__init__(self, **kwargs)
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 603, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 624, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 603, __pyx_L1_error)
+    __PYX_ERR(0, 624, __pyx_L1_error)
 
-    /* "pyliblo3/_liblo.pyx":602
+    /* "pyliblo3/_liblo.pyx":623
  *         __exception = None
  *         self._server = lo_server_new_with_proto(cs, proto, _err_handler)
  *         if __exception:             # <<<<<<<<<<<<<<
@@ -13132,35 +13573,36 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":605
+  /* "pyliblo3/_liblo.pyx":626
  *             raise __exception
  * 
- *         _ServerBase.__init__(self, **kwargs)             # <<<<<<<<<<<<<<
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase), __pyx_n_s_init); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 605, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase), __pyx_n_s_init); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 626, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 605, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 626, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 605, __pyx_L1_error);
-  __pyx_t_6 = PyDict_Copy(__pyx_v_kwargs); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 605, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 605, __pyx_L1_error)
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 626, __pyx_L1_error);
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 626, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_reg_methods, __pyx_v_reg_methods) < 0) __PYX_ERR(0, 626, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 626, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "pyliblo3/_liblo.pyx":571
- *     and never blocks.
+  /* "pyliblo3/_liblo.pyx":608
+ * 
  *     """
- *     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):             # <<<<<<<<<<<<<<
- *         """
- *         Server(port[, proto])
+ *     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):             # <<<<<<<<<<<<<<
+ *         cdef char *cs
+ * 
  */
 
   /* function exit code */
@@ -13169,18 +13611,19 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Server___init__(struct __pyx_obj_8pyliblo
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_AddTraceback("pyliblo3._liblo.Server.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_p);
+  __Pyx_XDECREF(__pyx_v_proto);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":607
- *         _ServerBase.__init__(self, **kwargs)
+/* "pyliblo3/_liblo.pyx":628
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         self.free()
@@ -13211,14 +13654,14 @@ static void __pyx_pf_8pyliblo3_6_liblo_6Server_2__dealloc__(struct __pyx_obj_8py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__dealloc__", 1);
 
-  /* "pyliblo3/_liblo.pyx":608
+  /* "pyliblo3/_liblo.pyx":629
  * 
  *     def __dealloc__(self):
  *         self.free()             # <<<<<<<<<<<<<<
  * 
  *     def free(self):
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_free); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 608, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_free); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 629, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -13238,14 +13681,14 @@ static void __pyx_pf_8pyliblo3_6_liblo_6Server_2__dealloc__(struct __pyx_obj_8py
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 608, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 629, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":607
- *         _ServerBase.__init__(self, **kwargs)
+  /* "pyliblo3/_liblo.pyx":628
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         self.free()
@@ -13263,12 +13706,12 @@ static void __pyx_pf_8pyliblo3_6_liblo_6Server_2__dealloc__(struct __pyx_obj_8py
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyliblo3/_liblo.pyx":610
+/* "pyliblo3/_liblo.pyx":631
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
 
 /* Python wrapper */
@@ -13279,7 +13722,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Server_4free, "\n        Free the underlying server object and close its port.  Note that this\n        will also happen automatically when the server is deallocated.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Server_4free, "Server.free(self)\n\n        Free the underlying server object and close its port.\n\n        Note that this will also happen automatically when the server is deallocated.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Server_5free = {"free", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_5free, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_4free};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Server_5free(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -13319,8 +13762,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_4free(struct __pyx_obj_8pyli
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("free", 1);
 
-  /* "pyliblo3/_liblo.pyx":615
- *         will also happen automatically when the server is deallocated.
+  /* "pyliblo3/_liblo.pyx":637
+ *         Note that this will also happen automatically when the server is deallocated.
  *         """
  *         if self._server:             # <<<<<<<<<<<<<<
  *             lo_server_free(self._server)
@@ -13329,7 +13772,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_4free(struct __pyx_obj_8pyli
   __pyx_t_1 = (__pyx_v_self->__pyx_base._server != 0);
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":616
+    /* "pyliblo3/_liblo.pyx":638
  *         """
  *         if self._server:
  *             lo_server_free(self._server)             # <<<<<<<<<<<<<<
@@ -13338,7 +13781,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_4free(struct __pyx_obj_8pyli
  */
     lo_server_free(__pyx_v_self->__pyx_base._server);
 
-    /* "pyliblo3/_liblo.pyx":617
+    /* "pyliblo3/_liblo.pyx":639
  *         if self._server:
  *             lo_server_free(self._server)
  *             self._server = NULL             # <<<<<<<<<<<<<<
@@ -13347,8 +13790,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_4free(struct __pyx_obj_8pyli
  */
     __pyx_v_self->__pyx_base._server = NULL;
 
-    /* "pyliblo3/_liblo.pyx":615
- *         will also happen automatically when the server is deallocated.
+    /* "pyliblo3/_liblo.pyx":637
+ *         Note that this will also happen automatically when the server is deallocated.
  *         """
  *         if self._server:             # <<<<<<<<<<<<<<
  *             lo_server_free(self._server)
@@ -13356,12 +13799,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_4free(struct __pyx_obj_8pyli
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":610
+  /* "pyliblo3/_liblo.pyx":631
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
 
   /* function exit code */
@@ -13371,12 +13814,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_4free(struct __pyx_obj_8pyli
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":619
+/* "pyliblo3/_liblo.pyx":641
  *             self._server = NULL
  * 
  *     def recv(self, timeout=None):             # <<<<<<<<<<<<<<
  *         """
- *         recv(timeout=None)
+ *         Receive and dispatch one OSC message.
  */
 
 /* Python wrapper */
@@ -13387,7 +13830,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Server_6recv, "\n        recv(timeout=None)\n\n        Receive and dispatch one OSC message.  Blocking by default, unless\n        *timeout* is specified.\n\n        :param timeout:\n            Time in milliseconds after which the function returns if no\n            messages have been received.\n            *timeout* may be 0, in which case the function always returns\n            immediately, whether messages have been received or not.\n\n        :return:\n            ``True`` if a message was received, otherwise ``False``.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Server_6recv, "Server.recv(self, timeout=None)\n\n        Receive and dispatch one OSC message.\n\n        Blocking by default, unless *timeout* is specified.\n\n        Args:\n            timeout (int, float): Time in milliseconds after which the function returns if no\n                messages have been received. May be 0, in which case the function always returns\n                immediately, whether messages have been received or not.\n\n        Returns:\n            `True` if a message was received, otherwise `False`.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Server_7recv = {"recv", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_7recv, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_6recv};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Server_7recv(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -13433,12 +13876,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_timeout);
           if (value) { values[0] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 619, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 641, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "recv") < 0)) __PYX_ERR(0, 619, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "recv") < 0)) __PYX_ERR(0, 641, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
@@ -13452,7 +13895,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("recv", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 619, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("recv", 0, 0, 1, __pyx_nargs); __PYX_ERR(0, 641, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -13493,40 +13936,40 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("recv", 1);
 
-  /* "pyliblo3/_liblo.pyx":636
+  /* "pyliblo3/_liblo.pyx":656
  *         """
  *         cdef int t, r
  *         self._check()             # <<<<<<<<<<<<<<
  *         if timeout != None:
  *             t = timeout
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Server *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base._check(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 636, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Server *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base._check(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 656, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":637
+  /* "pyliblo3/_liblo.pyx":657
  *         cdef int t, r
  *         self._check()
  *         if timeout != None:             # <<<<<<<<<<<<<<
  *             t = timeout
  *             with nogil:
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_timeout, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 637, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 637, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_timeout, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 657, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 657, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":638
+    /* "pyliblo3/_liblo.pyx":658
  *         self._check()
  *         if timeout != None:
  *             t = timeout             # <<<<<<<<<<<<<<
  *             with nogil:
  *                 r = lo_server_recv_noblock(self._server, t)
  */
-    __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_timeout); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 638, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_timeout); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 658, __pyx_L1_error)
     __pyx_v_t = __pyx_t_3;
 
-    /* "pyliblo3/_liblo.pyx":639
+    /* "pyliblo3/_liblo.pyx":659
  *         if timeout != None:
  *             t = timeout
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -13542,7 +13985,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
         #endif
         /*try:*/ {
 
-          /* "pyliblo3/_liblo.pyx":640
+          /* "pyliblo3/_liblo.pyx":660
  *             t = timeout
  *             with nogil:
  *                 r = lo_server_recv_noblock(self._server, t)             # <<<<<<<<<<<<<<
@@ -13552,7 +13995,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
           __pyx_v_r = lo_server_recv_noblock(__pyx_v_self->__pyx_base._server, __pyx_v_t);
         }
 
-        /* "pyliblo3/_liblo.pyx":639
+        /* "pyliblo3/_liblo.pyx":659
  *         if timeout != None:
  *             t = timeout
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -13571,7 +14014,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
         }
     }
 
-    /* "pyliblo3/_liblo.pyx":641
+    /* "pyliblo3/_liblo.pyx":661
  *             with nogil:
  *                 r = lo_server_recv_noblock(self._server, t)
  *             return r and True or False             # <<<<<<<<<<<<<<
@@ -13585,14 +14028,14 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
     }
     if (!1) {
     } else {
-      __pyx_t_4 = __Pyx_PyBool_FromLong(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 641, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyBool_FromLong(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 661, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_1 = __pyx_t_4;
       __pyx_t_4 = 0;
       goto __pyx_L7_bool_binop_done;
     }
     __pyx_L8_next_or:;
-    __pyx_t_4 = __Pyx_PyBool_FromLong(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 641, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBool_FromLong(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 661, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_1 = __pyx_t_4;
     __pyx_t_4 = 0;
@@ -13601,7 +14044,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "pyliblo3/_liblo.pyx":637
+    /* "pyliblo3/_liblo.pyx":657
  *         cdef int t, r
  *         self._check()
  *         if timeout != None:             # <<<<<<<<<<<<<<
@@ -13610,7 +14053,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":643
+  /* "pyliblo3/_liblo.pyx":663
  *             return r and True or False
  *         else:
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -13627,7 +14070,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
         #endif
         /*try:*/ {
 
-          /* "pyliblo3/_liblo.pyx":644
+          /* "pyliblo3/_liblo.pyx":664
  *         else:
  *             with nogil:
  *                 lo_server_recv(self._server)             # <<<<<<<<<<<<<<
@@ -13637,7 +14080,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
           (void)(lo_server_recv(__pyx_v_self->__pyx_base._server));
         }
 
-        /* "pyliblo3/_liblo.pyx":643
+        /* "pyliblo3/_liblo.pyx":663
  *             return r and True or False
  *         else:
  *             with nogil:             # <<<<<<<<<<<<<<
@@ -13656,7 +14099,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
         }
     }
 
-    /* "pyliblo3/_liblo.pyx":645
+    /* "pyliblo3/_liblo.pyx":665
  *             with nogil:
  *                 lo_server_recv(self._server)
  *             return True             # <<<<<<<<<<<<<<
@@ -13669,12 +14112,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_6recv(struct __pyx_obj_8pyli
     goto __pyx_L0;
   }
 
-  /* "pyliblo3/_liblo.pyx":619
+  /* "pyliblo3/_liblo.pyx":641
  *             self._server = NULL
  * 
  *     def recv(self, timeout=None):             # <<<<<<<<<<<<<<
  *         """
- *         recv(timeout=None)
+ *         Receive and dispatch one OSC message.
  */
 
   /* function exit code */
@@ -13703,7 +14146,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Server_9__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_9__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Server_8__reduce_cython__, "Server.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Server_9__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_9__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_8__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Server_9__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -13783,7 +14227,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Server_11__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_11__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Server_10__setstate_cython__, "Server.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Server_11__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_11__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_10__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Server_11__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -13903,27 +14348,23 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Server_10__setstate_cython__(CYTHON
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":662
+/* "pyliblo3/_liblo.pyx":699
  *     cdef lo_server_thread _server_thread
  * 
- *     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):             # <<<<<<<<<<<<<<
- *         """
- *         ServerThread(port[, proto])
+ *     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):             # <<<<<<<<<<<<<<
+ *         cdef char *cs
+ * 
  */
 
 /* Python wrapper */
 static int __pyx_pw_8pyliblo3_6_liblo_12ServerThread_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread___init__, "\n        ServerThread(port[, proto])\n\n        Create a new :class:`!ServerThread` object, which can receive OSC messages.\n        Unlike :class:`Server`, :class:`ServerThread` uses its own thread which\n        runs in the background to dispatch messages.  Note that callback methods\n        will not be run in the main Python thread!\n\n        :param port:\n            a decimal port number or a UNIX socket path. If omitted, an\n            arbitrary free UDP port will be used.\n        :param proto:\n            one of the constants :const:`UDP`, :const:`TCP`, or :const:`UNIX`;\n            default is :const:`UDP`.\n\n        :keyword reg_methods:\n            ``False`` if you don't want the init function to automatically\n            register callbacks defined with the make_method decorator\n            (keyword argument only).\n\n        :raises ServerError:\n            if creating the server fails, e.g. because the given port could not\n            be opened.\n        ");
-#if CYTHON_UPDATE_DESCRIPTOR_DOC
-struct wrapperbase __pyx_wrapperbase_8pyliblo3_6_liblo_12ServerThread___init__;
-#endif
 static int __pyx_pw_8pyliblo3_6_liblo_12ServerThread_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_port = 0;
   PyObject *__pyx_v_proto = 0;
-  PyObject *__pyx_v_kwargs = 0;
+  PyObject *__pyx_v_reg_methods = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[2] = {0,0};
+  PyObject* values[3] = {0,0,0};
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -13936,15 +14377,16 @@ static int __pyx_pw_8pyliblo3_6_liblo_12ServerThread_1__init__(PyObject *__pyx_v
   __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return -1;
   #endif
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_v_kwargs = PyDict_New(); if (unlikely(!__pyx_v_kwargs)) return -1;
-  __Pyx_GOTREF(__pyx_v_kwargs);
   {
-    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_port,&__pyx_n_s_proto,0};
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_port,&__pyx_n_s_proto,&__pyx_n_s_reg_methods,0};
     values[0] = __Pyx_Arg_NewRef_VARARGS(((PyObject *)Py_None));
     values[1] = __Pyx_Arg_NewRef_VARARGS(__pyx_k__5);
+    values[2] = __Pyx_Arg_NewRef_VARARGS(((PyObject *)Py_True));
     if (__pyx_kwds) {
       Py_ssize_t kw_args;
       switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_VARARGS(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
         case  2: values[1] = __Pyx_Arg_VARARGS(__pyx_args, 1);
         CYTHON_FALLTHROUGH;
         case  1: values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
@@ -13958,22 +14400,31 @@ static int __pyx_pw_8pyliblo3_6_liblo_12ServerThread_1__init__(PyObject *__pyx_v
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_port);
           if (value) { values[0] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 662, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 699, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  1:
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_proto);
           if (value) { values[1] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 662, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 699, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_reg_methods);
+          if (value) { values[2] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 699, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, __pyx_v_kwargs, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 662, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 699, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_VARARGS(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
         case  2: values[1] = __Pyx_Arg_VARARGS(__pyx_args, 1);
         CYTHON_FALLTHROUGH;
         case  1: values[0] = __Pyx_Arg_VARARGS(__pyx_args, 0);
@@ -13984,10 +14435,11 @@ static int __pyx_pw_8pyliblo3_6_liblo_12ServerThread_1__init__(PyObject *__pyx_v
     }
     __pyx_v_port = values[0];
     __pyx_v_proto = values[1];
+    __pyx_v_reg_methods = values[2];
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 2, __pyx_nargs); __PYX_ERR(0, 662, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 3, __pyx_nargs); __PYX_ERR(0, 699, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -13997,15 +14449,13 @@ static int __pyx_pw_8pyliblo3_6_liblo_12ServerThread_1__init__(PyObject *__pyx_v
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_DECREF(__pyx_v_kwargs); __pyx_v_kwargs = 0;
   __Pyx_AddTraceback("pyliblo3._liblo.ServerThread.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(((struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *)__pyx_v_self), __pyx_v_port, __pyx_v_proto, __pyx_v_kwargs);
+  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(((struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *)__pyx_v_self), __pyx_v_port, __pyx_v_proto, __pyx_v_reg_methods);
 
   /* function exit code */
-  __Pyx_DECREF(__pyx_v_kwargs);
   {
     Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -14016,7 +14466,7 @@ static int __pyx_pw_8pyliblo3_6_liblo_12ServerThread_1__init__(PyObject *__pyx_v
   return __pyx_r;
 }
 
-static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_kwargs) {
+static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8pyliblo3_6_liblo_ServerThread *__pyx_v_self, PyObject *__pyx_v_port, PyObject *__pyx_v_proto, PyObject *__pyx_v_reg_methods) {
   char *__pyx_v_cs;
   PyObject *__pyx_v_p = NULL;
   int __pyx_r;
@@ -14033,34 +14483,34 @@ static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":689
+  /* "pyliblo3/_liblo.pyx":702
  *         cdef char *cs
  * 
  *         if port != None:             # <<<<<<<<<<<<<<
  *             p = _encode(str(port));
  *             cs = p
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_port, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 689, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 689, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_port, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 702, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 702, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":690
+    /* "pyliblo3/_liblo.pyx":703
  * 
  *         if port != None:
  *             p = _encode(str(port));             # <<<<<<<<<<<<<<
  *             cs = p
  *         else:
  */
-    __pyx_t_1 = __Pyx_PyObject_Str(__pyx_v_port); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 690, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Str(__pyx_v_port); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 703, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 690, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 703, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_p = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":691
+    /* "pyliblo3/_liblo.pyx":704
  *         if port != None:
  *             p = _encode(str(port));
  *             cs = p             # <<<<<<<<<<<<<<
@@ -14069,12 +14519,12 @@ static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8
  */
     if (unlikely(__pyx_v_p == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 691, __pyx_L1_error)
+      __PYX_ERR(0, 704, __pyx_L1_error)
     }
-    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_p); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 691, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyBytes_AsWritableString(__pyx_v_p); if (unlikely((!__pyx_t_4) && PyErr_Occurred())) __PYX_ERR(0, 704, __pyx_L1_error)
     __pyx_v_cs = __pyx_t_4;
 
-    /* "pyliblo3/_liblo.pyx":689
+    /* "pyliblo3/_liblo.pyx":702
  *         cdef char *cs
  * 
  *         if port != None:             # <<<<<<<<<<<<<<
@@ -14084,7 +14534,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":693
+  /* "pyliblo3/_liblo.pyx":706
  *             cs = p
  *         else:
  *             cs = NULL             # <<<<<<<<<<<<<<
@@ -14096,7 +14546,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":696
+  /* "pyliblo3/_liblo.pyx":709
  * 
  *         # make sure python can handle threading
  *         PyEval_InitThreads()             # <<<<<<<<<<<<<<
@@ -14105,52 +14555,52 @@ static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8
  */
   PyEval_InitThreads();
 
-  /* "pyliblo3/_liblo.pyx":699
+  /* "pyliblo3/_liblo.pyx":712
  * 
  *         global __exception
  *         __exception = None             # <<<<<<<<<<<<<<
  *         self._server_thread = lo_server_thread_new_with_proto(cs, proto, _err_handler)
  *         if __exception:
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exception, Py_None) < 0) __PYX_ERR(0, 699, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_exception, Py_None) < 0) __PYX_ERR(0, 712, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":700
+  /* "pyliblo3/_liblo.pyx":713
  *         global __exception
  *         __exception = None
  *         self._server_thread = lo_server_thread_new_with_proto(cs, proto, _err_handler)             # <<<<<<<<<<<<<<
  *         if __exception:
  *             raise __exception
  */
-  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_proto); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 700, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_proto); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 713, __pyx_L1_error)
   __pyx_v_self->_server_thread = lo_server_thread_new_with_proto(__pyx_v_cs, __pyx_t_5, __pyx_f_8pyliblo3_6_liblo__err_handler);
 
-  /* "pyliblo3/_liblo.pyx":701
+  /* "pyliblo3/_liblo.pyx":714
  *         __exception = None
  *         self._server_thread = lo_server_thread_new_with_proto(cs, proto, _err_handler)
  *         if __exception:             # <<<<<<<<<<<<<<
  *             raise __exception
  *         self._server = lo_server_thread_get_server(self._server_thread)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 701, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 714, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 701, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 714, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (unlikely(__pyx_t_2)) {
 
-    /* "pyliblo3/_liblo.pyx":702
+    /* "pyliblo3/_liblo.pyx":715
  *         self._server_thread = lo_server_thread_new_with_proto(cs, proto, _err_handler)
  *         if __exception:
  *             raise __exception             # <<<<<<<<<<<<<<
  *         self._server = lo_server_thread_get_server(self._server_thread)
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 702, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 715, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 702, __pyx_L1_error)
+    __PYX_ERR(0, 715, __pyx_L1_error)
 
-    /* "pyliblo3/_liblo.pyx":701
+    /* "pyliblo3/_liblo.pyx":714
  *         __exception = None
  *         self._server_thread = lo_server_thread_new_with_proto(cs, proto, _err_handler)
  *         if __exception:             # <<<<<<<<<<<<<<
@@ -14159,44 +14609,45 @@ static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":703
+  /* "pyliblo3/_liblo.pyx":716
  *         if __exception:
  *             raise __exception
  *         self._server = lo_server_thread_get_server(self._server_thread)             # <<<<<<<<<<<<<<
  * 
- *         _ServerBase.__init__(self, **kwargs)
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)
  */
   __pyx_v_self->__pyx_base._server = lo_server_thread_get_server(__pyx_v_self->_server_thread);
 
-  /* "pyliblo3/_liblo.pyx":705
+  /* "pyliblo3/_liblo.pyx":718
  *         self._server = lo_server_thread_get_server(self._server_thread)
  * 
- *         _ServerBase.__init__(self, **kwargs)             # <<<<<<<<<<<<<<
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase), __pyx_n_s_init); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 705, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase), __pyx_n_s_init); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 718, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 705, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 718, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 705, __pyx_L1_error);
-  __pyx_t_6 = PyDict_Copy(__pyx_v_kwargs); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 705, __pyx_L1_error)
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 718, __pyx_L1_error);
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 718, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 705, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_reg_methods, __pyx_v_reg_methods) < 0) __PYX_ERR(0, 718, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 718, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "pyliblo3/_liblo.pyx":662
+  /* "pyliblo3/_liblo.pyx":699
  *     cdef lo_server_thread _server_thread
  * 
- *     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):             # <<<<<<<<<<<<<<
- *         """
- *         ServerThread(port[, proto])
+ *     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):             # <<<<<<<<<<<<<<
+ *         cdef char *cs
+ * 
  */
 
   /* function exit code */
@@ -14215,8 +14666,8 @@ static int __pyx_pf_8pyliblo3_6_liblo_12ServerThread___init__(struct __pyx_obj_8
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":707
- *         _ServerBase.__init__(self, **kwargs)
+/* "pyliblo3/_liblo.pyx":720
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         self.free()
@@ -14247,14 +14698,14 @@ static void __pyx_pf_8pyliblo3_6_liblo_12ServerThread_2__dealloc__(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__dealloc__", 1);
 
-  /* "pyliblo3/_liblo.pyx":708
+  /* "pyliblo3/_liblo.pyx":721
  * 
  *     def __dealloc__(self):
  *         self.free()             # <<<<<<<<<<<<<<
  * 
  *     def free(self):
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_free); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 708, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_free); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 721, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -14274,14 +14725,14 @@ static void __pyx_pf_8pyliblo3_6_liblo_12ServerThread_2__dealloc__(struct __pyx_
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 708, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 721, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":707
- *         _ServerBase.__init__(self, **kwargs)
+  /* "pyliblo3/_liblo.pyx":720
+ *         _ServerBase.__init__(self, reg_methods=reg_methods)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         self.free()
@@ -14299,12 +14750,12 @@ static void __pyx_pf_8pyliblo3_6_liblo_12ServerThread_2__dealloc__(struct __pyx_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyliblo3/_liblo.pyx":710
+/* "pyliblo3/_liblo.pyx":723
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
 
 /* Python wrapper */
@@ -14315,7 +14766,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_4free, "\n        Free the underlying server object and close its port.  Note that this\n        will also happen automatically when the server is deallocated.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_4free, "ServerThread.free(self)\n\n        Free the underlying server object and close its port.\n\n        !!! note\n\n            This method is called automatically when the server is deallocated.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12ServerThread_5free = {"free", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_5free, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_4free};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_12ServerThread_5free(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -14355,8 +14806,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_ob
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("free", 1);
 
-  /* "pyliblo3/_liblo.pyx":715
- *         will also happen automatically when the server is deallocated.
+  /* "pyliblo3/_liblo.pyx":731
+ *             This method is called automatically when the server is deallocated.
  *         """
  *         if self._server_thread:             # <<<<<<<<<<<<<<
  *             lo_server_thread_free(self._server_thread)
@@ -14365,7 +14816,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_ob
   __pyx_t_1 = (__pyx_v_self->_server_thread != 0);
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":716
+    /* "pyliblo3/_liblo.pyx":732
  *         """
  *         if self._server_thread:
  *             lo_server_thread_free(self._server_thread)             # <<<<<<<<<<<<<<
@@ -14374,7 +14825,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_ob
  */
     lo_server_thread_free(__pyx_v_self->_server_thread);
 
-    /* "pyliblo3/_liblo.pyx":717
+    /* "pyliblo3/_liblo.pyx":733
  *         if self._server_thread:
  *             lo_server_thread_free(self._server_thread)
  *             self._server_thread = NULL             # <<<<<<<<<<<<<<
@@ -14383,7 +14834,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_ob
  */
     __pyx_v_self->_server_thread = NULL;
 
-    /* "pyliblo3/_liblo.pyx":718
+    /* "pyliblo3/_liblo.pyx":734
  *             lo_server_thread_free(self._server_thread)
  *             self._server_thread = NULL
  *             self._server = NULL             # <<<<<<<<<<<<<<
@@ -14392,8 +14843,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_ob
  */
     __pyx_v_self->__pyx_base._server = NULL;
 
-    /* "pyliblo3/_liblo.pyx":715
- *         will also happen automatically when the server is deallocated.
+    /* "pyliblo3/_liblo.pyx":731
+ *             This method is called automatically when the server is deallocated.
  *         """
  *         if self._server_thread:             # <<<<<<<<<<<<<<
  *             lo_server_thread_free(self._server_thread)
@@ -14401,12 +14852,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_ob
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":710
+  /* "pyliblo3/_liblo.pyx":723
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
 
   /* function exit code */
@@ -14416,12 +14867,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_4free(struct __pyx_ob
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":720
+/* "pyliblo3/_liblo.pyx":736
  *             self._server = NULL
  * 
  *     def start(self):             # <<<<<<<<<<<<<<
  *         """
- *         Start the server thread. liblo will now start to dispatch any messages
+ *         Start the server thread.
  */
 
 /* Python wrapper */
@@ -14432,7 +14883,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_6start, "\n        Start the server thread. liblo will now start to dispatch any messages\n        it receives.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_6start, "ServerThread.start(self)\n\n        Start the server thread.\n\n        liblo will now start to dispatch any messages it receives.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12ServerThread_7start = {"start", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_7start, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_6start};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_12ServerThread_7start(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -14475,18 +14926,18 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_6start(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("start", 1);
 
-  /* "pyliblo3/_liblo.pyx":725
- *         it receives.
+  /* "pyliblo3/_liblo.pyx":742
+ *         liblo will now start to dispatch any messages it receives.
  *         """
  *         self._check()             # <<<<<<<<<<<<<<
  *         lo_server_thread_start(self._server_thread)
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_ServerThread *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base._check(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 725, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_ServerThread *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base._check(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 742, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":726
+  /* "pyliblo3/_liblo.pyx":743
  *         """
  *         self._check()
  *         lo_server_thread_start(self._server_thread)             # <<<<<<<<<<<<<<
@@ -14495,12 +14946,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_6start(struct __pyx_o
  */
   lo_server_thread_start(__pyx_v_self->_server_thread);
 
-  /* "pyliblo3/_liblo.pyx":720
+  /* "pyliblo3/_liblo.pyx":736
  *             self._server = NULL
  * 
  *     def start(self):             # <<<<<<<<<<<<<<
  *         """
- *         Start the server thread. liblo will now start to dispatch any messages
+ *         Start the server thread.
  */
 
   /* function exit code */
@@ -14516,7 +14967,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_6start(struct __pyx_o
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":728
+/* "pyliblo3/_liblo.pyx":745
  *         lo_server_thread_start(self._server_thread)
  * 
  *     def stop(self):             # <<<<<<<<<<<<<<
@@ -14532,7 +14983,7 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_8stop, "\n        Stop the server thread.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_8stop, "ServerThread.stop(self)\n\n        Stop the server thread.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12ServerThread_9stop = {"stop", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_9stop, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_8stop};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_12ServerThread_9stop(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
@@ -14575,18 +15026,18 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_8stop(struct __pyx_ob
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("stop", 1);
 
-  /* "pyliblo3/_liblo.pyx":732
+  /* "pyliblo3/_liblo.pyx":749
  *         Stop the server thread.
  *         """
  *         self._check()             # <<<<<<<<<<<<<<
  *         lo_server_thread_stop(self._server_thread)
  * 
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_ServerThread *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base._check(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 732, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_ServerThread *)__pyx_v_self->__pyx_base.__pyx_vtab)->__pyx_base._check(((struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *)__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 749, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":733
+  /* "pyliblo3/_liblo.pyx":750
  *         """
  *         self._check()
  *         lo_server_thread_stop(self._server_thread)             # <<<<<<<<<<<<<<
@@ -14595,7 +15046,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_8stop(struct __pyx_ob
  */
   lo_server_thread_stop(__pyx_v_self->_server_thread);
 
-  /* "pyliblo3/_liblo.pyx":728
+  /* "pyliblo3/_liblo.pyx":745
  *         lo_server_thread_start(self._server_thread)
  * 
  *     def stop(self):             # <<<<<<<<<<<<<<
@@ -14630,7 +15081,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_10__reduce_cython__, "ServerThread.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_10__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -14710,7 +15162,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12ServerThread_12__setstate_cython__, "ServerThread.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_12__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -14830,8 +15283,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12ServerThread_12__setstate_cython__
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":744
- *     Raised when trying to create an invalid :class:`Address` object.
+/* "pyliblo3/_liblo.pyx":761
+ *     Raised when trying to create an invalid `Address` object.
  *     """
  *     def __init__(self, msg):             # <<<<<<<<<<<<<<
  *         self.msg = msg
@@ -14846,7 +15299,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12AddressError_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12AddressError_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12AddressError___init__, "AddressError.__init__(self, msg)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12AddressError_1__init__ = {"__init__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12AddressError_1__init__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12AddressError___init__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_12AddressError_1__init__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -14894,7 +15348,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 744, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 761, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -14902,14 +15356,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 744, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 761, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 744, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 761, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 744, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 761, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -14922,7 +15376,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 744, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 761, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -14957,17 +15411,17 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12AddressError___init__(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":745
+  /* "pyliblo3/_liblo.pyx":762
  *     """
  *     def __init__(self, msg):
  *         self.msg = msg             # <<<<<<<<<<<<<<
  *     def __str__(self):
  *         return "address error: %s" % self.msg
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_msg, __pyx_v_msg) < 0) __PYX_ERR(0, 745, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_msg, __pyx_v_msg) < 0) __PYX_ERR(0, 762, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":744
- *     Raised when trying to create an invalid :class:`Address` object.
+  /* "pyliblo3/_liblo.pyx":761
+ *     Raised when trying to create an invalid `Address` object.
  *     """
  *     def __init__(self, msg):             # <<<<<<<<<<<<<<
  *         self.msg = msg
@@ -14986,7 +15440,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12AddressError___init__(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":746
+/* "pyliblo3/_liblo.pyx":763
  *     def __init__(self, msg):
  *         self.msg = msg
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -15002,7 +15456,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12AddressError_3__str__ = {"__str__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12AddressError_3__str__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_12AddressError_2__str__, "AddressError.__str__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_12AddressError_3__str__ = {"__str__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12AddressError_3__str__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12AddressError_2__str__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_12AddressError_3__str__(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -15047,12 +15502,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 746, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 763, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__str__") < 0)) __PYX_ERR(0, 746, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__str__") < 0)) __PYX_ERR(0, 763, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -15063,7 +15518,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__str__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 746, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__str__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 763, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -15100,7 +15555,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12AddressError_2__str__(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__str__", 1);
 
-  /* "pyliblo3/_liblo.pyx":747
+  /* "pyliblo3/_liblo.pyx":764
  *         self.msg = msg
  *     def __str__(self):
  *         return "address error: %s" % self.msg             # <<<<<<<<<<<<<<
@@ -15108,16 +15563,16 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12AddressError_2__str__(CYTHON_UNUSE
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_msg); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 747, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_msg); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 764, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyString_FormatSafe(__pyx_kp_s_address_error_s, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 747, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyString_FormatSafe(__pyx_kp_s_address_error_s, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 764, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":746
+  /* "pyliblo3/_liblo.pyx":763
  *     def __init__(self, msg):
  *         self.msg = msg
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -15137,20 +15592,16 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_12AddressError_2__str__(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":753
+/* "pyliblo3/_liblo.pyx":793
  *     cdef lo_address _address
  * 
  *     def __init__(self, addr, addr2=None, proto=LO_UDP):             # <<<<<<<<<<<<<<
- *         """
- *         Address(hostname, port[, proto])
+ *         if isinstance(proto, str):
+ *             proto = _protostr_to_int(proto)
  */
 
 /* Python wrapper */
 static int __pyx_pw_8pyliblo3_6_liblo_7Address_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Address___init__, "\n        Address(hostname, port[, proto])\n        Address(port)\n        Address(url)\n\n        Create a new :class:`!Address` object from the given hostname/port\n        or URL.\n\n        :param hostname:\n            the target's hostname.\n\n        :param port:\n            the port number on the target.\n\n        :param proto:\n            one of the constants :const:`UDP`, :const:`TCP`, or :const:`UNIX`.\n\n        :param url:\n            a URL in liblo notation, e.g. ``'osc.udp://hostname:1234/'``.\n\n        :raises AddressError:\n            if the given parameters do not represent a valid address.\n\n        ");
-#if CYTHON_UPDATE_DESCRIPTOR_DOC
-struct wrapperbase __pyx_wrapperbase_8pyliblo3_6_liblo_7Address___init__;
-#endif
 static int __pyx_pw_8pyliblo3_6_liblo_7Address_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_addr = 0;
   PyObject *__pyx_v_addr2 = 0;
@@ -15193,26 +15644,26 @@ static int __pyx_pw_8pyliblo3_6_liblo_7Address_1__init__(PyObject *__pyx_v_self,
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 753, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 793, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_addr2);
           if (value) { values[1] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 753, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 793, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (kw_args > 0) {
           PyObject* value = __Pyx_GetKwValue_VARARGS(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_proto);
           if (value) { values[2] = __Pyx_Arg_NewRef_VARARGS(value); kw_args--; }
-          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 753, __pyx_L3_error)
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 793, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 753, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 793, __pyx_L3_error)
       }
     } else {
       switch (__pyx_nargs) {
@@ -15231,7 +15682,7 @@ static int __pyx_pw_8pyliblo3_6_liblo_7Address_1__init__(PyObject *__pyx_v_self,
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 3, __pyx_nargs); __PYX_ERR(0, 753, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 3, __pyx_nargs); __PYX_ERR(0, 793, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -15266,71 +15717,125 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
   int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  char *__pyx_t_5;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
   char *__pyx_t_6;
-  PyObject *__pyx_t_7 = NULL;
+  char *__pyx_t_7;
   int __pyx_t_8;
   PyObject *__pyx_t_9 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("__init__", 1);
+  __Pyx_RefNannySetupContext("__init__", 0);
+  __Pyx_INCREF(__pyx_v_proto);
 
-  /* "pyliblo3/_liblo.pyx":778
+  /* "pyliblo3/_liblo.pyx":794
  * 
- *         """
+ *     def __init__(self, addr, addr2=None, proto=LO_UDP):
+ *         if isinstance(proto, str):             # <<<<<<<<<<<<<<
+ *             proto = _protostr_to_int(proto)
+ * 
+ */
+  __pyx_t_1 = PyString_Check(__pyx_v_proto); 
+  if (__pyx_t_1) {
+
+    /* "pyliblo3/_liblo.pyx":795
+ *     def __init__(self, addr, addr2=None, proto=LO_UDP):
+ *         if isinstance(proto, str):
+ *             proto = _protostr_to_int(proto)             # <<<<<<<<<<<<<<
+ * 
+ *         if addr2:
+ */
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_protostr_to_int); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 795, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_4 = NULL;
+    __pyx_t_5 = 0;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+      if (likely(__pyx_t_4)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __pyx_t_5 = 1;
+      }
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_proto};
+      __pyx_t_2 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_5, 1+__pyx_t_5);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 795, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    }
+    __Pyx_DECREF_SET(__pyx_v_proto, __pyx_t_2);
+    __pyx_t_2 = 0;
+
+    /* "pyliblo3/_liblo.pyx":794
+ * 
+ *     def __init__(self, addr, addr2=None, proto=LO_UDP):
+ *         if isinstance(proto, str):             # <<<<<<<<<<<<<<
+ *             proto = _protostr_to_int(proto)
+ * 
+ */
+  }
+
+  /* "pyliblo3/_liblo.pyx":797
+ *             proto = _protostr_to_int(proto)
+ * 
  *         if addr2:             # <<<<<<<<<<<<<<
  *             # Address(host, port[, proto])
  *             s = _encode(addr)
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_addr2); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 778, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_addr2); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 797, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":780
+    /* "pyliblo3/_liblo.pyx":799
  *         if addr2:
  *             # Address(host, port[, proto])
  *             s = _encode(addr)             # <<<<<<<<<<<<<<
  *             s2 = _encode(str(addr2))
  *             self._address = lo_address_new_with_proto(proto, s, s2)
  */
-    __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_addr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 780, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_addr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 799, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_s = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "pyliblo3/_liblo.pyx":781
+    /* "pyliblo3/_liblo.pyx":800
  *             # Address(host, port[, proto])
  *             s = _encode(addr)
  *             s2 = _encode(str(addr2))             # <<<<<<<<<<<<<<
  *             self._address = lo_address_new_with_proto(proto, s, s2)
  *             if not self._address:
  */
-    __pyx_t_2 = __Pyx_PyObject_Str(__pyx_v_addr2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 781, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Str(__pyx_v_addr2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 800, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 781, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 800, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_s2 = ((PyObject*)__pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":782
+    /* "pyliblo3/_liblo.pyx":801
  *             s = _encode(addr)
  *             s2 = _encode(str(addr2))
  *             self._address = lo_address_new_with_proto(proto, s, s2)             # <<<<<<<<<<<<<<
  *             if not self._address:
  *                 raise AddressError("invalid protocol")
  */
-    __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_proto); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 782, __pyx_L1_error)
-    __pyx_t_5 = __Pyx_PyObject_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_5) && PyErr_Occurred())) __PYX_ERR(0, 782, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_proto); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 801, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 801, __pyx_L1_error)
     if (unlikely(__pyx_v_s2 == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 782, __pyx_L1_error)
+      __PYX_ERR(0, 801, __pyx_L1_error)
     }
-    __pyx_t_6 = __Pyx_PyBytes_AsWritableString(__pyx_v_s2); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 782, __pyx_L1_error)
-    __pyx_v_self->_address = lo_address_new_with_proto(__pyx_t_4, __pyx_t_5, __pyx_t_6);
+    __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_s2); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 801, __pyx_L1_error)
+    __pyx_v_self->_address = lo_address_new_with_proto(__pyx_t_5, __pyx_t_6, __pyx_t_7);
 
-    /* "pyliblo3/_liblo.pyx":783
+    /* "pyliblo3/_liblo.pyx":802
  *             s2 = _encode(str(addr2))
  *             self._address = lo_address_new_with_proto(proto, s, s2)
  *             if not self._address:             # <<<<<<<<<<<<<<
@@ -15340,42 +15845,42 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
     __pyx_t_1 = (!(__pyx_v_self->_address != 0));
     if (unlikely(__pyx_t_1)) {
 
-      /* "pyliblo3/_liblo.pyx":784
+      /* "pyliblo3/_liblo.pyx":803
  *             self._address = lo_address_new_with_proto(proto, s, s2)
  *             if not self._address:
  *                 raise AddressError("invalid protocol")             # <<<<<<<<<<<<<<
  *         elif isinstance(addr, int) or (isinstance(addr, str) and addr.isdigit()):
  *             # Address(port)
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_AddressError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 784, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_AddressError); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 803, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_7 = NULL;
-      __pyx_t_4 = 0;
+      __pyx_t_4 = NULL;
+      __pyx_t_5 = 0;
       #if CYTHON_UNPACK_METHODS
       if (unlikely(PyMethod_Check(__pyx_t_2))) {
-        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_2);
-        if (likely(__pyx_t_7)) {
+        __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_2);
+        if (likely(__pyx_t_4)) {
           PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(__pyx_t_4);
           __Pyx_INCREF(function);
           __Pyx_DECREF_SET(__pyx_t_2, function);
-          __pyx_t_4 = 1;
+          __pyx_t_5 = 1;
         }
       }
       #endif
       {
-        PyObject *__pyx_callargs[2] = {__pyx_t_7, __pyx_kp_s_invalid_protocol};
-        __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
-        __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 784, __pyx_L1_error)
+        PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_kp_s_invalid_protocol};
+        __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_5, 1+__pyx_t_5);
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 803, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       }
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __PYX_ERR(0, 784, __pyx_L1_error)
+      __PYX_ERR(0, 803, __pyx_L1_error)
 
-      /* "pyliblo3/_liblo.pyx":783
+      /* "pyliblo3/_liblo.pyx":802
  *             s2 = _encode(str(addr2))
  *             self._address = lo_address_new_with_proto(proto, s, s2)
  *             if not self._address:             # <<<<<<<<<<<<<<
@@ -15384,17 +15889,17 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
  */
     }
 
-    /* "pyliblo3/_liblo.pyx":778
+    /* "pyliblo3/_liblo.pyx":797
+ *             proto = _protostr_to_int(proto)
  * 
- *         """
  *         if addr2:             # <<<<<<<<<<<<<<
  *             # Address(host, port[, proto])
  *             s = _encode(addr)
  */
-    goto __pyx_L3;
+    goto __pyx_L4;
   }
 
-  /* "pyliblo3/_liblo.pyx":785
+  /* "pyliblo3/_liblo.pyx":804
  *             if not self._address:
  *                 raise AddressError("invalid protocol")
  *         elif isinstance(addr, int) or (isinstance(addr, str) and addr.isdigit()):             # <<<<<<<<<<<<<<
@@ -15405,102 +15910,102 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
   if (!__pyx_t_8) {
   } else {
     __pyx_t_1 = __pyx_t_8;
-    goto __pyx_L5_bool_binop_done;
+    goto __pyx_L6_bool_binop_done;
   }
   __pyx_t_8 = PyString_Check(__pyx_v_addr); 
   if (__pyx_t_8) {
   } else {
     __pyx_t_1 = __pyx_t_8;
-    goto __pyx_L5_bool_binop_done;
+    goto __pyx_L6_bool_binop_done;
   }
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_addr, __pyx_n_s_isdigit); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 785, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_addr, __pyx_n_s_isdigit); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 804, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_7 = NULL;
-  __pyx_t_4 = 0;
+  __pyx_t_4 = NULL;
+  __pyx_t_5 = 0;
   #if CYTHON_UNPACK_METHODS
   if (likely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_7)) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_4)) {
       PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_7);
+      __Pyx_INCREF(__pyx_t_4);
       __Pyx_INCREF(function);
       __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_4 = 1;
+      __pyx_t_5 = 1;
     }
   }
   #endif
   {
-    PyObject *__pyx_callargs[2] = {__pyx_t_7, NULL};
-    __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
-    __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 785, __pyx_L1_error)
+    PyObject *__pyx_callargs[2] = {__pyx_t_4, NULL};
+    __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_5, 0+__pyx_t_5);
+    __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 804, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
-  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_8 < 0))) __PYX_ERR(0, 785, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_8 < 0))) __PYX_ERR(0, 804, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_1 = __pyx_t_8;
-  __pyx_L5_bool_binop_done:;
+  __pyx_L6_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":787
+    /* "pyliblo3/_liblo.pyx":806
  *         elif isinstance(addr, int) or (isinstance(addr, str) and addr.isdigit()):
  *             # Address(port)
  *             s = str(addr).encode()             # <<<<<<<<<<<<<<
  *             self._address = lo_address_new(NULL, s)
  *         else:
  */
-    __pyx_t_2 = __Pyx_PyObject_Str(__pyx_v_addr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 787, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Str(__pyx_v_addr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 806, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_encode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 787, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 806, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_2 = NULL;
-    __pyx_t_4 = 0;
+    __pyx_t_5 = 0;
     #if CYTHON_UNPACK_METHODS
-    if (likely(PyMethod_Check(__pyx_t_7))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_7);
+    if (likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
       if (likely(__pyx_t_2)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
         __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_7, function);
-        __pyx_t_4 = 1;
+        __Pyx_DECREF_SET(__pyx_t_4, function);
+        __pyx_t_5 = 1;
       }
     }
     #endif
     {
       PyObject *__pyx_callargs[2] = {__pyx_t_2, NULL};
-      __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_7, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
+      __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_5, 0+__pyx_t_5);
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 787, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 806, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __pyx_v_s = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":788
+    /* "pyliblo3/_liblo.pyx":807
  *             # Address(port)
  *             s = str(addr).encode()
  *             self._address = lo_address_new(NULL, s)             # <<<<<<<<<<<<<<
  *         else:
  *             # Address(url)
  */
-    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 788, __pyx_L1_error)
-    __pyx_v_self->_address = lo_address_new(NULL, __pyx_t_6);
+    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 807, __pyx_L1_error)
+    __pyx_v_self->_address = lo_address_new(NULL, __pyx_t_7);
 
-    /* "pyliblo3/_liblo.pyx":785
+    /* "pyliblo3/_liblo.pyx":804
  *             if not self._address:
  *                 raise AddressError("invalid protocol")
  *         elif isinstance(addr, int) or (isinstance(addr, str) and addr.isdigit()):             # <<<<<<<<<<<<<<
  *             # Address(port)
  *             s = str(addr).encode()
  */
-    goto __pyx_L3;
+    goto __pyx_L4;
   }
 
-  /* "pyliblo3/_liblo.pyx":791
+  /* "pyliblo3/_liblo.pyx":810
  *         else:
  *             # Address(url)
  *             s = _encode(addr)             # <<<<<<<<<<<<<<
@@ -15508,22 +16013,22 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
  *             # lo_address_errno() is of no use if self._addr == NULL
  */
   /*else*/ {
-    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_addr); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 791, __pyx_L1_error)
+    __pyx_t_3 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_addr); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 810, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_s = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":792
+    /* "pyliblo3/_liblo.pyx":811
  *             # Address(url)
  *             s = _encode(addr)
  *             self._address = lo_address_new_from_url(s)             # <<<<<<<<<<<<<<
  *             # lo_address_errno() is of no use if self._addr == NULL
  *             if not self._address:
  */
-    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 792, __pyx_L1_error)
-    __pyx_v_self->_address = lo_address_new_from_url(__pyx_t_6);
+    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 811, __pyx_L1_error)
+    __pyx_v_self->_address = lo_address_new_from_url(__pyx_t_7);
 
-    /* "pyliblo3/_liblo.pyx":794
+    /* "pyliblo3/_liblo.pyx":813
  *             self._address = lo_address_new_from_url(s)
  *             # lo_address_errno() is of no use if self._addr == NULL
  *             if not self._address:             # <<<<<<<<<<<<<<
@@ -15533,48 +16038,48 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
     __pyx_t_1 = (!(__pyx_v_self->_address != 0));
     if (unlikely(__pyx_t_1)) {
 
-      /* "pyliblo3/_liblo.pyx":795
+      /* "pyliblo3/_liblo.pyx":814
  *             # lo_address_errno() is of no use if self._addr == NULL
  *             if not self._address:
  *                 raise AddressError("invalid URL '%s'" % str(addr))             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_AddressError); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 795, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_2 = __Pyx_PyObject_Str(__pyx_v_addr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 795, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_AddressError); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 814, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_2 = __Pyx_PyObject_Str(__pyx_v_addr); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 814, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_9 = __Pyx_PyString_FormatSafe(__pyx_kp_s_invalid_URL_s, __pyx_t_2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 795, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyString_FormatSafe(__pyx_kp_s_invalid_URL_s, __pyx_t_2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 814, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_2 = NULL;
-      __pyx_t_4 = 0;
+      __pyx_t_5 = 0;
       #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_7))) {
-        __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_7);
+      if (unlikely(PyMethod_Check(__pyx_t_4))) {
+        __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
         if (likely(__pyx_t_2)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
           __Pyx_INCREF(__pyx_t_2);
           __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_7, function);
-          __pyx_t_4 = 1;
+          __Pyx_DECREF_SET(__pyx_t_4, function);
+          __pyx_t_5 = 1;
         }
       }
       #endif
       {
         PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_t_9};
-        __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_7, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
+        __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_5, 1+__pyx_t_5);
         __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 795, __pyx_L1_error)
+        if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 814, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       }
       __Pyx_Raise(__pyx_t_3, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __PYX_ERR(0, 795, __pyx_L1_error)
+      __PYX_ERR(0, 814, __pyx_L1_error)
 
-      /* "pyliblo3/_liblo.pyx":794
+      /* "pyliblo3/_liblo.pyx":813
  *             self._address = lo_address_new_from_url(s)
  *             # lo_address_errno() is of no use if self._addr == NULL
  *             if not self._address:             # <<<<<<<<<<<<<<
@@ -15583,14 +16088,14 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
  */
     }
   }
-  __pyx_L3:;
+  __pyx_L4:;
 
-  /* "pyliblo3/_liblo.pyx":753
+  /* "pyliblo3/_liblo.pyx":793
  *     cdef lo_address _address
  * 
  *     def __init__(self, addr, addr2=None, proto=LO_UDP):             # <<<<<<<<<<<<<<
- *         """
- *         Address(hostname, port[, proto])
+ *         if isinstance(proto, str):
+ *             proto = _protostr_to_int(proto)
  */
 
   /* function exit code */
@@ -15599,18 +16104,19 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Address___init__(struct __pyx_obj_8pylibl
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_AddTraceback("pyliblo3._liblo.Address.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_s);
   __Pyx_XDECREF(__pyx_v_s2);
+  __Pyx_XDECREF(__pyx_v_proto);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":797
+/* "pyliblo3/_liblo.pyx":816
  *                 raise AddressError("invalid URL '%s'" % str(addr))
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -15633,7 +16139,7 @@ static void __pyx_pw_8pyliblo3_6_liblo_7Address_3__dealloc__(PyObject *__pyx_v_s
 
 static void __pyx_pf_8pyliblo3_6_liblo_7Address_2__dealloc__(struct __pyx_obj_8pyliblo3_6_liblo_Address *__pyx_v_self) {
 
-  /* "pyliblo3/_liblo.pyx":798
+  /* "pyliblo3/_liblo.pyx":817
  * 
  *     def __dealloc__(self):
  *         lo_address_free(self._address)             # <<<<<<<<<<<<<<
@@ -15642,7 +16148,7 @@ static void __pyx_pf_8pyliblo3_6_liblo_7Address_2__dealloc__(struct __pyx_obj_8p
  */
   lo_address_free(__pyx_v_self->_address);
 
-  /* "pyliblo3/_liblo.pyx":797
+  /* "pyliblo3/_liblo.pyx":816
  *                 raise AddressError("invalid URL '%s'" % str(addr))
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -15653,12 +16159,12 @@ static void __pyx_pf_8pyliblo3_6_liblo_7Address_2__dealloc__(struct __pyx_obj_8p
   /* function exit code */
 }
 
-/* "pyliblo3/_liblo.pyx":800
+/* "pyliblo3/_liblo.pyx":819
  *         lo_address_free(self._address)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
+ *         """This Address as a liblo URL"""
  *         cdef char *tmp = lo_address_get_url(self._address)
- *         cdef object r = tmp
  */
 
 /* Python wrapper */
@@ -15669,7 +16175,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_5get_url = {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Address_4get_url, "Address.get_url(self)\nThis Address as a liblo URL");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_5get_url = {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_4get_url};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Address_5get_url(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -15713,28 +16220,28 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4get_url(struct __pyx_obj_8
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_url", 1);
 
-  /* "pyliblo3/_liblo.pyx":801
- * 
+  /* "pyliblo3/_liblo.pyx":821
  *     def get_url(self):
+ *         """This Address as a liblo URL"""
  *         cdef char *tmp = lo_address_get_url(self._address)             # <<<<<<<<<<<<<<
  *         cdef object r = tmp
  *         free(tmp)
  */
   __pyx_v_tmp = lo_address_get_url(__pyx_v_self->_address);
 
-  /* "pyliblo3/_liblo.pyx":802
- *     def get_url(self):
+  /* "pyliblo3/_liblo.pyx":822
+ *         """This Address as a liblo URL"""
  *         cdef char *tmp = lo_address_get_url(self._address)
  *         cdef object r = tmp             # <<<<<<<<<<<<<<
  *         free(tmp)
  *         return _decode(r)
  */
-  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_tmp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 802, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_tmp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 822, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_r = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":803
+  /* "pyliblo3/_liblo.pyx":823
  *         cdef char *tmp = lo_address_get_url(self._address)
  *         cdef object r = tmp
  *         free(tmp)             # <<<<<<<<<<<<<<
@@ -15743,7 +16250,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4get_url(struct __pyx_obj_8
  */
   free(__pyx_v_tmp);
 
-  /* "pyliblo3/_liblo.pyx":804
+  /* "pyliblo3/_liblo.pyx":824
  *         cdef object r = tmp
  *         free(tmp)
  *         return _decode(r)             # <<<<<<<<<<<<<<
@@ -15751,18 +16258,18 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4get_url(struct __pyx_obj_8
  *     def get_hostname(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_r); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 804, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_r); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 824, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":800
+  /* "pyliblo3/_liblo.pyx":819
  *         lo_address_free(self._address)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
+ *         """This Address as a liblo URL"""
  *         cdef char *tmp = lo_address_get_url(self._address)
- *         cdef object r = tmp
  */
 
   /* function exit code */
@@ -15777,12 +16284,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4get_url(struct __pyx_obj_8
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":806
+/* "pyliblo3/_liblo.pyx":826
  *         return _decode(r)
  * 
  *     def get_hostname(self):             # <<<<<<<<<<<<<<
+ *         """The hostname of this Address"""
  *         return _decode(lo_address_get_hostname(self._address))
- * 
  */
 
 /* Python wrapper */
@@ -15793,7 +16300,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_7get_hostname = {"get_hostname", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_7get_hostname, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Address_6get_hostname, "Address.get_hostname(self)\nThe hostname of this Address");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_7get_hostname = {"get_hostname", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_7get_hostname, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_6get_hostname};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Address_7get_hostname(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -15836,29 +16344,29 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_6get_hostname(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_hostname", 1);
 
-  /* "pyliblo3/_liblo.pyx":807
- * 
+  /* "pyliblo3/_liblo.pyx":828
  *     def get_hostname(self):
+ *         """The hostname of this Address"""
  *         return _decode(lo_address_get_hostname(self._address))             # <<<<<<<<<<<<<<
  * 
  *     def get_port(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(lo_address_get_hostname(__pyx_v_self->_address)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 807, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(lo_address_get_hostname(__pyx_v_self->_address)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 828, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 807, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 828, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":806
+  /* "pyliblo3/_liblo.pyx":826
  *         return _decode(r)
  * 
  *     def get_hostname(self):             # <<<<<<<<<<<<<<
+ *         """The hostname of this Address"""
  *         return _decode(lo_address_get_hostname(self._address))
- * 
  */
 
   /* function exit code */
@@ -15873,12 +16381,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_6get_hostname(struct __pyx_
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":809
+/* "pyliblo3/_liblo.pyx":830
  *         return _decode(lo_address_get_hostname(self._address))
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
+ *         """The port number of this Address"""
  *         cdef bytes s = lo_address_get_port(self._address)
- *         if s.isdigit():
  */
 
 /* Python wrapper */
@@ -15889,7 +16397,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_9get_port = {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_9get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Address_8get_port, "Address.get_port(self)\nThe port number of this Address");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_9get_port = {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_9get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_8get_port};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Address_9get_port(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -15933,32 +16442,32 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8get_port(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_port", 1);
 
-  /* "pyliblo3/_liblo.pyx":810
- * 
+  /* "pyliblo3/_liblo.pyx":832
  *     def get_port(self):
+ *         """The port number of this Address"""
  *         cdef bytes s = lo_address_get_port(self._address)             # <<<<<<<<<<<<<<
  *         if s.isdigit():
  *             return int(s)
  */
-  __pyx_t_1 = __Pyx_PyBytes_FromString(lo_address_get_port(__pyx_v_self->_address)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 810, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(lo_address_get_port(__pyx_v_self->_address)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 832, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_s = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":811
- *     def get_port(self):
+  /* "pyliblo3/_liblo.pyx":833
+ *         """The port number of this Address"""
  *         cdef bytes s = lo_address_get_port(self._address)
  *         if s.isdigit():             # <<<<<<<<<<<<<<
  *             return int(s)
  *         else:
  */
-  __pyx_t_1 = __Pyx_CallUnboundCMethod0(&__pyx_umethod_PyBytes_Type_isdigit, __pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 811, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CallUnboundCMethod0(&__pyx_umethod_PyBytes_Type_isdigit, __pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 833, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 811, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_2 < 0))) __PYX_ERR(0, 833, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":812
+    /* "pyliblo3/_liblo.pyx":834
  *         cdef bytes s = lo_address_get_port(self._address)
  *         if s.isdigit():
  *             return int(s)             # <<<<<<<<<<<<<<
@@ -15966,14 +16475,14 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8get_port(struct __pyx_obj_
  *             return _decode(s)
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 812, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 834, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "pyliblo3/_liblo.pyx":811
- *     def get_port(self):
+    /* "pyliblo3/_liblo.pyx":833
+ *         """The port number of this Address"""
  *         cdef bytes s = lo_address_get_port(self._address)
  *         if s.isdigit():             # <<<<<<<<<<<<<<
  *             return int(s)
@@ -15981,7 +16490,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8get_port(struct __pyx_obj_
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":814
+  /* "pyliblo3/_liblo.pyx":836
  *             return int(s)
  *         else:
  *             return _decode(s)             # <<<<<<<<<<<<<<
@@ -15990,19 +16499,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8get_port(struct __pyx_obj_
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 814, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 836, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_r = __pyx_t_1;
     __pyx_t_1 = 0;
     goto __pyx_L0;
   }
 
-  /* "pyliblo3/_liblo.pyx":809
+  /* "pyliblo3/_liblo.pyx":830
  *         return _decode(lo_address_get_hostname(self._address))
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
+ *         """The port number of this Address"""
  *         cdef bytes s = lo_address_get_port(self._address)
- *         if s.isdigit():
  */
 
   /* function exit code */
@@ -16017,12 +16526,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8get_port(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":816
+/* "pyliblo3/_liblo.pyx":838
  *             return _decode(s)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         return lo_address_get_protocol(self._address)
- * 
+ *         """
+ *         The protocol used as an int
  */
 
 /* Python wrapper */
@@ -16033,7 +16542,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_11get_protocol = {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_11get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Address_10get_protocol, "Address.get_protocol(self)\n\n        The protocol used as an int\n\n        Example\n        -------\n\n        ```python\n        from pyliblo3 import *\n        address = Address('127.0.0.0', 9876)\n        assert address.get_protocol() == LO_UDP\n        ```\n\n        ");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_11get_protocol = {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_11get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_10get_protocol};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Address_11get_protocol(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -16075,26 +16585,26 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_10get_protocol(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get_protocol", 1);
 
-  /* "pyliblo3/_liblo.pyx":817
+  /* "pyliblo3/_liblo.pyx":852
  * 
- *     def get_protocol(self):
+ *         """
  *         return lo_address_get_protocol(self._address)             # <<<<<<<<<<<<<<
  * 
  *     property url:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(lo_address_get_protocol(__pyx_v_self->_address)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 817, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(lo_address_get_protocol(__pyx_v_self->_address)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 852, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":816
+  /* "pyliblo3/_liblo.pyx":838
  *             return _decode(s)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         return lo_address_get_protocol(self._address)
- * 
+ *         """
+ *         The protocol used as an int
  */
 
   /* function exit code */
@@ -16108,7 +16618,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_10get_protocol(struct __pyx
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":823
+/* "pyliblo3/_liblo.pyx":858
  *         The address's URL.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16143,7 +16653,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_3url___get__(struct __pyx_o
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 1);
 
-  /* "pyliblo3/_liblo.pyx":824
+  /* "pyliblo3/_liblo.pyx":859
  *         """
  *         def __get__(self):
  *             return self.get_url()             # <<<<<<<<<<<<<<
@@ -16151,7 +16661,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_3url___get__(struct __pyx_o
  *     property hostname:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_url); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 824, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_url); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 859, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -16171,7 +16681,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_3url___get__(struct __pyx_o
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 824, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 859, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -16179,7 +16689,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_3url___get__(struct __pyx_o
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":823
+  /* "pyliblo3/_liblo.pyx":858
  *         The address's URL.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16200,7 +16710,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_3url___get__(struct __pyx_o
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":830
+/* "pyliblo3/_liblo.pyx":865
  *         The address's hostname.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16235,7 +16745,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8hostname___get__(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 1);
 
-  /* "pyliblo3/_liblo.pyx":831
+  /* "pyliblo3/_liblo.pyx":866
  *         """
  *         def __get__(self):
  *             return self.get_hostname()             # <<<<<<<<<<<<<<
@@ -16243,7 +16753,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8hostname___get__(struct __
  *     property port:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_hostname); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 831, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_hostname); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 866, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -16263,7 +16773,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8hostname___get__(struct __
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 831, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 866, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -16271,7 +16781,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8hostname___get__(struct __
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":830
+  /* "pyliblo3/_liblo.pyx":865
  *         The address's hostname.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16292,7 +16802,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8hostname___get__(struct __
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":837
+/* "pyliblo3/_liblo.pyx":872
  *         The address's port number.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16327,7 +16837,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4port___get__(struct __pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 1);
 
-  /* "pyliblo3/_liblo.pyx":838
+  /* "pyliblo3/_liblo.pyx":873
  *         """
  *         def __get__(self):
  *             return self.get_port()             # <<<<<<<<<<<<<<
@@ -16335,7 +16845,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4port___get__(struct __pyx_
  *     property protocol:
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_port); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 838, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_port); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 873, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -16355,7 +16865,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4port___get__(struct __pyx_
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 838, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 873, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -16363,7 +16873,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4port___get__(struct __pyx_
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":837
+  /* "pyliblo3/_liblo.pyx":872
  *         The address's port number.
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16384,7 +16894,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_4port___get__(struct __pyx_
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":845
+/* "pyliblo3/_liblo.pyx":880
  *         :const:`TCP`, or :const:`UNIX`).
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16419,7 +16929,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8protocol___get__(struct __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 1);
 
-  /* "pyliblo3/_liblo.pyx":846
+  /* "pyliblo3/_liblo.pyx":881
  *         """
  *         def __get__(self):
  *             return self.get_protocol()             # <<<<<<<<<<<<<<
@@ -16427,7 +16937,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8protocol___get__(struct __
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_protocol); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 846, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_protocol); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 881, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -16447,7 +16957,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8protocol___get__(struct __
     PyObject *__pyx_callargs[2] = {__pyx_t_3, NULL};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_4, 0+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 846, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 881, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
@@ -16455,7 +16965,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_8protocol___get__(struct __
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyliblo3/_liblo.pyx":845
+  /* "pyliblo3/_liblo.pyx":880
  *         :const:`TCP`, or :const:`UNIX`).
  *         """
  *         def __get__(self):             # <<<<<<<<<<<<<<
@@ -16490,7 +17000,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_13__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_13__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Address_12__reduce_cython__, "Address.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_13__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_13__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_12__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Address_13__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -16570,7 +17081,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_15__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_15__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Address_14__setstate_cython__, "Address.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Address_15__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_15__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_14__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Address_15__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -16690,7 +17202,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Address_14__setstate_cython__(CYTHO
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":856
+/* "pyliblo3/_liblo.pyx":891
  *     cdef lo_blob _blob
  * 
  *     def __init__(self, arr):             # <<<<<<<<<<<<<<
@@ -16734,12 +17246,12 @@ static int __pyx_pw_8pyliblo3_6_liblo_5_Blob_1__init__(PyObject *__pyx_v_self, P
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 856, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 891, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 856, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "__init__") < 0)) __PYX_ERR(0, 891, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -16750,7 +17262,7 @@ static int __pyx_pw_8pyliblo3_6_liblo_5_Blob_1__init__(PyObject *__pyx_v_self, P
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 856, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 891, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -16804,17 +17316,17 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":860
+  /* "pyliblo3/_liblo.pyx":895
  *         cdef unsigned char *p
  *         cdef uint32_t size, i
  *         size = len(arr)             # <<<<<<<<<<<<<<
  *         if size < 1:
  *             raise ValueError("blob is empty")
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_arr); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 860, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_arr); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 895, __pyx_L1_error)
   __pyx_v_size = __pyx_t_1;
 
-  /* "pyliblo3/_liblo.pyx":861
+  /* "pyliblo3/_liblo.pyx":896
  *         cdef uint32_t size, i
  *         size = len(arr)
  *         if size < 1:             # <<<<<<<<<<<<<<
@@ -16824,20 +17336,20 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
   __pyx_t_2 = (__pyx_v_size < 1);
   if (unlikely(__pyx_t_2)) {
 
-    /* "pyliblo3/_liblo.pyx":862
+    /* "pyliblo3/_liblo.pyx":897
  *         size = len(arr)
  *         if size < 1:
  *             raise ValueError("blob is empty")             # <<<<<<<<<<<<<<
  *         # copy each element of arr to a C array
  *         p = <unsigned char*>malloc(size)
  */
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 862, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 897, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 862, __pyx_L1_error)
+    __PYX_ERR(0, 897, __pyx_L1_error)
 
-    /* "pyliblo3/_liblo.pyx":861
+    /* "pyliblo3/_liblo.pyx":896
  *         cdef uint32_t size, i
  *         size = len(arr)
  *         if size < 1:             # <<<<<<<<<<<<<<
@@ -16846,7 +17358,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":864
+  /* "pyliblo3/_liblo.pyx":899
  *             raise ValueError("blob is empty")
  *         # copy each element of arr to a C array
  *         p = <unsigned char*>malloc(size)             # <<<<<<<<<<<<<<
@@ -16855,7 +17367,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
  */
   __pyx_v_p = ((unsigned char *)malloc(__pyx_v_size));
 
-  /* "pyliblo3/_liblo.pyx":865
+  /* "pyliblo3/_liblo.pyx":900
  *         # copy each element of arr to a C array
  *         p = <unsigned char*>malloc(size)
  *         try:             # <<<<<<<<<<<<<<
@@ -16864,14 +17376,14 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
  */
   /*try:*/ {
 
-    /* "pyliblo3/_liblo.pyx":866
+    /* "pyliblo3/_liblo.pyx":901
  *         p = <unsigned char*>malloc(size)
  *         try:
  *             if isinstance(arr[0], (str, unicode)):             # <<<<<<<<<<<<<<
  *                 # use ord() if arr is a string (but not bytes)
  *                 for i from 0 <= i < size:
  */
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arr, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 866, __pyx_L5_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arr, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 901, __pyx_L5_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_4 = PyString_Check(__pyx_t_3); 
     if (!__pyx_t_4) {
@@ -16885,7 +17397,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_2) {
 
-      /* "pyliblo3/_liblo.pyx":868
+      /* "pyliblo3/_liblo.pyx":903
  *             if isinstance(arr[0], (str, unicode)):
  *                 # use ord() if arr is a string (but not bytes)
  *                 for i from 0 <= i < size:             # <<<<<<<<<<<<<<
@@ -16895,21 +17407,21 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
       __pyx_t_5 = __pyx_v_size;
       for (__pyx_v_i = 0; __pyx_v_i < __pyx_t_5; __pyx_v_i++) {
 
-        /* "pyliblo3/_liblo.pyx":869
+        /* "pyliblo3/_liblo.pyx":904
  *                 # use ord() if arr is a string (but not bytes)
  *                 for i from 0 <= i < size:
  *                     p[i] = ord(arr[i])             # <<<<<<<<<<<<<<
  *             else:
  *                 for i from 0 <= i < size:
  */
-        __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arr, __pyx_v_i, uint32_t, 0, __Pyx_PyInt_From_uint32_t, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 869, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arr, __pyx_v_i, uint32_t, 0, __Pyx_PyInt_From_uint32_t, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 904, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_6 = __Pyx_PyObject_Ord(__pyx_t_3); if (unlikely(__pyx_t_6 == ((long)(long)(Py_UCS4)-1))) __PYX_ERR(0, 869, __pyx_L5_error)
+        __pyx_t_6 = __Pyx_PyObject_Ord(__pyx_t_3); if (unlikely(__pyx_t_6 == ((long)(long)(Py_UCS4)-1))) __PYX_ERR(0, 904, __pyx_L5_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         (__pyx_v_p[__pyx_v_i]) = __pyx_t_6;
       }
 
-      /* "pyliblo3/_liblo.pyx":866
+      /* "pyliblo3/_liblo.pyx":901
  *         p = <unsigned char*>malloc(size)
  *         try:
  *             if isinstance(arr[0], (str, unicode)):             # <<<<<<<<<<<<<<
@@ -16919,7 +17431,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
       goto __pyx_L7;
     }
 
-    /* "pyliblo3/_liblo.pyx":871
+    /* "pyliblo3/_liblo.pyx":906
  *                     p[i] = ord(arr[i])
  *             else:
  *                 for i from 0 <= i < size:             # <<<<<<<<<<<<<<
@@ -16930,23 +17442,23 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
       __pyx_t_5 = __pyx_v_size;
       for (__pyx_v_i = 0; __pyx_v_i < __pyx_t_5; __pyx_v_i++) {
 
-        /* "pyliblo3/_liblo.pyx":872
+        /* "pyliblo3/_liblo.pyx":907
  *             else:
  *                 for i from 0 <= i < size:
  *                     p[i] = arr[i]             # <<<<<<<<<<<<<<
  *             # build blob
  *             self._blob = lo_blob_new(size, p)
  */
-        __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arr, __pyx_v_i, uint32_t, 0, __Pyx_PyInt_From_uint32_t, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 872, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arr, __pyx_v_i, uint32_t, 0, __Pyx_PyInt_From_uint32_t, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 907, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_7 = __Pyx_PyInt_As_unsigned_char(__pyx_t_3); if (unlikely((__pyx_t_7 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 872, __pyx_L5_error)
+        __pyx_t_7 = __Pyx_PyInt_As_unsigned_char(__pyx_t_3); if (unlikely((__pyx_t_7 == (unsigned char)-1) && PyErr_Occurred())) __PYX_ERR(0, 907, __pyx_L5_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         (__pyx_v_p[__pyx_v_i]) = __pyx_t_7;
       }
     }
     __pyx_L7:;
 
-    /* "pyliblo3/_liblo.pyx":874
+    /* "pyliblo3/_liblo.pyx":909
  *                     p[i] = arr[i]
  *             # build blob
  *             self._blob = lo_blob_new(size, p)             # <<<<<<<<<<<<<<
@@ -16956,7 +17468,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
     __pyx_v_self->_blob = lo_blob_new(__pyx_v_size, __pyx_v_p);
   }
 
-  /* "pyliblo3/_liblo.pyx":876
+  /* "pyliblo3/_liblo.pyx":911
  *             self._blob = lo_blob_new(size, p)
  *         finally:
  *             free(p)             # <<<<<<<<<<<<<<
@@ -17003,7 +17515,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
     __pyx_L6:;
   }
 
-  /* "pyliblo3/_liblo.pyx":856
+  /* "pyliblo3/_liblo.pyx":891
  *     cdef lo_blob _blob
  * 
  *     def __init__(self, arr):             # <<<<<<<<<<<<<<
@@ -17023,7 +17535,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_5_Blob___init__(struct __pyx_obj_8pyliblo3
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":878
+/* "pyliblo3/_liblo.pyx":913
  *             free(p)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -17046,7 +17558,7 @@ static void __pyx_pw_8pyliblo3_6_liblo_5_Blob_3__dealloc__(PyObject *__pyx_v_sel
 
 static void __pyx_pf_8pyliblo3_6_liblo_5_Blob_2__dealloc__(struct __pyx_obj_8pyliblo3_6_liblo__Blob *__pyx_v_self) {
 
-  /* "pyliblo3/_liblo.pyx":879
+  /* "pyliblo3/_liblo.pyx":914
  * 
  *     def __dealloc__(self):
  *         lo_blob_free(self._blob)             # <<<<<<<<<<<<<<
@@ -17055,7 +17567,7 @@ static void __pyx_pf_8pyliblo3_6_liblo_5_Blob_2__dealloc__(struct __pyx_obj_8pyl
  */
   lo_blob_free(__pyx_v_self->_blob);
 
-  /* "pyliblo3/_liblo.pyx":878
+  /* "pyliblo3/_liblo.pyx":913
  *             free(p)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -17080,7 +17592,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_5_Blob_4__reduce_cython__, "_Blob.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_5_Blob_4__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -17160,7 +17673,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_5_Blob_6__setstate_cython__, "_Blob.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_5_Blob_6__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -17280,20 +17794,16 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_5_Blob_6__setstate_cython__(CYTHON_U
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":890
+/* "pyliblo3/_liblo.pyx":929
  *     cdef list _keep_refs
  * 
  *     def __init__(self, path, *args):             # <<<<<<<<<<<<<<
- *         """
- *         Message(path, *args)
+ *         self._keep_refs = []
+ *         # encode path to bytestring if necessary
  */
 
 /* Python wrapper */
 static int __pyx_pw_8pyliblo3_6_liblo_7Message_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Message___init__, "\n        Message(path, *args)\n\n        Create a new :class:`!Message` object.\n        ");
-#if CYTHON_UPDATE_DESCRIPTOR_DOC
-struct wrapperbase __pyx_wrapperbase_8pyliblo3_6_liblo_7Message___init__;
-#endif
 static int __pyx_pw_8pyliblo3_6_liblo_7Message_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_path = 0;
   PyObject *__pyx_v_args = 0;
@@ -17335,13 +17845,13 @@ static int __pyx_pw_8pyliblo3_6_liblo_7Message_1__init__(PyObject *__pyx_v_self,
           (void)__Pyx_Arg_NewRef_VARARGS(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 890, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 929, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
         const Py_ssize_t used_pos_args = (kwd_pos_args < 1) ? kwd_pos_args : 1;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, used_pos_args, "__init__") < 0)) __PYX_ERR(0, 890, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, used_pos_args, "__init__") < 0)) __PYX_ERR(0, 929, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs < 1)) {
       goto __pyx_L5_argtuple_error;
@@ -17352,7 +17862,7 @@ static int __pyx_pw_8pyliblo3_6_liblo_7Message_1__init__(PyObject *__pyx_v_self,
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 890, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 1, __pyx_nargs); __PYX_ERR(0, 929, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -17391,14 +17901,14 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Message___init__(struct __pyx_obj_8pylibl
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pyliblo3/_liblo.pyx":896
- *         Create a new :class:`!Message` object.
- *         """
+  /* "pyliblo3/_liblo.pyx":930
+ * 
+ *     def __init__(self, path, *args):
  *         self._keep_refs = []             # <<<<<<<<<<<<<<
  *         # encode path to bytestring if necessary
  *         self._path = _encode(path)
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 896, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 930, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->_keep_refs);
@@ -17406,14 +17916,14 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Message___init__(struct __pyx_obj_8pylibl
   __pyx_v_self->_keep_refs = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":898
+  /* "pyliblo3/_liblo.pyx":932
  *         self._keep_refs = []
  *         # encode path to bytestring if necessary
  *         self._path = _encode(path)             # <<<<<<<<<<<<<<
  *         self._message = lo_message_new()
  * 
  */
-  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 898, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_path); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 932, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->_path);
@@ -17421,7 +17931,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Message___init__(struct __pyx_obj_8pylibl
   __pyx_v_self->_path = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":899
+  /* "pyliblo3/_liblo.pyx":933
  *         # encode path to bytestring if necessary
  *         self._path = _encode(path)
  *         self._message = lo_message_new()             # <<<<<<<<<<<<<<
@@ -17430,26 +17940,26 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Message___init__(struct __pyx_obj_8pylibl
  */
   __pyx_v_self->_message = lo_message_new();
 
-  /* "pyliblo3/_liblo.pyx":901
+  /* "pyliblo3/_liblo.pyx":935
  *         self._message = lo_message_new()
  * 
  *         self.add(*args)             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 901, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 935, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_v_args, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 901, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_v_args, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 935, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":890
+  /* "pyliblo3/_liblo.pyx":929
  *     cdef list _keep_refs
  * 
  *     def __init__(self, path, *args):             # <<<<<<<<<<<<<<
- *         """
- *         Message(path, *args)
+ *         self._keep_refs = []
+ *         # encode path to bytestring if necessary
  */
 
   /* function exit code */
@@ -17465,7 +17975,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_7Message___init__(struct __pyx_obj_8pylibl
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":903
+/* "pyliblo3/_liblo.pyx":937
  *         self.add(*args)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -17488,7 +17998,7 @@ static void __pyx_pw_8pyliblo3_6_liblo_7Message_3__dealloc__(PyObject *__pyx_v_s
 
 static void __pyx_pf_8pyliblo3_6_liblo_7Message_2__dealloc__(struct __pyx_obj_8pyliblo3_6_liblo_Message *__pyx_v_self) {
 
-  /* "pyliblo3/_liblo.pyx":904
+  /* "pyliblo3/_liblo.pyx":938
  * 
  *     def __dealloc__(self):
  *         lo_message_free(self._message)             # <<<<<<<<<<<<<<
@@ -17497,7 +18007,7 @@ static void __pyx_pf_8pyliblo3_6_liblo_7Message_2__dealloc__(struct __pyx_obj_8p
  */
   lo_message_free(__pyx_v_self->_message);
 
-  /* "pyliblo3/_liblo.pyx":903
+  /* "pyliblo3/_liblo.pyx":937
  *         self.add(*args)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -17508,17 +18018,17 @@ static void __pyx_pf_8pyliblo3_6_liblo_7Message_2__dealloc__(struct __pyx_obj_8p
   /* function exit code */
 }
 
-/* "pyliblo3/_liblo.pyx":906
+/* "pyliblo3/_liblo.pyx":940
  *         lo_message_free(self._message)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*args)
+ *         Append the given arguments to this message
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Message_5add(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Message_4add, "\n        add(*args)\n\n        Append the given arguments to the message.\n        Arguments can be single values or ``(typetag, data)`` tuples.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Message_4add, "Message.add(self, *args)\n\n        Append the given arguments to this message\n\n        Arguments can be single values or `(typetag, data)` tuples to specify\n        the actual type. This might be needed for numbers, to specify if a float\n        needs to be encoded as a 32-bit (typetag = 'f') or 64-bit float (typetag = 'd').\n        By default, float numbers are interpreted as 32-bit floats.\n\n        Args:\n            args: each argument can be a single value or a tuple `(typetag: str, data: Any)`\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Message_5add = {"add", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_5add, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Message_4add};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Message_5add(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_args = 0;
@@ -17562,8 +18072,8 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add", 1);
 
-  /* "pyliblo3/_liblo.pyx":913
- *         Arguments can be single values or ``(typetag, data)`` tuples.
+  /* "pyliblo3/_liblo.pyx":952
+ *             args: each argument can be a single value or a tuple `(typetag: str, data: Any)`
  *         """
  *         for arg in args:             # <<<<<<<<<<<<<<
  *             if (isinstance(arg, tuple) and len(arg) <= 2 and
@@ -17575,20 +18085,20 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
     {
       Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
       #if !CYTHON_ASSUME_SAFE_MACROS
-      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 913, __pyx_L1_error)
+      if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 952, __pyx_L1_error)
       #endif
       if (__pyx_t_2 >= __pyx_temp) break;
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely((0 < 0))) __PYX_ERR(0, 913, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely((0 < 0))) __PYX_ERR(0, 952, __pyx_L1_error)
     #else
-    __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 913, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 952, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_arg, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":914
+    /* "pyliblo3/_liblo.pyx":953
  *         """
  *         for arg in args:
  *             if (isinstance(arg, tuple) and len(arg) <= 2 and             # <<<<<<<<<<<<<<
@@ -17601,7 +18111,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
       __pyx_t_4 = __pyx_t_5;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_6 = PyObject_Length(__pyx_v_arg); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 914, __pyx_L1_error)
+    __pyx_t_6 = PyObject_Length(__pyx_v_arg); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 953, __pyx_L1_error)
     __pyx_t_5 = (__pyx_t_6 <= 2);
     if (__pyx_t_5) {
     } else {
@@ -17609,14 +18119,14 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
       goto __pyx_L6_bool_binop_done;
     }
 
-    /* "pyliblo3/_liblo.pyx":915
+    /* "pyliblo3/_liblo.pyx":954
  *         for arg in args:
  *             if (isinstance(arg, tuple) and len(arg) <= 2 and
  *                     isinstance(arg[0], (bytes, unicode)) and len(arg[0]) == 1):             # <<<<<<<<<<<<<<
  *                 # type explicitly specified
  *                 if len(arg) == 2:
  */
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 915, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 954, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_7 = PyBytes_Check(__pyx_t_3); 
     if (!__pyx_t_7) {
@@ -17633,15 +18143,15 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
       __pyx_t_4 = __pyx_t_5;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 915, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 954, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 915, __pyx_L1_error)
+    __pyx_t_6 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 954, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_5 = (__pyx_t_6 == 1);
     __pyx_t_4 = __pyx_t_5;
     __pyx_L6_bool_binop_done:;
 
-    /* "pyliblo3/_liblo.pyx":914
+    /* "pyliblo3/_liblo.pyx":953
  *         """
  *         for arg in args:
  *             if (isinstance(arg, tuple) and len(arg) <= 2 and             # <<<<<<<<<<<<<<
@@ -17650,35 +18160,35 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
  */
     if (__pyx_t_4) {
 
-      /* "pyliblo3/_liblo.pyx":917
+      /* "pyliblo3/_liblo.pyx":956
  *                     isinstance(arg[0], (bytes, unicode)) and len(arg[0]) == 1):
  *                 # type explicitly specified
  *                 if len(arg) == 2:             # <<<<<<<<<<<<<<
  *                     self._add(arg[0], arg[1])
  *                 else:
  */
-      __pyx_t_6 = PyObject_Length(__pyx_v_arg); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 917, __pyx_L1_error)
+      __pyx_t_6 = PyObject_Length(__pyx_v_arg); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 956, __pyx_L1_error)
       __pyx_t_4 = (__pyx_t_6 == 2);
       if (__pyx_t_4) {
 
-        /* "pyliblo3/_liblo.pyx":918
+        /* "pyliblo3/_liblo.pyx":957
  *                 # type explicitly specified
  *                 if len(arg) == 2:
  *                     self._add(arg[0], arg[1])             # <<<<<<<<<<<<<<
  *                 else:
  *                     self._add(arg[0], None)
  */
-        __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 918, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 957, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_arg, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 918, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_arg, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 957, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_9 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add(__pyx_v_self, __pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 918, __pyx_L1_error)
+        __pyx_t_9 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add(__pyx_v_self, __pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 957, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-        /* "pyliblo3/_liblo.pyx":917
+        /* "pyliblo3/_liblo.pyx":956
  *                     isinstance(arg[0], (bytes, unicode)) and len(arg[0]) == 1):
  *                 # type explicitly specified
  *                 if len(arg) == 2:             # <<<<<<<<<<<<<<
@@ -17688,7 +18198,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
         goto __pyx_L12;
       }
 
-      /* "pyliblo3/_liblo.pyx":920
+      /* "pyliblo3/_liblo.pyx":959
  *                     self._add(arg[0], arg[1])
  *                 else:
  *                     self._add(arg[0], None)             # <<<<<<<<<<<<<<
@@ -17696,16 +18206,16 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
  *                 # detect type automatically
  */
       /*else*/ {
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 920, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_arg, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 959, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_8 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add(__pyx_v_self, __pyx_t_9, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 920, __pyx_L1_error)
+        __pyx_t_8 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add(__pyx_v_self, __pyx_t_9, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 959, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
       __pyx_L12:;
 
-      /* "pyliblo3/_liblo.pyx":914
+      /* "pyliblo3/_liblo.pyx":953
  *         """
  *         for arg in args:
  *             if (isinstance(arg, tuple) and len(arg) <= 2 and             # <<<<<<<<<<<<<<
@@ -17715,7 +18225,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
       goto __pyx_L5;
     }
 
-    /* "pyliblo3/_liblo.pyx":923
+    /* "pyliblo3/_liblo.pyx":962
  *             else:
  *                 # detect type automatically
  *                 self._add_auto(arg)             # <<<<<<<<<<<<<<
@@ -17723,14 +18233,14 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
  *     cdef _add(self, type, value):
  */
     /*else*/ {
-      __pyx_t_8 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add_auto(__pyx_v_self, __pyx_v_arg); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 923, __pyx_L1_error)
+      __pyx_t_8 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add_auto(__pyx_v_self, __pyx_v_arg); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 962, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
     __pyx_L5:;
 
-    /* "pyliblo3/_liblo.pyx":913
- *         Arguments can be single values or ``(typetag, data)`` tuples.
+    /* "pyliblo3/_liblo.pyx":952
+ *             args: each argument can be a single value or a tuple `(typetag: str, data: Any)`
  *         """
  *         for arg in args:             # <<<<<<<<<<<<<<
  *             if (isinstance(arg, tuple) and len(arg) <= 2 and
@@ -17739,12 +18249,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyliblo3/_liblo.pyx":906
+  /* "pyliblo3/_liblo.pyx":940
  *         lo_message_free(self._message)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*args)
+ *         Append the given arguments to this message
  */
 
   /* function exit code */
@@ -17764,7 +18274,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_4add(struct __pyx_obj_8pyli
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":925
+/* "pyliblo3/_liblo.pyx":964
  *                 self._add_auto(arg)
  * 
  *     cdef _add(self, type, value):             # <<<<<<<<<<<<<<
@@ -17795,23 +18305,23 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_add", 1);
 
-  /* "pyliblo3/_liblo.pyx":929
+  /* "pyliblo3/_liblo.pyx":968
  * 
  *         # accept both bytes and unicode as type specifier
  *         cdef char t = ord(_decode(type)[0])             # <<<<<<<<<<<<<<
  * 
  *         if t == 'i':
  */
-  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_type); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 929, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_8pyliblo3_6_liblo__decode(__pyx_v_type); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 968, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 929, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 968, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Ord(__pyx_t_2); if (unlikely(__pyx_t_3 == ((long)(long)(Py_UCS4)-1))) __PYX_ERR(0, 929, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Ord(__pyx_t_2); if (unlikely(__pyx_t_3 == ((long)(long)(Py_UCS4)-1))) __PYX_ERR(0, 968, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_t = __pyx_t_3;
 
-  /* "pyliblo3/_liblo.pyx":931
+  /* "pyliblo3/_liblo.pyx":970
  *         cdef char t = ord(_decode(type)[0])
  * 
  *         if t == 'i':             # <<<<<<<<<<<<<<
@@ -17821,20 +18331,20 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
   switch (__pyx_v_t) {
     case 'i':
 
-    /* "pyliblo3/_liblo.pyx":932
+    /* "pyliblo3/_liblo.pyx":971
  * 
  *         if t == 'i':
  *             lo_message_add_int32(self._message, int(value))             # <<<<<<<<<<<<<<
  *         elif t == 'h':
  *             lo_message_add_int64(self._message, long(value))
  */
-    __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 932, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 971, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyInt_As_int32_t(__pyx_t_2); if (unlikely((__pyx_t_4 == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 932, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_As_int32_t(__pyx_t_2); if (unlikely((__pyx_t_4 == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 971, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     lo_message_add_int32(__pyx_v_self->_message, __pyx_t_4);
 
-    /* "pyliblo3/_liblo.pyx":931
+    /* "pyliblo3/_liblo.pyx":970
  *         cdef char t = ord(_decode(type)[0])
  * 
  *         if t == 'i':             # <<<<<<<<<<<<<<
@@ -17844,20 +18354,20 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'h':
 
-    /* "pyliblo3/_liblo.pyx":934
+    /* "pyliblo3/_liblo.pyx":973
  *             lo_message_add_int32(self._message, int(value))
  *         elif t == 'h':
  *             lo_message_add_int64(self._message, long(value))             # <<<<<<<<<<<<<<
  *         elif t == 'f':
  *             lo_message_add_float(self._message, float(value))
  */
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyLong_Type)), __pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 934, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyLong_Type)), __pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 973, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyInt_As_int64_t(__pyx_t_2); if (unlikely((__pyx_t_5 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 934, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_int64_t(__pyx_t_2); if (unlikely((__pyx_t_5 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 973, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     lo_message_add_int64(__pyx_v_self->_message, __pyx_t_5);
 
-    /* "pyliblo3/_liblo.pyx":933
+    /* "pyliblo3/_liblo.pyx":972
  *         if t == 'i':
  *             lo_message_add_int32(self._message, int(value))
  *         elif t == 'h':             # <<<<<<<<<<<<<<
@@ -17867,17 +18377,17 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'f':
 
-    /* "pyliblo3/_liblo.pyx":936
+    /* "pyliblo3/_liblo.pyx":975
  *             lo_message_add_int64(self._message, long(value))
  *         elif t == 'f':
  *             lo_message_add_float(self._message, float(value))             # <<<<<<<<<<<<<<
  *         elif t == 'd':
  *             lo_message_add_double(self._message, float(value))
  */
-    __pyx_t_6 = __Pyx_PyObject_AsDouble(__pyx_v_value); if (unlikely(__pyx_t_6 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 936, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_AsDouble(__pyx_v_value); if (unlikely(__pyx_t_6 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 975, __pyx_L1_error)
     lo_message_add_float(__pyx_v_self->_message, __pyx_t_6);
 
-    /* "pyliblo3/_liblo.pyx":935
+    /* "pyliblo3/_liblo.pyx":974
  *         elif t == 'h':
  *             lo_message_add_int64(self._message, long(value))
  *         elif t == 'f':             # <<<<<<<<<<<<<<
@@ -17887,17 +18397,17 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'd':
 
-    /* "pyliblo3/_liblo.pyx":938
+    /* "pyliblo3/_liblo.pyx":977
  *             lo_message_add_float(self._message, float(value))
  *         elif t == 'd':
  *             lo_message_add_double(self._message, float(value))             # <<<<<<<<<<<<<<
  *         elif t == 'c':
  *             lo_message_add_char(self._message, ord(value))
  */
-    __pyx_t_6 = __Pyx_PyObject_AsDouble(__pyx_v_value); if (unlikely(__pyx_t_6 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 938, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_AsDouble(__pyx_v_value); if (unlikely(__pyx_t_6 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 977, __pyx_L1_error)
     lo_message_add_double(__pyx_v_self->_message, __pyx_t_6);
 
-    /* "pyliblo3/_liblo.pyx":937
+    /* "pyliblo3/_liblo.pyx":976
  *         elif t == 'f':
  *             lo_message_add_float(self._message, float(value))
  *         elif t == 'd':             # <<<<<<<<<<<<<<
@@ -17907,17 +18417,17 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'c':
 
-    /* "pyliblo3/_liblo.pyx":940
+    /* "pyliblo3/_liblo.pyx":979
  *             lo_message_add_double(self._message, float(value))
  *         elif t == 'c':
  *             lo_message_add_char(self._message, ord(value))             # <<<<<<<<<<<<<<
  *         elif t == 's':
  *             s = _encode(value)
  */
-    __pyx_t_3 = __Pyx_PyObject_Ord(__pyx_v_value); if (unlikely(__pyx_t_3 == ((long)(long)(Py_UCS4)-1))) __PYX_ERR(0, 940, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Ord(__pyx_v_value); if (unlikely(__pyx_t_3 == ((long)(long)(Py_UCS4)-1))) __PYX_ERR(0, 979, __pyx_L1_error)
     lo_message_add_char(__pyx_v_self->_message, __pyx_t_3);
 
-    /* "pyliblo3/_liblo.pyx":939
+    /* "pyliblo3/_liblo.pyx":978
  *         elif t == 'd':
  *             lo_message_add_double(self._message, float(value))
  *         elif t == 'c':             # <<<<<<<<<<<<<<
@@ -17927,19 +18437,19 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 's':
 
-    /* "pyliblo3/_liblo.pyx":942
+    /* "pyliblo3/_liblo.pyx":981
  *             lo_message_add_char(self._message, ord(value))
  *         elif t == 's':
  *             s = _encode(value)             # <<<<<<<<<<<<<<
  *             lo_message_add_string(self._message, s)
  *         elif t == 'S':
  */
-    __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 942, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 981, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_s = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "pyliblo3/_liblo.pyx":943
+    /* "pyliblo3/_liblo.pyx":982
  *         elif t == 's':
  *             s = _encode(value)
  *             lo_message_add_string(self._message, s)             # <<<<<<<<<<<<<<
@@ -17948,12 +18458,12 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     if (unlikely(__pyx_v_s == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 943, __pyx_L1_error)
+      __PYX_ERR(0, 982, __pyx_L1_error)
     }
-    __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 943, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 982, __pyx_L1_error)
     lo_message_add_string(__pyx_v_self->_message, __pyx_t_7);
 
-    /* "pyliblo3/_liblo.pyx":941
+    /* "pyliblo3/_liblo.pyx":980
  *         elif t == 'c':
  *             lo_message_add_char(self._message, ord(value))
  *         elif t == 's':             # <<<<<<<<<<<<<<
@@ -17963,19 +18473,19 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'S':
 
-    /* "pyliblo3/_liblo.pyx":945
+    /* "pyliblo3/_liblo.pyx":984
  *             lo_message_add_string(self._message, s)
  *         elif t == 'S':
  *             s = _encode(value)             # <<<<<<<<<<<<<<
  *             lo_message_add_symbol(self._message, s)
  *         elif t == 'T':
  */
-    __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 945, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 984, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_s = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "pyliblo3/_liblo.pyx":946
+    /* "pyliblo3/_liblo.pyx":985
  *         elif t == 'S':
  *             s = _encode(value)
  *             lo_message_add_symbol(self._message, s)             # <<<<<<<<<<<<<<
@@ -17984,12 +18494,12 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     if (unlikely(__pyx_v_s == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 946, __pyx_L1_error)
+      __PYX_ERR(0, 985, __pyx_L1_error)
     }
-    __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 946, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 985, __pyx_L1_error)
     lo_message_add_symbol(__pyx_v_self->_message, __pyx_t_7);
 
-    /* "pyliblo3/_liblo.pyx":944
+    /* "pyliblo3/_liblo.pyx":983
  *             s = _encode(value)
  *             lo_message_add_string(self._message, s)
  *         elif t == 'S':             # <<<<<<<<<<<<<<
@@ -17999,7 +18509,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'T':
 
-    /* "pyliblo3/_liblo.pyx":948
+    /* "pyliblo3/_liblo.pyx":987
  *             lo_message_add_symbol(self._message, s)
  *         elif t == 'T':
  *             lo_message_add_true(self._message)             # <<<<<<<<<<<<<<
@@ -18008,7 +18518,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     lo_message_add_true(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":947
+    /* "pyliblo3/_liblo.pyx":986
  *             s = _encode(value)
  *             lo_message_add_symbol(self._message, s)
  *         elif t == 'T':             # <<<<<<<<<<<<<<
@@ -18018,7 +18528,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'F':
 
-    /* "pyliblo3/_liblo.pyx":950
+    /* "pyliblo3/_liblo.pyx":989
  *             lo_message_add_true(self._message)
  *         elif t == 'F':
  *             lo_message_add_false(self._message)             # <<<<<<<<<<<<<<
@@ -18027,7 +18537,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     lo_message_add_false(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":949
+    /* "pyliblo3/_liblo.pyx":988
  *         elif t == 'T':
  *             lo_message_add_true(self._message)
  *         elif t == 'F':             # <<<<<<<<<<<<<<
@@ -18037,7 +18547,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'N':
 
-    /* "pyliblo3/_liblo.pyx":952
+    /* "pyliblo3/_liblo.pyx":991
  *             lo_message_add_false(self._message)
  *         elif t == 'N':
  *             lo_message_add_nil(self._message)             # <<<<<<<<<<<<<<
@@ -18046,7 +18556,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     lo_message_add_nil(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":951
+    /* "pyliblo3/_liblo.pyx":990
  *         elif t == 'F':
  *             lo_message_add_false(self._message)
  *         elif t == 'N':             # <<<<<<<<<<<<<<
@@ -18056,7 +18566,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'I':
 
-    /* "pyliblo3/_liblo.pyx":954
+    /* "pyliblo3/_liblo.pyx":993
  *             lo_message_add_nil(self._message)
  *         elif t == 'I':
  *             lo_message_add_infinitum(self._message)             # <<<<<<<<<<<<<<
@@ -18065,7 +18575,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     lo_message_add_infinitum(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":953
+    /* "pyliblo3/_liblo.pyx":992
  *         elif t == 'N':
  *             lo_message_add_nil(self._message)
  *         elif t == 'I':             # <<<<<<<<<<<<<<
@@ -18075,7 +18585,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'm':
 
-    /* "pyliblo3/_liblo.pyx":956
+    /* "pyliblo3/_liblo.pyx":995
  *             lo_message_add_infinitum(self._message)
  *         elif t == 'm':
  *             for n from 0 <= n < 4:             # <<<<<<<<<<<<<<
@@ -18084,21 +18594,21 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     for (__pyx_v_n = 0; __pyx_v_n < 4; __pyx_v_n++) {
 
-      /* "pyliblo3/_liblo.pyx":957
+      /* "pyliblo3/_liblo.pyx":996
  *         elif t == 'm':
  *             for n from 0 <= n < 4:
  *                 midi[n] = value[n]             # <<<<<<<<<<<<<<
  *             lo_message_add_midi(self._message, midi)
  *         elif t == 't':
  */
-      __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_value, __pyx_v_n, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 957, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_GetItemInt(__pyx_v_value, __pyx_v_n, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 996, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_8 = __Pyx_PyInt_As_uint8_t(__pyx_t_2); if (unlikely((__pyx_t_8 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 957, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyInt_As_uint8_t(__pyx_t_2); if (unlikely((__pyx_t_8 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 996, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       (__pyx_v_midi[__pyx_v_n]) = __pyx_t_8;
     }
 
-    /* "pyliblo3/_liblo.pyx":958
+    /* "pyliblo3/_liblo.pyx":997
  *             for n from 0 <= n < 4:
  *                 midi[n] = value[n]
  *             lo_message_add_midi(self._message, midi)             # <<<<<<<<<<<<<<
@@ -18107,7 +18617,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     lo_message_add_midi(__pyx_v_self->_message, __pyx_v_midi);
 
-    /* "pyliblo3/_liblo.pyx":955
+    /* "pyliblo3/_liblo.pyx":994
  *         elif t == 'I':
  *             lo_message_add_infinitum(self._message)
  *         elif t == 'm':             # <<<<<<<<<<<<<<
@@ -18117,18 +18627,18 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 't':
 
-    /* "pyliblo3/_liblo.pyx":960
+    /* "pyliblo3/_liblo.pyx":999
  *             lo_message_add_midi(self._message, midi)
  *         elif t == 't':
  *             lo_message_add_timetag(self._message, _double_to_timetag(value))             # <<<<<<<<<<<<<<
  *         elif t == 'b':
  *             b = _Blob(value)
  */
-    __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 960, __pyx_L1_error)
-    __pyx_t_9 = __pyx_f_8pyliblo3_6_liblo__double_to_timetag(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 960, __pyx_L1_error)
+    __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 999, __pyx_L1_error)
+    __pyx_t_9 = __pyx_f_8pyliblo3_6_liblo__double_to_timetag(__pyx_t_6); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 999, __pyx_L1_error)
     lo_message_add_timetag(__pyx_v_self->_message, __pyx_t_9);
 
-    /* "pyliblo3/_liblo.pyx":959
+    /* "pyliblo3/_liblo.pyx":998
  *                 midi[n] = value[n]
  *             lo_message_add_midi(self._message, midi)
  *         elif t == 't':             # <<<<<<<<<<<<<<
@@ -18138,19 +18648,19 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     case 'b':
 
-    /* "pyliblo3/_liblo.pyx":962
+    /* "pyliblo3/_liblo.pyx":1001
  *             lo_message_add_timetag(self._message, _double_to_timetag(value))
  *         elif t == 'b':
  *             b = _Blob(value)             # <<<<<<<<<<<<<<
  *             # make sure the blob is not deleted as long as this message exists
  *             self._keep_refs.append(b)
  */
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__Blob), __pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 962, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__Blob), __pyx_v_value); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1001, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_b = ((struct __pyx_obj_8pyliblo3_6_liblo__Blob *)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "pyliblo3/_liblo.pyx":964
+    /* "pyliblo3/_liblo.pyx":1003
  *             b = _Blob(value)
  *             # make sure the blob is not deleted as long as this message exists
  *             self._keep_refs.append(b)             # <<<<<<<<<<<<<<
@@ -18159,11 +18669,11 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     if (unlikely(__pyx_v_self->_keep_refs == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "append");
-      __PYX_ERR(0, 964, __pyx_L1_error)
+      __PYX_ERR(0, 1003, __pyx_L1_error)
     }
-    __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, ((PyObject *)__pyx_v_b)); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 964, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, ((PyObject *)__pyx_v_b)); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 1003, __pyx_L1_error)
 
-    /* "pyliblo3/_liblo.pyx":965
+    /* "pyliblo3/_liblo.pyx":1004
  *             # make sure the blob is not deleted as long as this message exists
  *             self._keep_refs.append(b)
  *             lo_message_add_blob(self._message, (<_Blob>b)._blob)             # <<<<<<<<<<<<<<
@@ -18172,7 +18682,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
  */
     lo_message_add_blob(__pyx_v_self->_message, __pyx_v_b->_blob);
 
-    /* "pyliblo3/_liblo.pyx":961
+    /* "pyliblo3/_liblo.pyx":1000
  *         elif t == 't':
  *             lo_message_add_timetag(self._message, _double_to_timetag(value))
  *         elif t == 'b':             # <<<<<<<<<<<<<<
@@ -18182,28 +18692,28 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
     break;
     default:
 
-    /* "pyliblo3/_liblo.pyx":967
+    /* "pyliblo3/_liblo.pyx":1006
  *             lo_message_add_blob(self._message, (<_Blob>b)._blob)
  *         else:
  *             raise TypeError("unknown OSC data type '%c'" % t)             # <<<<<<<<<<<<<<
  * 
  *     cdef _add_auto(self, value):
  */
-    __pyx_t_2 = __Pyx_PyInt_From_char(__pyx_v_t); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 967, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_char(__pyx_v_t); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1006, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyString_Format(__pyx_kp_s_unknown_OSC_data_type_c, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 967, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyString_Format(__pyx_kp_s_unknown_OSC_data_type_c, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1006, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 967, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_TypeError, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1006, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_Raise(__pyx_t_2, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __PYX_ERR(0, 967, __pyx_L1_error)
+    __PYX_ERR(0, 1006, __pyx_L1_error)
     break;
   }
 
-  /* "pyliblo3/_liblo.pyx":925
+  /* "pyliblo3/_liblo.pyx":964
  *                 self._add_auto(arg)
  * 
  *     cdef _add(self, type, value):             # <<<<<<<<<<<<<<
@@ -18227,7 +18737,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add(struct __pyx_obj_8pylib
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":969
+/* "pyliblo3/_liblo.pyx":1008
  *             raise TypeError("unknown OSC data type '%c'" % t)
  * 
  *     cdef _add_auto(self, value):             # <<<<<<<<<<<<<<
@@ -18258,7 +18768,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_add_auto", 1);
 
-  /* "pyliblo3/_liblo.pyx":971
+  /* "pyliblo3/_liblo.pyx":1010
  *     cdef _add_auto(self, value):
  *         # bool is a subclass of int, so check those first
  *         if value is True:             # <<<<<<<<<<<<<<
@@ -18268,7 +18778,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
   __pyx_t_1 = (__pyx_v_value == Py_True);
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":972
+    /* "pyliblo3/_liblo.pyx":1011
  *         # bool is a subclass of int, so check those first
  *         if value is True:
  *             lo_message_add_true(self._message)             # <<<<<<<<<<<<<<
@@ -18277,7 +18787,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
  */
     lo_message_add_true(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":971
+    /* "pyliblo3/_liblo.pyx":1010
  *     cdef _add_auto(self, value):
  *         # bool is a subclass of int, so check those first
  *         if value is True:             # <<<<<<<<<<<<<<
@@ -18287,7 +18797,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":973
+  /* "pyliblo3/_liblo.pyx":1012
  *         if value is True:
  *             lo_message_add_true(self._message)
  *         elif value is False:             # <<<<<<<<<<<<<<
@@ -18297,7 +18807,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
   __pyx_t_1 = (__pyx_v_value == Py_False);
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":974
+    /* "pyliblo3/_liblo.pyx":1013
  *             lo_message_add_true(self._message)
  *         elif value is False:
  *             lo_message_add_false(self._message)             # <<<<<<<<<<<<<<
@@ -18306,7 +18816,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
  */
     lo_message_add_false(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":973
+    /* "pyliblo3/_liblo.pyx":1012
  *         if value is True:
  *             lo_message_add_true(self._message)
  *         elif value is False:             # <<<<<<<<<<<<<<
@@ -18316,7 +18826,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":975
+  /* "pyliblo3/_liblo.pyx":1014
  *         elif value is False:
  *             lo_message_add_false(self._message)
  *         elif isinstance(value, (int, long)):             # <<<<<<<<<<<<<<
@@ -18334,7 +18844,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":976
+    /* "pyliblo3/_liblo.pyx":1015
  *             lo_message_add_false(self._message)
  *         elif isinstance(value, (int, long)):
  *             try:             # <<<<<<<<<<<<<<
@@ -18350,17 +18860,17 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       __Pyx_XGOTREF(__pyx_t_5);
       /*try:*/ {
 
-        /* "pyliblo3/_liblo.pyx":977
+        /* "pyliblo3/_liblo.pyx":1016
  *         elif isinstance(value, (int, long)):
  *             try:
  *                 lo_message_add_int32(self._message, <int32_t>value)             # <<<<<<<<<<<<<<
  *             except OverflowError:
  *                 lo_message_add_int64(self._message, <int64_t>value)
  */
-        __pyx_t_6 = __Pyx_PyInt_As_int32_t(__pyx_v_value); if (unlikely((__pyx_t_6 == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 977, __pyx_L6_error)
+        __pyx_t_6 = __Pyx_PyInt_As_int32_t(__pyx_v_value); if (unlikely((__pyx_t_6 == ((int32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1016, __pyx_L6_error)
         lo_message_add_int32(__pyx_v_self->_message, ((int32_t)__pyx_t_6));
 
-        /* "pyliblo3/_liblo.pyx":976
+        /* "pyliblo3/_liblo.pyx":1015
  *             lo_message_add_false(self._message)
  *         elif isinstance(value, (int, long)):
  *             try:             # <<<<<<<<<<<<<<
@@ -18374,7 +18884,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       goto __pyx_L11_try_end;
       __pyx_L6_error:;
 
-      /* "pyliblo3/_liblo.pyx":978
+      /* "pyliblo3/_liblo.pyx":1017
  *             try:
  *                 lo_message_add_int32(self._message, <int32_t>value)
  *             except OverflowError:             # <<<<<<<<<<<<<<
@@ -18384,19 +18894,19 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       __pyx_t_7 = __Pyx_PyErr_ExceptionMatches(__pyx_builtin_OverflowError);
       if (__pyx_t_7) {
         __Pyx_AddTraceback("pyliblo3._liblo.Message._add_auto", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_8, &__pyx_t_9, &__pyx_t_10) < 0) __PYX_ERR(0, 978, __pyx_L8_except_error)
+        if (__Pyx_GetException(&__pyx_t_8, &__pyx_t_9, &__pyx_t_10) < 0) __PYX_ERR(0, 1017, __pyx_L8_except_error)
         __Pyx_XGOTREF(__pyx_t_8);
         __Pyx_XGOTREF(__pyx_t_9);
         __Pyx_XGOTREF(__pyx_t_10);
 
-        /* "pyliblo3/_liblo.pyx":979
+        /* "pyliblo3/_liblo.pyx":1018
  *                 lo_message_add_int32(self._message, <int32_t>value)
  *             except OverflowError:
  *                 lo_message_add_int64(self._message, <int64_t>value)             # <<<<<<<<<<<<<<
  *         elif isinstance(value, float):
  *             lo_message_add_float(self._message, float(value))
  */
-        __pyx_t_11 = __Pyx_PyInt_As_int64_t(__pyx_v_value); if (unlikely((__pyx_t_11 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 979, __pyx_L8_except_error)
+        __pyx_t_11 = __Pyx_PyInt_As_int64_t(__pyx_v_value); if (unlikely((__pyx_t_11 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1018, __pyx_L8_except_error)
         lo_message_add_int64(__pyx_v_self->_message, ((int64_t)__pyx_t_11));
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
@@ -18405,7 +18915,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       }
       goto __pyx_L8_except_error;
 
-      /* "pyliblo3/_liblo.pyx":976
+      /* "pyliblo3/_liblo.pyx":1015
  *             lo_message_add_false(self._message)
  *         elif isinstance(value, (int, long)):
  *             try:             # <<<<<<<<<<<<<<
@@ -18426,7 +18936,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       __pyx_L11_try_end:;
     }
 
-    /* "pyliblo3/_liblo.pyx":975
+    /* "pyliblo3/_liblo.pyx":1014
  *         elif value is False:
  *             lo_message_add_false(self._message)
  *         elif isinstance(value, (int, long)):             # <<<<<<<<<<<<<<
@@ -18436,7 +18946,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":980
+  /* "pyliblo3/_liblo.pyx":1019
  *             except OverflowError:
  *                 lo_message_add_int64(self._message, <int64_t>value)
  *         elif isinstance(value, float):             # <<<<<<<<<<<<<<
@@ -18446,17 +18956,17 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
   __pyx_t_1 = PyFloat_Check(__pyx_v_value); 
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":981
+    /* "pyliblo3/_liblo.pyx":1020
  *                 lo_message_add_int64(self._message, <int64_t>value)
  *         elif isinstance(value, float):
  *             lo_message_add_float(self._message, float(value))             # <<<<<<<<<<<<<<
  *         elif isinstance(value, (bytes, unicode)):
  *             s = _encode(value)
  */
-    __pyx_t_12 = __Pyx_PyObject_AsDouble(__pyx_v_value); if (unlikely(__pyx_t_12 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 981, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_PyObject_AsDouble(__pyx_v_value); if (unlikely(__pyx_t_12 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1020, __pyx_L1_error)
     lo_message_add_float(__pyx_v_self->_message, __pyx_t_12);
 
-    /* "pyliblo3/_liblo.pyx":980
+    /* "pyliblo3/_liblo.pyx":1019
  *             except OverflowError:
  *                 lo_message_add_int64(self._message, <int64_t>value)
  *         elif isinstance(value, float):             # <<<<<<<<<<<<<<
@@ -18466,7 +18976,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":982
+  /* "pyliblo3/_liblo.pyx":1021
  *         elif isinstance(value, float):
  *             lo_message_add_float(self._message, float(value))
  *         elif isinstance(value, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -18484,19 +18994,19 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
   __pyx_L14_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":983
+    /* "pyliblo3/_liblo.pyx":1022
  *             lo_message_add_float(self._message, float(value))
  *         elif isinstance(value, (bytes, unicode)):
  *             s = _encode(value)             # <<<<<<<<<<<<<<
  *             lo_message_add_string(self._message, s)
  *         elif value == None:
  */
-    __pyx_t_10 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_value); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 983, __pyx_L1_error)
+    __pyx_t_10 = __pyx_f_8pyliblo3_6_liblo__encode(__pyx_v_value); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1022, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __pyx_v_s = ((PyObject*)__pyx_t_10);
     __pyx_t_10 = 0;
 
-    /* "pyliblo3/_liblo.pyx":984
+    /* "pyliblo3/_liblo.pyx":1023
  *         elif isinstance(value, (bytes, unicode)):
  *             s = _encode(value)
  *             lo_message_add_string(self._message, s)             # <<<<<<<<<<<<<<
@@ -18505,12 +19015,12 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
  */
     if (unlikely(__pyx_v_s == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 984, __pyx_L1_error)
+      __PYX_ERR(0, 1023, __pyx_L1_error)
     }
-    __pyx_t_13 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_13) && PyErr_Occurred())) __PYX_ERR(0, 984, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyBytes_AsWritableString(__pyx_v_s); if (unlikely((!__pyx_t_13) && PyErr_Occurred())) __PYX_ERR(0, 1023, __pyx_L1_error)
     lo_message_add_string(__pyx_v_self->_message, __pyx_t_13);
 
-    /* "pyliblo3/_liblo.pyx":982
+    /* "pyliblo3/_liblo.pyx":1021
  *         elif isinstance(value, float):
  *             lo_message_add_float(self._message, float(value))
  *         elif isinstance(value, (bytes, unicode)):             # <<<<<<<<<<<<<<
@@ -18520,19 +19030,19 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":985
+  /* "pyliblo3/_liblo.pyx":1024
  *             s = _encode(value)
  *             lo_message_add_string(self._message, s)
  *         elif value == None:             # <<<<<<<<<<<<<<
  *             lo_message_add_nil(self._message)
  *         elif value == float('inf'):
  */
-  __pyx_t_10 = PyObject_RichCompare(__pyx_v_value, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_10); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 985, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 985, __pyx_L1_error)
+  __pyx_t_10 = PyObject_RichCompare(__pyx_v_value, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_10); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1024, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 1024, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":986
+    /* "pyliblo3/_liblo.pyx":1025
  *             lo_message_add_string(self._message, s)
  *         elif value == None:
  *             lo_message_add_nil(self._message)             # <<<<<<<<<<<<<<
@@ -18541,7 +19051,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
  */
     lo_message_add_nil(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":985
+    /* "pyliblo3/_liblo.pyx":1024
  *             s = _encode(value)
  *             lo_message_add_string(self._message, s)
  *         elif value == None:             # <<<<<<<<<<<<<<
@@ -18551,23 +19061,23 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":987
+  /* "pyliblo3/_liblo.pyx":1026
  *         elif value == None:
  *             lo_message_add_nil(self._message)
  *         elif value == float('inf'):             # <<<<<<<<<<<<<<
  *             lo_message_add_infinitum(self._message)
  *         else:
  */
-  __pyx_t_12 = __Pyx_PyString_AsDouble(__pyx_n_s_inf); if (unlikely(__pyx_t_12 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 987, __pyx_L1_error)
-  __pyx_t_10 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 987, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyString_AsDouble(__pyx_n_s_inf); if (unlikely(__pyx_t_12 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1026, __pyx_L1_error)
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1026, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_9 = PyObject_RichCompare(__pyx_v_value, __pyx_t_10, Py_EQ); __Pyx_XGOTREF(__pyx_t_9); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 987, __pyx_L1_error)
+  __pyx_t_9 = PyObject_RichCompare(__pyx_v_value, __pyx_t_10, Py_EQ); __Pyx_XGOTREF(__pyx_t_9); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 1026, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 987, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely((__pyx_t_1 < 0))) __PYX_ERR(0, 1026, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   if (__pyx_t_1) {
 
-    /* "pyliblo3/_liblo.pyx":988
+    /* "pyliblo3/_liblo.pyx":1027
  *             lo_message_add_nil(self._message)
  *         elif value == float('inf'):
  *             lo_message_add_infinitum(self._message)             # <<<<<<<<<<<<<<
@@ -18576,7 +19086,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
  */
     lo_message_add_infinitum(__pyx_v_self->_message);
 
-    /* "pyliblo3/_liblo.pyx":987
+    /* "pyliblo3/_liblo.pyx":1026
  *         elif value == None:
  *             lo_message_add_nil(self._message)
  *         elif value == float('inf'):             # <<<<<<<<<<<<<<
@@ -18586,7 +19096,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":991
+  /* "pyliblo3/_liblo.pyx":1030
  *         else:
  *             # last chance: could be a blob
  *             try:             # <<<<<<<<<<<<<<
@@ -18603,18 +19113,18 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       __Pyx_XGOTREF(__pyx_t_3);
       /*try:*/ {
 
-        /* "pyliblo3/_liblo.pyx":992
+        /* "pyliblo3/_liblo.pyx":1031
  *             # last chance: could be a blob
  *             try:
  *                 iter(value)             # <<<<<<<<<<<<<<
  *             except TypeError:
  *                 raise TypeError("unsupported message argument type")
  */
-        __pyx_t_9 = PyObject_GetIter(__pyx_v_value); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 992, __pyx_L16_error)
+        __pyx_t_9 = PyObject_GetIter(__pyx_v_value); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 1031, __pyx_L16_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-        /* "pyliblo3/_liblo.pyx":991
+        /* "pyliblo3/_liblo.pyx":1030
  *         else:
  *             # last chance: could be a blob
  *             try:             # <<<<<<<<<<<<<<
@@ -18631,7 +19141,7 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-      /* "pyliblo3/_liblo.pyx":993
+      /* "pyliblo3/_liblo.pyx":1032
  *             try:
  *                 iter(value)
  *             except TypeError:             # <<<<<<<<<<<<<<
@@ -18641,27 +19151,27 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       __pyx_t_7 = __Pyx_PyErr_ExceptionMatches(__pyx_builtin_TypeError);
       if (__pyx_t_7) {
         __Pyx_AddTraceback("pyliblo3._liblo.Message._add_auto", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_9, &__pyx_t_10, &__pyx_t_8) < 0) __PYX_ERR(0, 993, __pyx_L18_except_error)
+        if (__Pyx_GetException(&__pyx_t_9, &__pyx_t_10, &__pyx_t_8) < 0) __PYX_ERR(0, 1032, __pyx_L18_except_error)
         __Pyx_XGOTREF(__pyx_t_9);
         __Pyx_XGOTREF(__pyx_t_10);
         __Pyx_XGOTREF(__pyx_t_8);
 
-        /* "pyliblo3/_liblo.pyx":994
+        /* "pyliblo3/_liblo.pyx":1033
  *                 iter(value)
  *             except TypeError:
  *                 raise TypeError("unsupported message argument type")             # <<<<<<<<<<<<<<
  *             self._add('b', value)
  * 
  */
-        __pyx_t_14 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 994, __pyx_L18_except_error)
+        __pyx_t_14 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 1033, __pyx_L18_except_error)
         __Pyx_GOTREF(__pyx_t_14);
         __Pyx_Raise(__pyx_t_14, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __PYX_ERR(0, 994, __pyx_L18_except_error)
+        __PYX_ERR(0, 1033, __pyx_L18_except_error)
       }
       goto __pyx_L18_except_error;
 
-      /* "pyliblo3/_liblo.pyx":991
+      /* "pyliblo3/_liblo.pyx":1030
  *         else:
  *             # last chance: could be a blob
  *             try:             # <<<<<<<<<<<<<<
@@ -18677,20 +19187,20 @@ static PyObject *__pyx_f_8pyliblo3_6_liblo_7Message__add_auto(struct __pyx_obj_8
       __pyx_L21_try_end:;
     }
 
-    /* "pyliblo3/_liblo.pyx":995
+    /* "pyliblo3/_liblo.pyx":1034
  *             except TypeError:
  *                 raise TypeError("unsupported message argument type")
  *             self._add('b', value)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_8 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add(__pyx_v_self, __pyx_n_s_b, __pyx_v_value); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 995, __pyx_L1_error)
+    __pyx_t_8 = ((struct __pyx_vtabstruct_8pyliblo3_6_liblo_Message *)__pyx_v_self->__pyx_vtab)->_add(__pyx_v_self, __pyx_n_s_b, __pyx_v_value); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 1034, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":969
+  /* "pyliblo3/_liblo.pyx":1008
  *             raise TypeError("unknown OSC data type '%c'" % t)
  * 
  *     cdef _add_auto(self, value):             # <<<<<<<<<<<<<<
@@ -18729,7 +19239,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Message_7__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Message_6__reduce_cython__, "Message.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Message_7__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Message_6__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Message_7__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -18809,7 +19320,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Message_9__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_7Message_8__setstate_cython__, "Message.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7Message_9__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Message_8__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_7Message_9__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -18929,20 +19441,16 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_7Message_8__setstate_cython__(CYTHON
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":1009
+/* "pyliblo3/_liblo.pyx":1062
  *     cdef list _keep_refs
  * 
  *     def __init__(self, *messages):             # <<<<<<<<<<<<<<
- *         """
- *         Bundle([timetag, ]*messages)
+ *         cdef lo_timetag tt
+ *         tt.sec, tt.frac = 0, 0
  */
 
 /* Python wrapper */
 static int __pyx_pw_8pyliblo3_6_liblo_6Bundle_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Bundle___init__, "\n        Bundle([timetag, ]*messages)\n\n        Create a new :class:`Bundle` object.  You can optionally specify a\n        time at which the messages should be dispatched (as an OSC timetag\n        float), and any number of messages to be included in the bundle.\n        ");
-#if CYTHON_UPDATE_DESCRIPTOR_DOC
-struct wrapperbase __pyx_wrapperbase_8pyliblo3_6_liblo_6Bundle___init__;
-#endif
 static int __pyx_pw_8pyliblo3_6_liblo_6Bundle_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_messages = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -18990,8 +19498,8 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
   __Pyx_RefNannySetupContext("__init__", 0);
   __Pyx_INCREF(__pyx_v_messages);
 
-  /* "pyliblo3/_liblo.pyx":1018
- *         """
+  /* "pyliblo3/_liblo.pyx":1064
+ *     def __init__(self, *messages):
  *         cdef lo_timetag tt
  *         tt.sec, tt.frac = 0, 0             # <<<<<<<<<<<<<<
  *         self._keep_refs = []
@@ -19002,14 +19510,14 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
   __pyx_v_tt.sec = __pyx_t_1;
   __pyx_v_tt.frac = __pyx_t_2;
 
-  /* "pyliblo3/_liblo.pyx":1019
+  /* "pyliblo3/_liblo.pyx":1065
  *         cdef lo_timetag tt
  *         tt.sec, tt.frac = 0, 0
  *         self._keep_refs = []             # <<<<<<<<<<<<<<
  * 
  *         if len(messages) and not isinstance(messages[0], Message):
  */
-  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1019, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1065, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_3);
   __Pyx_GOTREF(__pyx_v_self->_keep_refs);
@@ -19017,21 +19525,21 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
   __pyx_v_self->_keep_refs = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":1021
+  /* "pyliblo3/_liblo.pyx":1067
  *         self._keep_refs = []
  * 
  *         if len(messages) and not isinstance(messages[0], Message):             # <<<<<<<<<<<<<<
  *             t = messages[0]
  *             if isinstance(t, (float, int, long)):
  */
-  __pyx_t_5 = __Pyx_PyTuple_GET_SIZE(__pyx_v_messages); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 1021, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyTuple_GET_SIZE(__pyx_v_messages); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 1067, __pyx_L1_error)
   __pyx_t_6 = (__pyx_t_5 != 0);
   if (__pyx_t_6) {
   } else {
     __pyx_t_4 = __pyx_t_6;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_messages, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1021, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_messages, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1067, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_6 = __Pyx_TypeCheck(__pyx_t_3, __pyx_ptype_8pyliblo3_6_liblo_Message); 
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -19040,19 +19548,19 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_4) {
 
-    /* "pyliblo3/_liblo.pyx":1022
+    /* "pyliblo3/_liblo.pyx":1068
  * 
  *         if len(messages) and not isinstance(messages[0], Message):
  *             t = messages[0]             # <<<<<<<<<<<<<<
  *             if isinstance(t, (float, int, long)):
  *                 tt = _double_to_timetag(t)
  */
-    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_messages, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1022, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_messages, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1068, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_v_t = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":1023
+    /* "pyliblo3/_liblo.pyx":1069
  *         if len(messages) and not isinstance(messages[0], Message):
  *             t = messages[0]
  *             if isinstance(t, (float, int, long)):             # <<<<<<<<<<<<<<
@@ -19076,18 +19584,18 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
     __pyx_L7_bool_binop_done:;
     if (__pyx_t_4) {
 
-      /* "pyliblo3/_liblo.pyx":1024
+      /* "pyliblo3/_liblo.pyx":1070
  *             t = messages[0]
  *             if isinstance(t, (float, int, long)):
  *                 tt = _double_to_timetag(t)             # <<<<<<<<<<<<<<
  *             elif isinstance(t, tuple) and len(t) == 2:
  *                 tt.sec, tt.frac = t
  */
-      __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_t); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1024, __pyx_L1_error)
-      __pyx_t_9 = __pyx_f_8pyliblo3_6_liblo__double_to_timetag(__pyx_t_8); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1024, __pyx_L1_error)
+      __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_t); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 1070, __pyx_L1_error)
+      __pyx_t_9 = __pyx_f_8pyliblo3_6_liblo__double_to_timetag(__pyx_t_8); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1070, __pyx_L1_error)
       __pyx_v_tt = __pyx_t_9;
 
-      /* "pyliblo3/_liblo.pyx":1023
+      /* "pyliblo3/_liblo.pyx":1069
  *         if len(messages) and not isinstance(messages[0], Message):
  *             t = messages[0]
  *             if isinstance(t, (float, int, long)):             # <<<<<<<<<<<<<<
@@ -19097,7 +19605,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
       goto __pyx_L6;
     }
 
-    /* "pyliblo3/_liblo.pyx":1025
+    /* "pyliblo3/_liblo.pyx":1071
  *             if isinstance(t, (float, int, long)):
  *                 tt = _double_to_timetag(t)
  *             elif isinstance(t, tuple) and len(t) == 2:             # <<<<<<<<<<<<<<
@@ -19110,13 +19618,13 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
       __pyx_t_4 = __pyx_t_7;
       goto __pyx_L10_bool_binop_done;
     }
-    __pyx_t_5 = PyObject_Length(__pyx_v_t); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 1025, __pyx_L1_error)
+    __pyx_t_5 = PyObject_Length(__pyx_v_t); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 1071, __pyx_L1_error)
     __pyx_t_7 = (__pyx_t_5 == 2);
     __pyx_t_4 = __pyx_t_7;
     __pyx_L10_bool_binop_done:;
     if (likely(__pyx_t_4)) {
 
-      /* "pyliblo3/_liblo.pyx":1026
+      /* "pyliblo3/_liblo.pyx":1072
  *                 tt = _double_to_timetag(t)
  *             elif isinstance(t, tuple) and len(t) == 2:
  *                 tt.sec, tt.frac = t             # <<<<<<<<<<<<<<
@@ -19129,7 +19637,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          __PYX_ERR(0, 1026, __pyx_L1_error)
+          __PYX_ERR(0, 1072, __pyx_L1_error)
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -19142,21 +19650,21 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
         __Pyx_INCREF(__pyx_t_3);
         __Pyx_INCREF(__pyx_t_10);
         #else
-        __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1026, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1072, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_10 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1026, __pyx_L1_error)
+        __pyx_t_10 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1072, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         #endif
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_11 = PyObject_GetIter(__pyx_v_t); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 1026, __pyx_L1_error)
+        __pyx_t_11 = PyObject_GetIter(__pyx_v_t); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 1072, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __pyx_t_12 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_11);
         index = 0; __pyx_t_3 = __pyx_t_12(__pyx_t_11); if (unlikely(!__pyx_t_3)) goto __pyx_L12_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_3);
         index = 1; __pyx_t_10 = __pyx_t_12(__pyx_t_11); if (unlikely(!__pyx_t_10)) goto __pyx_L12_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_10);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_12(__pyx_t_11), 2) < 0) __PYX_ERR(0, 1026, __pyx_L1_error)
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_12(__pyx_t_11), 2) < 0) __PYX_ERR(0, 1072, __pyx_L1_error)
         __pyx_t_12 = NULL;
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         goto __pyx_L13_unpacking_done;
@@ -19164,17 +19672,17 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         __pyx_t_12 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        __PYX_ERR(0, 1026, __pyx_L1_error)
+        __PYX_ERR(0, 1072, __pyx_L1_error)
         __pyx_L13_unpacking_done:;
       }
-      __pyx_t_2 = __Pyx_PyInt_As_uint32_t(__pyx_t_3); if (unlikely((__pyx_t_2 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1026, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_As_uint32_t(__pyx_t_3); if (unlikely((__pyx_t_2 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1072, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_t_10); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1026, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_t_10); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1072, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __pyx_v_tt.sec = __pyx_t_2;
       __pyx_v_tt.frac = __pyx_t_1;
 
-      /* "pyliblo3/_liblo.pyx":1025
+      /* "pyliblo3/_liblo.pyx":1071
  *             if isinstance(t, (float, int, long)):
  *                 tt = _double_to_timetag(t)
  *             elif isinstance(t, tuple) and len(t) == 2:             # <<<<<<<<<<<<<<
@@ -19184,7 +19692,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
       goto __pyx_L6;
     }
 
-    /* "pyliblo3/_liblo.pyx":1028
+    /* "pyliblo3/_liblo.pyx":1074
  *                 tt.sec, tt.frac = t
  *             else:
  *                 raise TypeError("invalid timetag")             # <<<<<<<<<<<<<<
@@ -19192,27 +19700,27 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
  *             messages = messages[1:]
  */
     /*else*/ {
-      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1028, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_TypeError, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1074, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_Raise(__pyx_t_10, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __PYX_ERR(0, 1028, __pyx_L1_error)
+      __PYX_ERR(0, 1074, __pyx_L1_error)
     }
     __pyx_L6:;
 
-    /* "pyliblo3/_liblo.pyx":1030
+    /* "pyliblo3/_liblo.pyx":1076
  *                 raise TypeError("invalid timetag")
  *             # first argument was timetag, so continue with second
  *             messages = messages[1:]             # <<<<<<<<<<<<<<
  * 
  *         self._bundle = lo_bundle_new(tt)
  */
-    __pyx_t_10 = __Pyx_PyTuple_GetSlice(__pyx_v_messages, 1, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1030, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyTuple_GetSlice(__pyx_v_messages, 1, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1076, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF_SET(__pyx_v_messages, ((PyObject*)__pyx_t_10));
     __pyx_t_10 = 0;
 
-    /* "pyliblo3/_liblo.pyx":1021
+    /* "pyliblo3/_liblo.pyx":1067
  *         self._keep_refs = []
  * 
  *         if len(messages) and not isinstance(messages[0], Message):             # <<<<<<<<<<<<<<
@@ -19221,7 +19729,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":1032
+  /* "pyliblo3/_liblo.pyx":1078
  *             messages = messages[1:]
  * 
  *         self._bundle = lo_bundle_new(tt)             # <<<<<<<<<<<<<<
@@ -19230,32 +19738,32 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
  */
   __pyx_v_self->_bundle = lo_bundle_new(__pyx_v_tt);
 
-  /* "pyliblo3/_liblo.pyx":1033
+  /* "pyliblo3/_liblo.pyx":1079
  * 
  *         self._bundle = lo_bundle_new(tt)
  *         if len(messages):             # <<<<<<<<<<<<<<
  *             self.add(*messages)
  * 
  */
-  __pyx_t_5 = __Pyx_PyTuple_GET_SIZE(__pyx_v_messages); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 1033, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyTuple_GET_SIZE(__pyx_v_messages); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 1079, __pyx_L1_error)
   __pyx_t_4 = (__pyx_t_5 != 0);
   if (__pyx_t_4) {
 
-    /* "pyliblo3/_liblo.pyx":1034
+    /* "pyliblo3/_liblo.pyx":1080
  *         self._bundle = lo_bundle_new(tt)
  *         if len(messages):
  *             self.add(*messages)             # <<<<<<<<<<<<<<
  * 
  *     def __dealloc__(self):
  */
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1034, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1080, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_v_messages, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1034, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_v_messages, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1080, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "pyliblo3/_liblo.pyx":1033
+    /* "pyliblo3/_liblo.pyx":1079
  * 
  *         self._bundle = lo_bundle_new(tt)
  *         if len(messages):             # <<<<<<<<<<<<<<
@@ -19264,12 +19772,12 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
  */
   }
 
-  /* "pyliblo3/_liblo.pyx":1009
+  /* "pyliblo3/_liblo.pyx":1062
  *     cdef list _keep_refs
  * 
  *     def __init__(self, *messages):             # <<<<<<<<<<<<<<
- *         """
- *         Bundle([timetag, ]*messages)
+ *         cdef lo_timetag tt
+ *         tt.sec, tt.frac = 0, 0
  */
 
   /* function exit code */
@@ -19288,7 +19796,7 @@ static int __pyx_pf_8pyliblo3_6_liblo_6Bundle___init__(struct __pyx_obj_8pyliblo
   return __pyx_r;
 }
 
-/* "pyliblo3/_liblo.pyx":1036
+/* "pyliblo3/_liblo.pyx":1082
  *             self.add(*messages)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -19311,7 +19819,7 @@ static void __pyx_pw_8pyliblo3_6_liblo_6Bundle_3__dealloc__(PyObject *__pyx_v_se
 
 static void __pyx_pf_8pyliblo3_6_liblo_6Bundle_2__dealloc__(struct __pyx_obj_8pyliblo3_6_liblo_Bundle *__pyx_v_self) {
 
-  /* "pyliblo3/_liblo.pyx":1037
+  /* "pyliblo3/_liblo.pyx":1083
  * 
  *     def __dealloc__(self):
  *         lo_bundle_free(self._bundle)             # <<<<<<<<<<<<<<
@@ -19320,7 +19828,7 @@ static void __pyx_pf_8pyliblo3_6_liblo_6Bundle_2__dealloc__(struct __pyx_obj_8py
  */
   lo_bundle_free(__pyx_v_self->_bundle);
 
-  /* "pyliblo3/_liblo.pyx":1036
+  /* "pyliblo3/_liblo.pyx":1082
  *             self.add(*messages)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -19331,17 +19839,17 @@ static void __pyx_pf_8pyliblo3_6_liblo_6Bundle_2__dealloc__(struct __pyx_obj_8py
   /* function exit code */
 }
 
-/* "pyliblo3/_liblo.pyx":1039
+/* "pyliblo3/_liblo.pyx":1085
  *         lo_bundle_free(self._bundle)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*messages)
+ *         Add one or more messages to this bundle
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Bundle_5add(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Bundle_4add, "\n        add(*messages)\n        add(path, *args)\n\n        Add one or more messages to the bundle.\n        ");
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Bundle_4add, "Bundle.add(self, *args)\n\n        Add one or more messages to this bundle\n\n        Possible forms:\n\n        * `add(*messages: Message)`\n        * `add(path: str, *args)`, where path is the osc path (for example, '/path1' or '/root/subpath')\n            and `args` are passed directly to `Message` to create a Message to be added to this Bundle\n\n        Add one or more messages to the bundle.\n        ");
 static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Bundle_5add = {"add", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_5add, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Bundle_4add};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Bundle_5add(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_args = 0;
@@ -19385,20 +19893,20 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("add", 1);
 
-  /* "pyliblo3/_liblo.pyx":1046
+  /* "pyliblo3/_liblo.pyx":1097
  *         Add one or more messages to the bundle.
  *         """
  *         if isinstance(args[0], Message):             # <<<<<<<<<<<<<<
  *             # args is already a list of Messages
  *             messages = args
  */
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1046, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_args, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1097, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_TypeCheck(__pyx_t_1, __pyx_ptype_8pyliblo3_6_liblo_Message); 
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
 
-    /* "pyliblo3/_liblo.pyx":1048
+    /* "pyliblo3/_liblo.pyx":1099
  *         if isinstance(args[0], Message):
  *             # args is already a list of Messages
  *             messages = args             # <<<<<<<<<<<<<<
@@ -19408,7 +19916,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
     __Pyx_INCREF(__pyx_v_args);
     __pyx_v_messages = __pyx_v_args;
 
-    /* "pyliblo3/_liblo.pyx":1046
+    /* "pyliblo3/_liblo.pyx":1097
  *         Add one or more messages to the bundle.
  *         """
  *         if isinstance(args[0], Message):             # <<<<<<<<<<<<<<
@@ -19418,7 +19926,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
     goto __pyx_L3;
   }
 
-  /* "pyliblo3/_liblo.pyx":1051
+  /* "pyliblo3/_liblo.pyx":1102
  *         else:
  *             # make a single Message from all arguments
  *             messages = [Message(*args)]             # <<<<<<<<<<<<<<
@@ -19426,19 +19934,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
  *         # add all messages
  */
   /*else*/ {
-    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Message), __pyx_v_args, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1051, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Message), __pyx_v_args, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1102, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1051, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1102, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_1);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1)) __PYX_ERR(0, 1051, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1)) __PYX_ERR(0, 1102, __pyx_L1_error);
     __pyx_t_1 = 0;
     __pyx_v_messages = __pyx_t_3;
     __pyx_t_3 = 0;
   }
   __pyx_L3:;
 
-  /* "pyliblo3/_liblo.pyx":1054
+  /* "pyliblo3/_liblo.pyx":1105
  * 
  *         # add all messages
  *         for m in messages:             # <<<<<<<<<<<<<<
@@ -19450,9 +19958,9 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
     __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_messages); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1054, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_messages); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1105, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1054, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1105, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_5)) {
@@ -19460,28 +19968,28 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_MACROS
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 1054, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 1105, __pyx_L1_error)
           #endif
           if (__pyx_t_4 >= __pyx_temp) break;
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely((0 < 0))) __PYX_ERR(0, 1054, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely((0 < 0))) __PYX_ERR(0, 1105, __pyx_L1_error)
         #else
-        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1054, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1105, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         {
           Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_MACROS
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 1054, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 1105, __pyx_L1_error)
           #endif
           if (__pyx_t_4 >= __pyx_temp) break;
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely((0 < 0))) __PYX_ERR(0, 1054, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely((0 < 0))) __PYX_ERR(0, 1105, __pyx_L1_error)
         #else
-        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1054, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1105, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -19491,7 +19999,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 1054, __pyx_L1_error)
+          else __PYX_ERR(0, 1105, __pyx_L1_error)
         }
         break;
       }
@@ -19500,7 +20008,7 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
     __Pyx_XDECREF_SET(__pyx_v_m, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":1055
+    /* "pyliblo3/_liblo.pyx":1106
  *         # add all messages
  *         for m in messages:
  *             self._keep_refs.append(m)             # <<<<<<<<<<<<<<
@@ -19509,11 +20017,11 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
  */
     if (unlikely(__pyx_v_self->_keep_refs == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "append");
-      __PYX_ERR(0, 1055, __pyx_L1_error)
+      __PYX_ERR(0, 1106, __pyx_L1_error)
     }
-    __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, __pyx_v_m); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 1055, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_self->_keep_refs, __pyx_v_m); if (unlikely(__pyx_t_6 == ((int)-1))) __PYX_ERR(0, 1106, __pyx_L1_error)
 
-    /* "pyliblo3/_liblo.pyx":1056
+    /* "pyliblo3/_liblo.pyx":1107
  *         for m in messages:
  *             self._keep_refs.append(m)
  *             message = <Message> m             # <<<<<<<<<<<<<<
@@ -19524,19 +20032,19 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
     __Pyx_XDECREF_SET(__pyx_v_message, ((struct __pyx_obj_8pyliblo3_6_liblo_Message *)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "pyliblo3/_liblo.pyx":1057
+    /* "pyliblo3/_liblo.pyx":1108
  *             self._keep_refs.append(m)
  *             message = <Message> m
  *             lo_bundle_add_message(self._bundle, message._path, message._message)             # <<<<<<<<<<<<<<
  */
     if (unlikely(__pyx_v_message->_path == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "expected bytes, NoneType found");
-      __PYX_ERR(0, 1057, __pyx_L1_error)
+      __PYX_ERR(0, 1108, __pyx_L1_error)
     }
-    __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_message->_path); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 1057, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyBytes_AsWritableString(__pyx_v_message->_path); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 1108, __pyx_L1_error)
     lo_bundle_add_message(__pyx_v_self->_bundle, __pyx_t_7, __pyx_v_message->_message);
 
-    /* "pyliblo3/_liblo.pyx":1054
+    /* "pyliblo3/_liblo.pyx":1105
  * 
  *         # add all messages
  *         for m in messages:             # <<<<<<<<<<<<<<
@@ -19546,12 +20054,12 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_4add(struct __pyx_obj_8pylib
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":1039
+  /* "pyliblo3/_liblo.pyx":1085
  *         lo_bundle_free(self._bundle)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*messages)
+ *         Add one or more messages to this bundle
  */
 
   /* function exit code */
@@ -19585,7 +20093,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Bundle_6__reduce_cython__, "Bundle.__reduce_cython__(self)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Bundle_6__reduce_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -19665,7 +20174,8 @@ PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6Bundle_8__setstate_cython__, "Bundle.__setstate_cython__(self, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Bundle_8__setstate_cython__};
 static PyObject *__pyx_pw_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
@@ -19792,15 +20302,16 @@ static PyObject *__pyx_pf_8pyliblo3_6_liblo_6Bundle_8__setstate_cython__(CYTHON_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8pyliblo3_6_liblo_5__pyx_unpickle_Callback(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_7__pyx_unpickle_Callback(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_5__pyx_unpickle_Callback = {"__pyx_unpickle_Callback", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5__pyx_unpickle_Callback, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_8pyliblo3_6_liblo_5__pyx_unpickle_Callback(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_8pyliblo3_6_liblo_6__pyx_unpickle_Callback, "__pyx_unpickle_Callback(__pyx_type, long __pyx_checksum, __pyx_state)");
+static PyMethodDef __pyx_mdef_8pyliblo3_6_liblo_7__pyx_unpickle_Callback = {"__pyx_unpickle_Callback", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7__pyx_unpickle_Callback, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6__pyx_unpickle_Callback};
+static PyObject *__pyx_pw_8pyliblo3_6_liblo_7__pyx_unpickle_Callback(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -19904,7 +20415,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_4__pyx_unpickle_Callback(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_8pyliblo3_6_liblo_6__pyx_unpickle_Callback(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -19917,7 +20428,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8pyliblo3_6_liblo_4__pyx_unpickle_Callback(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_8pyliblo3_6_liblo_6__pyx_unpickle_Callback(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -20324,13 +20835,14 @@ static int __pyx_tp_clear_8pyliblo3_6_liblo_Callback(PyObject *o) {
 }
 
 static PyMethodDef __pyx_methods_8pyliblo3_6_liblo_Callback[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_8Callback_2__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_8Callback_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_8Callback_4__setstate_cython__},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo_Callback_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo_Callback},
+  {Py_tp_doc, (void *)PyDoc_STR("Callback(func, user_data)\n\n    Used internally to wrap a python function as a callback\n\n    Args:\n        func: the function to call\n        user_data: any python object, will be passed to the callback as the last argument\n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_8pyliblo3_6_liblo_Callback},
   {Py_tp_clear, (void *)__pyx_tp_clear_8pyliblo3_6_liblo_Callback},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo_Callback},
@@ -20378,7 +20890,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo_Callback = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  0, /*tp_doc*/
+  PyDoc_STR("Callback(func, user_data)\n\n    Used internally to wrap a python function as a callback\n\n    Args:\n        func: the function to call\n        user_data: any python object, will be passed to the callback as the last argument\n    "), /*tp_doc*/
   __pyx_tp_traverse_8pyliblo3_6_liblo_Callback, /*tp_traverse*/
   __pyx_tp_clear_8pyliblo3_6_liblo_Callback, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -20503,28 +21015,29 @@ static PyObject *__pyx_getprop_8pyliblo3_6_liblo_11_ServerBase_protocol(PyObject
 
 static PyMethodDef __pyx_methods_8pyliblo3_6_liblo__ServerBase[] = {
   {"register_methods", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_3register_methods, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_2register_methods},
-  {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_7get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_9get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_4get_url},
+  {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_7get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_6get_port},
+  {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_9get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_8get_protocol},
   {"fileno", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_11fileno, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_10fileno},
   {"add_method", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_13add_method, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_12add_method},
   {"del_method", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_15del_method, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_14del_method},
   {"add_bundle_handlers", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_17add_bundle_handlers, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_16add_bundle_handlers},
   {"send", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_19send, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_18send},
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_20__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_11_ServerBase_22__setstate_cython__},
   {0, 0, 0, 0}
 };
 
 static struct PyGetSetDef __pyx_getsets_8pyliblo3_6_liblo__ServerBase[] = {
   {(char *)"url", __pyx_getprop_8pyliblo3_6_liblo_11_ServerBase_url, 0, (char *)PyDoc_STR("\n        The server's URL.\n        "), 0},
-  {(char *)"port", __pyx_getprop_8pyliblo3_6_liblo_11_ServerBase_port, 0, (char *)PyDoc_STR("\n        The server's port number.\n        "), 0},
-  {(char *)"protocol", __pyx_getprop_8pyliblo3_6_liblo_11_ServerBase_protocol, 0, (char *)PyDoc_STR("\n        The server's protocol (one of the constants :const:`UDP`,\n        :const:`TCP`, or :const:`UNIX`).\n        "), 0},
+  {(char *)"port", __pyx_getprop_8pyliblo3_6_liblo_11_ServerBase_port, 0, (char *)PyDoc_STR("\n        The server's port number (int)\n        "), 0},
+  {(char *)"protocol", __pyx_getprop_8pyliblo3_6_liblo_11_ServerBase_protocol, 0, (char *)PyDoc_STR("\n        The server's protocol (one of the constants `LO_UDP`, `LO_TCP` or `LO_UNIX`).\n        "), 0},
   {0, 0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo__ServerBase_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo__ServerBase},
+  {Py_tp_doc, (void *)PyDoc_STR("_ServerBase(reg_methods=True)")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_8pyliblo3_6_liblo__ServerBase},
   {Py_tp_clear, (void *)__pyx_tp_clear_8pyliblo3_6_liblo__ServerBase},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo__ServerBase},
@@ -20573,7 +21086,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo__ServerBase = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  0, /*tp_doc*/
+  PyDoc_STR("_ServerBase(reg_methods=True)"), /*tp_doc*/
   __pyx_tp_traverse_8pyliblo3_6_liblo__ServerBase, /*tp_traverse*/
   __pyx_tp_clear_8pyliblo3_6_liblo__ServerBase, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -20683,12 +21196,12 @@ static PyObject *__pyx_getprop_8pyliblo3_6_liblo_7Address_protocol(PyObject *o, 
 }
 
 static PyMethodDef __pyx_methods_8pyliblo3_6_liblo_Address[] = {
-  {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"get_hostname", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_7get_hostname, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_9get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_11get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_13__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_15__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"get_url", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_5get_url, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_4get_url},
+  {"get_hostname", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_7get_hostname, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_6get_hostname},
+  {"get_port", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_9get_port, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_8get_port},
+  {"get_protocol", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_11get_protocol, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_10get_protocol},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_13__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_12__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Address_15__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Address_14__setstate_cython__},
   {0, 0, 0, 0}
 };
 
@@ -20702,6 +21215,7 @@ static struct PyGetSetDef __pyx_getsets_8pyliblo3_6_liblo_Address[] = {
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo_Address_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo_Address},
+  {Py_tp_doc, (void *)PyDoc_STR("Address(addr, addr2=None, proto=LO_UDP)\n\n    An Address represents a destination for a message\n\n    Possible forms:\n\n    * `Address(hostname: str, port: int, proto: [int | str] = LO_UDP`)\n    * `Address(port: int)`   # Assumes localhost\n    * `Address(url: str)`    # A URL of the form 'osc.udp://hostname:1234/'\n\n    Create a new `Address` object from the given hostname/port\n    or URL.\n\n    Args:\n        hostname: the target's hostname - the name or an IP of the form '127.0.0.0'.\n        port: the port number of the target\n        proto: one of the constants `LO_UDP`, `LO_TCP`, `LO_UNIX` or a string like 'UDP', 'TCP' or 'UNIX'\n        url: a URL in liblo notation, e.g. `'osc.udp://hostname:1234/'`.\n\n    Raises:\n        AddressError: if the given parameters do not represent a valid address.\n\n    ")},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo_Address},
   {Py_tp_getset, (void *)__pyx_getsets_8pyliblo3_6_liblo_Address},
   {Py_tp_init, (void *)__pyx_pw_8pyliblo3_6_liblo_7Address_1__init__},
@@ -20748,7 +21262,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo_Address = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
-  0, /*tp_doc*/
+  PyDoc_STR("Address(addr, addr2=None, proto=LO_UDP)\n\n    An Address represents a destination for a message\n\n    Possible forms:\n\n    * `Address(hostname: str, port: int, proto: [int | str] = LO_UDP`)\n    * `Address(port: int)`   # Assumes localhost\n    * `Address(url: str)`    # A URL of the form 'osc.udp://hostname:1234/'\n\n    Create a new `Address` object from the given hostname/port\n    or URL.\n\n    Args:\n        hostname: the target's hostname - the name or an IP of the form '127.0.0.0'.\n        port: the port number of the target\n        proto: one of the constants `LO_UDP`, `LO_TCP`, `LO_UNIX` or a string like 'UDP', 'TCP' or 'UNIX'\n        url: a URL in liblo notation, e.g. `'osc.udp://hostname:1234/'`.\n\n    Raises:\n        AddressError: if the given parameters do not represent a valid address.\n\n    "), /*tp_doc*/
   0, /*tp_traverse*/
   0, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -20871,14 +21385,14 @@ static int __pyx_tp_clear_8pyliblo3_6_liblo_Message(PyObject *o) {
 
 static PyMethodDef __pyx_methods_8pyliblo3_6_liblo_Message[] = {
   {"add", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_5add, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Message_4add},
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Message_6__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_7Message_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_7Message_8__setstate_cython__},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo_Message_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo_Message},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    An OSC message, consisting of a path and arbitrary arguments.\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("Message(path, *args)\n\n    An OSC message, consisting of a path and arbitrary arguments.\n\n    Args:\n        path (str): the path of the message\n        args: any arguments passed will be added to this messag\n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_8pyliblo3_6_liblo_Message},
   {Py_tp_clear, (void *)__pyx_tp_clear_8pyliblo3_6_liblo_Message},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo_Message},
@@ -20926,7 +21440,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo_Message = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("\n    An OSC message, consisting of a path and arbitrary arguments.\n    "), /*tp_doc*/
+  PyDoc_STR("Message(path, *args)\n\n    An OSC message, consisting of a path and arbitrary arguments.\n\n    Args:\n        path (str): the path of the message\n        args: any arguments passed will be added to this messag\n    "), /*tp_doc*/
   __pyx_tp_traverse_8pyliblo3_6_liblo_Message, /*tp_traverse*/
   __pyx_tp_clear_8pyliblo3_6_liblo_Message, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -21045,14 +21559,14 @@ static int __pyx_tp_clear_8pyliblo3_6_liblo_Bundle(PyObject *o) {
 
 static PyMethodDef __pyx_methods_8pyliblo3_6_liblo_Bundle[] = {
   {"add", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_5add, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Bundle_4add},
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Bundle_6__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Bundle_8__setstate_cython__},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo_Bundle_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo_Bundle},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    A bundle of one or more messages to be sent and dispatched together.\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("Bundle(*messages)\n\n    A bundle of one or more messages to be sent and dispatched together.\n\n    Possible forms:\n\n    * `Bundle(*messages)`\n    * `Bundle(timetag: float, *messages)`\n\n    Create a new `Bundle` object. You can optionally specify a\n    time at which the messages should be dispatched (as an OSC timetag\n    float), and any number of messages to be included in the bundle.\n\n    Args:\n        timetag (float): optional, speficies the time at which the message\n            should be dispatched\n        messages: any number of `Message`s to include in this `Bundle`\n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_8pyliblo3_6_liblo_Bundle},
   {Py_tp_clear, (void *)__pyx_tp_clear_8pyliblo3_6_liblo_Bundle},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo_Bundle},
@@ -21100,7 +21614,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo_Bundle = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("\n    A bundle of one or more messages to be sent and dispatched together.\n    "), /*tp_doc*/
+  PyDoc_STR("Bundle(*messages)\n\n    A bundle of one or more messages to be sent and dispatched together.\n\n    Possible forms:\n\n    * `Bundle(*messages)`\n    * `Bundle(timetag: float, *messages)`\n\n    Create a new `Bundle` object. You can optionally specify a\n    time at which the messages should be dispatched (as an OSC timetag\n    float), and any number of messages to be included in the bundle.\n\n    Args:\n        timetag (float): optional, speficies the time at which the message\n            should be dispatched\n        messages: any number of `Message`s to include in this `Bundle`\n    "), /*tp_doc*/
   __pyx_tp_traverse_8pyliblo3_6_liblo_Bundle, /*tp_traverse*/
   __pyx_tp_clear_8pyliblo3_6_liblo_Bundle, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -21185,14 +21699,14 @@ static void __pyx_tp_dealloc_8pyliblo3_6_liblo_Server(PyObject *o) {
 static PyMethodDef __pyx_methods_8pyliblo3_6_liblo_Server[] = {
   {"free", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_5free, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_4free},
   {"recv", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_7recv, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_6recv},
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_9__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_11__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_9__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_8__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_6Server_11__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_6Server_10__setstate_cython__},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo_Server_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo_Server},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    A server that can receive OSC messages using a simple single-threaded\n    polling model.\n    Use :class:`ServerThread` for an OSC server that runs in its own thread\n    and never blocks.\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("Server(port=None, proto=LO_DEFAULT, reg_methods=True)\n\n    A server that can receive OSC messages, blocking\n\n    Use [ServerThread](#ServerThread) for an OSC server that runs in its own thread\n    and never blocks.\n\n    Args:\n        port (int | None): a decimal port number or a UNIX socket path.  If omitted, an\n            arbitrary free UDP port will be used.\n        proto (int | str): one of LO_UDP, LO_TCP, LO_UNIX or LO_DEFAULT, or one of the\n            strings 'UDP', 'TCP', 'UNIX'\n        reg_methods (bool): if True, register any methods decorated with the [make_method](#make_method)\n            decorator\n\n        Raises:\n            ServerError: if an error occurs created the underlying liblo server\n\n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_8pyliblo3_6_liblo__ServerBase},
   {Py_tp_clear, (void *)__pyx_tp_clear_8pyliblo3_6_liblo__ServerBase},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo_Server},
@@ -21240,7 +21754,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo_Server = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("\n    A server that can receive OSC messages using a simple single-threaded\n    polling model.\n    Use :class:`ServerThread` for an OSC server that runs in its own thread\n    and never blocks.\n    "), /*tp_doc*/
+  PyDoc_STR("Server(port=None, proto=LO_DEFAULT, reg_methods=True)\n\n    A server that can receive OSC messages, blocking\n\n    Use [ServerThread](#ServerThread) for an OSC server that runs in its own thread\n    and never blocks.\n\n    Args:\n        port (int | None): a decimal port number or a UNIX socket path.  If omitted, an\n            arbitrary free UDP port will be used.\n        proto (int | str): one of LO_UDP, LO_TCP, LO_UNIX or LO_DEFAULT, or one of the\n            strings 'UDP', 'TCP', 'UNIX'\n        reg_methods (bool): if True, register any methods decorated with the [make_method](#make_method)\n            decorator\n\n        Raises:\n            ServerError: if an error occurs created the underlying liblo server\n\n    "), /*tp_doc*/
   __pyx_tp_traverse_8pyliblo3_6_liblo__ServerBase, /*tp_traverse*/
   __pyx_tp_clear_8pyliblo3_6_liblo__ServerBase, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -21326,14 +21840,14 @@ static PyMethodDef __pyx_methods_8pyliblo3_6_liblo_ServerThread[] = {
   {"free", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_5free, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_4free},
   {"start", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_7start, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_6start},
   {"stop", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_9stop, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_8stop},
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_10__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_12ServerThread_12__setstate_cython__},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo_ServerThread_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo_ServerThread},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    Unlike :class:`Server`, :class:`!ServerThread` uses its own thread which\n    runs in the background to dispatch messages.\n    :class:`!ServerThread` has the same methods as :class:`!Server`, with the\n    exception of :meth:`Server.recv`. Instead, it defines two additional\n    methods :meth:`start` and :meth:`stop`.\n\n    .. note:: Because liblo creates its own thread to receive and dispatch\n              messages, callback functions will not be run in the main Python\n              thread!\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("ServerThread(port=None, proto=LO_DEFAULT, reg_methods=True)\n\n    Server running in a thread\n\n    Unlike `Server`, `ServerThread` uses its own thread which\n    runs in the background to dispatch messages. `ServerThread`\n    has the same methods as `Server`, with the\n    exception of `.recv`. Instead, it defines two additional\n    methods `.start` and `.stop`.\n\n    Args:\n        port (int | str): a decimal port number or a UNIX socket path. If omitted, an\n            arbitrary free UDP port will be used.\n        proto (int | str): one of the constants `LO_UDP`, `LO_TCP` or `LO_UNIX` or\n            a corresponding string 'UDP', 'TCP', 'UNIX'\n        reg_methods: if True, register any method decorated with the [make_method](#make_method)\n            decorator\n\n    Raises:\n        ServerError: if creating the server fails, e.g. because the given port could not\n            be opened.\n\n    !!! note\n\n        Because liblo creates its own thread to receive and dispatch\n        messages, callback functions will not be run in the main Python\n        thread!\n\n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_8pyliblo3_6_liblo__ServerBase},
   {Py_tp_clear, (void *)__pyx_tp_clear_8pyliblo3_6_liblo__ServerBase},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo_ServerThread},
@@ -21381,7 +21895,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo_ServerThread = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("\n    Unlike :class:`Server`, :class:`!ServerThread` uses its own thread which\n    runs in the background to dispatch messages.\n    :class:`!ServerThread` has the same methods as :class:`!Server`, with the\n    exception of :meth:`Server.recv`. Instead, it defines two additional\n    methods :meth:`start` and :meth:`stop`.\n\n    .. note:: Because liblo creates its own thread to receive and dispatch\n              messages, callback functions will not be run in the main Python\n              thread!\n    "), /*tp_doc*/
+  PyDoc_STR("ServerThread(port=None, proto=LO_DEFAULT, reg_methods=True)\n\n    Server running in a thread\n\n    Unlike `Server`, `ServerThread` uses its own thread which\n    runs in the background to dispatch messages. `ServerThread`\n    has the same methods as `Server`, with the\n    exception of `.recv`. Instead, it defines two additional\n    methods `.start` and `.stop`.\n\n    Args:\n        port (int | str): a decimal port number or a UNIX socket path. If omitted, an\n            arbitrary free UDP port will be used.\n        proto (int | str): one of the constants `LO_UDP`, `LO_TCP` or `LO_UNIX` or\n            a corresponding string 'UDP', 'TCP', 'UNIX'\n        reg_methods: if True, register any method decorated with the [make_method](#make_method)\n            decorator\n\n    Raises:\n        ServerError: if creating the server fails, e.g. because the given port could not\n            be opened.\n\n    !!! note\n\n        Because liblo creates its own thread to receive and dispatch\n        messages, callback functions will not be run in the main Python\n        thread!\n\n    "), /*tp_doc*/
   __pyx_tp_traverse_8pyliblo3_6_liblo__ServerBase, /*tp_traverse*/
   __pyx_tp_clear_8pyliblo3_6_liblo__ServerBase, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -21475,13 +21989,14 @@ static void __pyx_tp_dealloc_8pyliblo3_6_liblo__Blob(PyObject *o) {
 }
 
 static PyMethodDef __pyx_methods_8pyliblo3_6_liblo__Blob[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_5_Blob_4__reduce_cython__},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_8pyliblo3_6_liblo_5_Blob_6__setstate_cython__},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_8pyliblo3_6_liblo__Blob_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_8pyliblo3_6_liblo__Blob},
+  {Py_tp_doc, (void *)PyDoc_STR("_Blob(arr)")},
   {Py_tp_methods, (void *)__pyx_methods_8pyliblo3_6_liblo__Blob},
   {Py_tp_init, (void *)__pyx_pw_8pyliblo3_6_liblo_5_Blob_1__init__},
   {Py_tp_new, (void *)__pyx_tp_new_8pyliblo3_6_liblo__Blob},
@@ -21527,7 +22042,7 @@ static PyTypeObject __pyx_type_8pyliblo3_6_liblo__Blob = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
-  0, /*tp_doc*/
+  PyDoc_STR("_Blob(arr)"), /*tp_doc*/
   0, /*tp_traverse*/
   0, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -21594,7 +22109,7 @@ static PyMethodDef __pyx_methods[] = {
 
 static int __Pyx_CreateStringTabAndInitStrings(void) {
   __Pyx_StringTabEntry __pyx_string_tab[] = {
-    {&__pyx_kp_s_0_10_1, __pyx_k_0_10_1, sizeof(__pyx_k_0_10_1), 0, 0, 1, 0},
+    {&__pyx_kp_s_0_16_1, __pyx_k_0_16_1, sizeof(__pyx_k_0_16_1), 0, 0, 1, 0},
     {&__pyx_kp_s_A_decorator_that_serves_as_a_mo, __pyx_k_A_decorator_that_serves_as_a_mo, sizeof(__pyx_k_A_decorator_that_serves_as_a_mo), 0, 0, 1, 0},
     {&__pyx_n_s_Address, __pyx_k_Address, sizeof(__pyx_k_Address), 0, 0, 1, 1},
     {&__pyx_n_s_AddressError, __pyx_k_AddressError, sizeof(__pyx_k_AddressError), 0, 0, 1, 1},
@@ -21624,6 +22139,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_Message_add, __pyx_k_Message_add, sizeof(__pyx_k_Message_add), 0, 0, 1, 1},
     {&__pyx_n_s_OverflowError, __pyx_k_OverflowError, sizeof(__pyx_k_OverflowError), 0, 0, 1, 1},
     {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
+    {&__pyx_kp_u_Proto, __pyx_k_Proto, sizeof(__pyx_k_Proto), 0, 1, 0, 0},
     {&__pyx_kp_s_Raised_when_creating_a_liblo_OS, __pyx_k_Raised_when_creating_a_liblo_OS, sizeof(__pyx_k_Raised_when_creating_a_liblo_OS), 0, 0, 1, 0},
     {&__pyx_kp_s_Raised_when_trying_to_create_an, __pyx_k_Raised_when_trying_to_create_an, sizeof(__pyx_k_Raised_when_trying_to_create_an), 0, 0, 1, 0},
     {&__pyx_n_s_RuntimeError, __pyx_k_RuntimeError, sizeof(__pyx_k_RuntimeError), 0, 0, 1, 1},
@@ -21662,7 +22178,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_kp_s_Weak_reference_to_a_function_in, __pyx_k_Weak_reference_to_a_function_in, sizeof(__pyx_k_Weak_reference_to_a_function_in), 0, 0, 1, 0},
     {&__pyx_kp_u__11, __pyx_k__11, sizeof(__pyx_k__11), 0, 1, 0, 0},
     {&__pyx_n_s__12, __pyx_k__12, sizeof(__pyx_k__12), 0, 0, 1, 1},
-    {&__pyx_n_s__86, __pyx_k__86, sizeof(__pyx_k__86), 0, 0, 1, 1},
+    {&__pyx_n_s__88, __pyx_k__88, sizeof(__pyx_k__88), 0, 0, 1, 1},
     {&__pyx_n_s_add, __pyx_k_add, sizeof(__pyx_k_add), 0, 0, 1, 1},
     {&__pyx_n_s_add_bundle_handlers, __pyx_k_add_bundle_handlers, sizeof(__pyx_k_add_bundle_handlers), 0, 0, 1, 1},
     {&__pyx_n_s_add_method, __pyx_k_add_method, sizeof(__pyx_k_add_method), 0, 0, 1, 1},
@@ -21746,6 +22262,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
     {&__pyx_n_s_name_2, __pyx_k_name_2, sizeof(__pyx_k_name_2), 0, 0, 1, 1},
     {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
+    {&__pyx_kp_u_not_understood_expected_one_of, __pyx_k_not_understood_expected_one_of, sizeof(__pyx_k_not_understood_expected_one_of), 0, 1, 0, 0},
     {&__pyx_n_s_num, __pyx_k_num, sizeof(__pyx_k_num), 0, 0, 1, 1},
     {&__pyx_n_s_obj, __pyx_k_obj, sizeof(__pyx_k_obj), 0, 0, 1, 1},
     {&__pyx_n_s_p, __pyx_k_p, sizeof(__pyx_k_p), 0, 0, 1, 1},
@@ -21756,6 +22273,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_prepare, __pyx_k_prepare, sizeof(__pyx_k_prepare), 0, 0, 1, 1},
     {&__pyx_n_s_property, __pyx_k_property, sizeof(__pyx_k_property), 0, 0, 1, 1},
     {&__pyx_n_s_proto, __pyx_k_proto, sizeof(__pyx_k_proto), 0, 0, 1, 1},
+    {&__pyx_n_s_protostr_to_int, __pyx_k_protostr_to_int, sizeof(__pyx_k_protostr_to_int), 0, 0, 1, 1},
     {&__pyx_n_s_pyliblo3__liblo, __pyx_k_pyliblo3__liblo, sizeof(__pyx_k_pyliblo3__liblo), 0, 0, 1, 1},
     {&__pyx_kp_s_pyliblo3__liblo_pyx, __pyx_k_pyliblo3__liblo_pyx, sizeof(__pyx_k_pyliblo3__liblo_pyx), 0, 0, 1, 0},
     {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
@@ -21838,13 +22356,13 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_property = __Pyx_GetBuiltinName(__pyx_n_s_property); if (!__pyx_builtin_property) __PYX_ERR(0, 43, __pyx_L1_error)
-  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(0, 173, __pyx_L1_error)
-  __pyx_builtin_chr = __Pyx_GetBuiltinName(__pyx_n_s_chr); if (!__pyx_builtin_chr) __PYX_ERR(0, 236, __pyx_L1_error)
-  __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(0, 352, __pyx_L1_error)
-  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(0, 437, __pyx_L1_error)
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 862, __pyx_L1_error)
-  __pyx_builtin_OverflowError = __Pyx_GetBuiltinName(__pyx_n_s_OverflowError); if (!__pyx_builtin_OverflowError) __PYX_ERR(0, 978, __pyx_L1_error)
+  __pyx_builtin_property = __Pyx_GetBuiltinName(__pyx_n_s_property); if (!__pyx_builtin_property) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_builtin_chr = __Pyx_GetBuiltinName(__pyx_n_s_chr); if (!__pyx_builtin_chr) __PYX_ERR(0, 263, __pyx_L1_error)
+  __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(0, 371, __pyx_L1_error)
+  __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(0, 466, __pyx_L1_error)
+  __pyx_builtin_OverflowError = __Pyx_GetBuiltinName(__pyx_n_s_OverflowError); if (!__pyx_builtin_OverflowError) __PYX_ERR(0, 1017, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -21855,69 +22373,69 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "pyliblo3/_liblo.pyx":352
+  /* "pyliblo3/_liblo.pyx":371
  *     cdef _check(self):
  *         if self._server == NULL:
  *             raise RuntimeError("Server method called after free()")             # <<<<<<<<<<<<<<
  * 
  *     def register_methods(self, obj=None):
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_Server_method_called_after_free); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 352, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_Server_method_called_after_free); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 371, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "pyliblo3/_liblo.pyx":437
+  /* "pyliblo3/_liblo.pyx":466
  *             p = NULL
  *         else:
  *             raise TypeError("path must be a string or None")             # <<<<<<<<<<<<<<
  * 
  *         if isinstance(typespec, (bytes, unicode)):
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_path_must_be_a_string_or_None); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 437, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_path_must_be_a_string_or_None); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 466, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "pyliblo3/_liblo.pyx":445
+  /* "pyliblo3/_liblo.pyx":474
  *             t = NULL
  *         else:
  *             raise TypeError("typespec must be a string or None")             # <<<<<<<<<<<<<<
  * 
  *         self._check()
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_typespec_must_be_a_string_or_Non); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 445, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_typespec_must_be_a_string_or_Non); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 474, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "pyliblo3/_liblo.pyx":862
+  /* "pyliblo3/_liblo.pyx":897
  *         size = len(arr)
  *         if size < 1:
  *             raise ValueError("blob is empty")             # <<<<<<<<<<<<<<
  *         # copy each element of arr to a C array
  *         p = <unsigned char*>malloc(size)
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_s_blob_is_empty); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 862, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_kp_s_blob_is_empty); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 897, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "pyliblo3/_liblo.pyx":994
+  /* "pyliblo3/_liblo.pyx":1033
  *                 iter(value)
  *             except TypeError:
  *                 raise TypeError("unsupported message argument type")             # <<<<<<<<<<<<<<
  *             self._add('b', value)
  * 
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s_unsupported_message_argument_typ); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 994, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s_unsupported_message_argument_typ); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 1033, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "pyliblo3/_liblo.pyx":1028
+  /* "pyliblo3/_liblo.pyx":1074
  *                 tt.sec, tt.frac = t
  *             else:
  *                 raise TypeError("invalid timetag")             # <<<<<<<<<<<<<<
  *             # first argument was timetag, so continue with second
  *             messages = messages[1:]
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_invalid_timetag); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 1028, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s_invalid_timetag); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 1074, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
@@ -21932,74 +22450,86 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
 
-  /* "pyliblo3/_liblo.pyx":33
+  /* "pyliblo3/_liblo.pyx":34
+ * 
+ * 
+ * def _protostr_to_int(str proto):             # <<<<<<<<<<<<<<
+ *     if proto == 'UDP':
+ *         return LO_UDP
+ */
+  __pyx_tuple__13 = PyTuple_Pack(1, __pyx_n_s_proto); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__13);
+  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_protostr_to_int, 34, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 34, __pyx_L1_error)
+
+  /* "pyliblo3/_liblo.pyx":49
  *     Weak reference to a function, including support for bound methods.
  *     """
  *     __slots__ = ('_func', 'obj')             # <<<<<<<<<<<<<<
  * 
  *     def __init__(self, f):
  */
-  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_n_s_func_2, __pyx_n_s_obj); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__15 = PyTuple_Pack(2, __pyx_n_s_func_2, __pyx_n_s_obj); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__15);
+  __Pyx_GIVEREF(__pyx_tuple__15);
 
-  /* "pyliblo3/_liblo.pyx":35
+  /* "pyliblo3/_liblo.pyx":51
  *     __slots__ = ('_func', 'obj')
  * 
  *     def __init__(self, f):             # <<<<<<<<<<<<<<
  *         if _inspect.ismethod(f):
  *             self._func = f.__func__
  */
-  __pyx_tuple__14 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_f); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 35, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 35, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_f); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 51, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 51, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":43
+  /* "pyliblo3/_liblo.pyx":59
  *             self.obj = None
  * 
  *     @property             # <<<<<<<<<<<<<<
  *     def func(self):
  *         if self.obj:
  */
-  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 43, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
-  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_func_3, 43, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
+  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_func_3, 59, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 59, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":50
+  /* "pyliblo3/_liblo.pyx":66
  *             return self._func
  * 
  *     def __call__(self, *args, **kwargs):             # <<<<<<<<<<<<<<
  *         return self.func(*args, **kwargs)
  * 
  */
-  __pyx_tuple__18 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_args, __pyx_n_s_kwargs); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
-  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_call, 50, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_args, __pyx_n_s_kwargs); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__20);
+  __Pyx_GIVEREF(__pyx_tuple__20);
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_call, 66, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 66, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":55
+  /* "pyliblo3/_liblo.pyx":71
  * 
  * class struct:
  *     def __init__(self, **kwargs):             # <<<<<<<<<<<<<<
  *         for k, v in kwargs.items():
  *             setattr(self, k, v)
  */
-  __pyx_tuple__20 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_kwargs, __pyx_n_s_k, __pyx_n_s_v); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 55, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 55, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_kwargs, __pyx_n_s_k, __pyx_n_s_v); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 71, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 71, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_tuple__22 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_state, __pyx_n_s_dict_2, __pyx_n_s_use_setstate); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_tuple__24 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_state, __pyx_n_s_dict_2, __pyx_n_s_use_setstate); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":16
  *     else:
@@ -22007,188 +22537,188 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_Callback__set_state(self, __pyx_state)
  */
-  __pyx_tuple__24 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(2, 16, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(2, 16, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(2, 16, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__26);
+  __Pyx_GIVEREF(__pyx_tuple__26);
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 16, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(2, 16, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":120
+  /* "pyliblo3/_liblo.pyx":143
  *     return <double>tt.sec + (<double>(tt.frac) / 4294967296.0)
  * 
  * def time():             # <<<<<<<<<<<<<<
  *     """
- *     Return the current time as a floating point number (seconds since
+ *     Return the current time as a floating point number (seconds since January 1, 1900).
  */
-  __pyx_tuple__26 = PyTuple_Pack(1, __pyx_n_s_tt); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 120, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__26);
-  __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_time, 120, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_tuple__28 = PyTuple_Pack(1, __pyx_n_s_tt); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 143, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__28);
+  __Pyx_GIVEREF(__pyx_tuple__28);
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_time, 143, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 143, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":177
+  /* "pyliblo3/_liblo.pyx":202
  * 
  * 
  * def send(target, *args):             # <<<<<<<<<<<<<<
  *     """
- *     send(target, *messages)
+ *     Send a message without requiring a server
  */
-  __pyx_tuple__28 = PyTuple_Pack(2, __pyx_n_s_target, __pyx_n_s_args); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 177, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__28);
-  __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_send, 177, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __pyx_tuple__30 = PyTuple_Pack(2, __pyx_n_s_target, __pyx_n_s_args); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__30);
+  __Pyx_GIVEREF(__pyx_tuple__30);
+  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_send, 202, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 202, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":210
+  /* "pyliblo3/_liblo.pyx":237
  *     Raised when creating a liblo OSC server fails.
  *     """
  *     def __init__(self, num, msg, where):             # <<<<<<<<<<<<<<
  *         self.num = num
  *         self.msg = msg
  */
-  __pyx_tuple__30 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_num, __pyx_n_s_msg, __pyx_n_s_where); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 210, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__30);
-  __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 210, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 210, __pyx_L1_error)
+  __pyx_tuple__32 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_num, __pyx_n_s_msg, __pyx_n_s_where); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__32);
+  __Pyx_GIVEREF(__pyx_tuple__32);
+  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 237, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 237, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":214
+  /* "pyliblo3/_liblo.pyx":241
  *         self.msg = msg
  *         self.where = where
  *     def __str__(self):             # <<<<<<<<<<<<<<
  *         s = "server error %d" % self.num
  *         if self.where: s += " in %s" % self.where
  */
-  __pyx_tuple__32 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_s_2); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 214, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__32);
-  __Pyx_GIVEREF(__pyx_tuple__32);
-  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_str, 214, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 214, __pyx_L1_error)
+  __pyx_tuple__34 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_s_2); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__34);
+  __Pyx_GIVEREF(__pyx_tuple__34);
+  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_str, 241, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 241, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":305
+  /* "pyliblo3/_liblo.pyx":340
  *     _counter = 0
  * 
  *     def __init__(self, path, types, user_data=None):             # <<<<<<<<<<<<<<
- *         """
- *         make_method(path, typespec[, user_data])
+ *         self.spec = struct(counter=make_method._counter,
+ *                            path=path,
  */
-  __pyx_tuple__34 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_path, __pyx_n_s_types, __pyx_n_s_user_data); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 305, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__34);
-  __Pyx_GIVEREF(__pyx_tuple__34);
-  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 305, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 305, __pyx_L1_error)
-  __pyx_tuple__36 = PyTuple_Pack(1, Py_None); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_tuple__36 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_path, __pyx_n_s_types, __pyx_n_s_user_data); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 340, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__36);
   __Pyx_GIVEREF(__pyx_tuple__36);
+  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 340, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_tuple__38 = PyTuple_Pack(1, Py_None); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__38);
+  __Pyx_GIVEREF(__pyx_tuple__38);
 
-  /* "pyliblo3/_liblo.pyx":328
+  /* "pyliblo3/_liblo.pyx":347
  *         make_method._counter += 1
  * 
  *     def __call__(self, f):             # <<<<<<<<<<<<<<
  *         # we can't access the Server object here, because at the time the
  *         # decorator is run it doesn't even exist yet, so we store the
  */
-  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_call, 328, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 328, __pyx_L1_error)
+  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_call, 347, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 347, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":354
+  /* "pyliblo3/_liblo.pyx":373
  *             raise RuntimeError("Server method called after free()")
  * 
  *     def register_methods(self, obj=None):             # <<<<<<<<<<<<<<
  *         """
- *         register_methods(obj=None)
+ *         Called internally during init if reg_methods is True
  */
-  __pyx_tuple__38 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_obj, __pyx_n_s_methods, __pyx_n_s_m, __pyx_n_s_spec, __pyx_n_s_e); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 354, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__38);
-  __Pyx_GIVEREF(__pyx_tuple__38);
-  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_register_methods, 354, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_tuple__40 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_obj, __pyx_n_s_methods, __pyx_n_s_m, __pyx_n_s_spec, __pyx_n_s_e); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 373, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__40);
+  __Pyx_GIVEREF(__pyx_tuple__40);
+  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_register_methods, 373, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 373, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":381
+  /* "pyliblo3/_liblo.pyx":397
  *             self.add_method(e.spec.path, e.spec.types, e.name, e.spec.user_data)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         cdef char *tmp = lo_server_get_url(self._server)
+ *         """
+ *         Returns the url of the server
  */
-  __pyx_tuple__40 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_tmp, __pyx_n_s_r); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 381, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__40);
-  __Pyx_GIVEREF(__pyx_tuple__40);
-  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_url, 381, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 381, __pyx_L1_error)
+  __pyx_tuple__42 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_tmp, __pyx_n_s_r); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 397, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__42);
+  __Pyx_GIVEREF(__pyx_tuple__42);
+  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_url, 397, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) __PYX_ERR(0, 397, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":388
+  /* "pyliblo3/_liblo.pyx":410
  *         return _decode(r)
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_port(self._server)
+ *         """
+ *         Returns the port number of this server
  */
-  __pyx_codeobj__42 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_port, 388, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__42)) __PYX_ERR(0, 388, __pyx_L1_error)
+  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_port, 410, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 410, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":392
+  /* "pyliblo3/_liblo.pyx":420
  *         return lo_server_get_port(self._server)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_protocol(self._server)
+ *         """
+ *         Returns the protocol of this server, as an int
  */
-  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_protocol, 392, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) __PYX_ERR(0, 392, __pyx_L1_error)
+  __pyx_codeobj__45 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_protocol, 420, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__45)) __PYX_ERR(0, 420, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":396
+  /* "pyliblo3/_liblo.pyx":432
  *         return lo_server_get_protocol(self._server)
  * 
  *     def fileno(self):             # <<<<<<<<<<<<<<
  *         """
- *         Return the file descriptor of the server socket, or -1 if not
+ *         Return the file descriptor of the server socket
  */
-  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_fileno, 396, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 396, __pyx_L1_error)
+  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_fileno, 432, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 432, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":404
+  /* "pyliblo3/_liblo.pyx":442
  *         return lo_server_get_socket_fd(self._server)
  * 
- *     def add_method(self, path, typespec, func, user_data=None):             # <<<<<<<<<<<<<<
+ *     def add_method(self, str path, str typespec, func, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_method(path, typespec, func, user_data=None)
+ *         Register a callback for OSC messages with matching path and argument types.
  */
-  __pyx_tuple__45 = PyTuple_Pack(10, __pyx_n_s_self, __pyx_n_s_path, __pyx_n_s_typespec, __pyx_n_s_func_3, __pyx_n_s_user_data, __pyx_n_s_p, __pyx_n_s_t, __pyx_n_s_s_2, __pyx_n_s_s2, __pyx_n_s_cb); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(0, 404, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__45);
-  __Pyx_GIVEREF(__pyx_tuple__45);
-  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(5, 0, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__45, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add_method, 404, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 404, __pyx_L1_error)
-
-  /* "pyliblo3/_liblo.pyx":460
- *         lo_server_add_method(self._server, p, t, _msg_callback, <void*>cb)
- * 
- *     def del_method(self, path, typespec):             # <<<<<<<<<<<<<<
- *         """
- *         del_method(path, typespec)
- */
-  __pyx_tuple__47 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_path, __pyx_n_s_typespec, __pyx_n_s_p, __pyx_n_s_t, __pyx_n_s_s_2, __pyx_n_s_s2); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(0, 460, __pyx_L1_error)
+  __pyx_tuple__47 = PyTuple_Pack(10, __pyx_n_s_self, __pyx_n_s_path, __pyx_n_s_typespec, __pyx_n_s_func_3, __pyx_n_s_user_data, __pyx_n_s_p, __pyx_n_s_t, __pyx_n_s_s_2, __pyx_n_s_s2, __pyx_n_s_cb); if (unlikely(!__pyx_tuple__47)) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__47);
   __Pyx_GIVEREF(__pyx_tuple__47);
-  __pyx_codeobj__48 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__47, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_del_method, 460, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__48)) __PYX_ERR(0, 460, __pyx_L1_error)
+  __pyx_codeobj__48 = (PyObject*)__Pyx_PyCode_New(5, 0, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__47, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add_method, 442, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__48)) __PYX_ERR(0, 442, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":491
+  /* "pyliblo3/_liblo.pyx":489
+ *         lo_server_add_method(self._server, p, t, _msg_callback, <void*>cb)
+ * 
+ *     def del_method(self, path, typespec=None):             # <<<<<<<<<<<<<<
+ *         """
+ *         Delete a callback function
+ */
+  __pyx_tuple__49 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_path, __pyx_n_s_typespec, __pyx_n_s_p, __pyx_n_s_t, __pyx_n_s_s_2, __pyx_n_s_s2); if (unlikely(!__pyx_tuple__49)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__49);
+  __Pyx_GIVEREF(__pyx_tuple__49);
+  __pyx_codeobj__50 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__49, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_del_method, 489, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__50)) __PYX_ERR(0, 489, __pyx_L1_error)
+
+  /* "pyliblo3/_liblo.pyx":523
  *         lo_server_del_method(self._server, p, t)
  * 
  *     def add_bundle_handlers(self, start_handler, end_handler, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_bundle_handlers(start_handler, end_handler, user_data=None)
+ *         Add bundle notification handlers.
  */
-  __pyx_tuple__49 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_start_handler, __pyx_n_s_end_handler, __pyx_n_s_user_data, __pyx_n_s_cb_data); if (unlikely(!__pyx_tuple__49)) __PYX_ERR(0, 491, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__49);
-  __Pyx_GIVEREF(__pyx_tuple__49);
-  __pyx_codeobj__50 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__49, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add_bundle_handlers, 491, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__50)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __pyx_tuple__51 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_start_handler, __pyx_n_s_end_handler, __pyx_n_s_user_data, __pyx_n_s_cb_data); if (unlikely(!__pyx_tuple__51)) __PYX_ERR(0, 523, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__51);
+  __Pyx_GIVEREF(__pyx_tuple__51);
+  __pyx_codeobj__52 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__51, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add_bundle_handlers, 523, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__52)) __PYX_ERR(0, 523, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":516
+  /* "pyliblo3/_liblo.pyx":543
  *                                       _bundle_end_callback, <void*>cb_data)
  * 
  *     def send(self, target, *args):             # <<<<<<<<<<<<<<
  *         """
- *         send(target, *messages)
+ *         Send a message or bundle from this server to the the given target.
  */
-  __pyx_tuple__51 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_target, __pyx_n_s_args); if (unlikely(!__pyx_tuple__51)) __PYX_ERR(0, 516, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__51);
-  __Pyx_GIVEREF(__pyx_tuple__51);
-  __pyx_codeobj__52 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__51, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_send, 516, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__52)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_tuple__53 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_target, __pyx_n_s_args); if (unlikely(!__pyx_tuple__53)) __PYX_ERR(0, 543, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__53);
+  __Pyx_GIVEREF(__pyx_tuple__53);
+  __pyx_codeobj__54 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__53, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_send, 543, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__54)) __PYX_ERR(0, 543, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__53 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__53)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_codeobj__55 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__55)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -22196,35 +22726,35 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  */
-  __pyx_codeobj__54 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__54)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_codeobj__56 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__56)) __PYX_ERR(2, 3, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":610
+  /* "pyliblo3/_liblo.pyx":631
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
-  __pyx_codeobj__55 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_free, 610, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__55)) __PYX_ERR(0, 610, __pyx_L1_error)
+  __pyx_codeobj__57 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_free, 631, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__57)) __PYX_ERR(0, 631, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":619
+  /* "pyliblo3/_liblo.pyx":641
  *             self._server = NULL
  * 
  *     def recv(self, timeout=None):             # <<<<<<<<<<<<<<
  *         """
- *         recv(timeout=None)
+ *         Receive and dispatch one OSC message.
  */
-  __pyx_tuple__56 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_timeout, __pyx_n_s_t, __pyx_n_s_r); if (unlikely(!__pyx_tuple__56)) __PYX_ERR(0, 619, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__56);
-  __Pyx_GIVEREF(__pyx_tuple__56);
-  __pyx_codeobj__57 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__56, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_recv, 619, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__57)) __PYX_ERR(0, 619, __pyx_L1_error)
+  __pyx_tuple__58 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_timeout, __pyx_n_s_t, __pyx_n_s_r); if (unlikely(!__pyx_tuple__58)) __PYX_ERR(0, 641, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__58);
+  __Pyx_GIVEREF(__pyx_tuple__58);
+  __pyx_codeobj__59 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__58, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_recv, 641, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__59)) __PYX_ERR(0, 641, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__58 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__58)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -22232,41 +22762,41 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  */
-  __pyx_codeobj__59 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__59)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_codeobj__61 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__61)) __PYX_ERR(2, 3, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":710
+  /* "pyliblo3/_liblo.pyx":723
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
-  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_free, 710, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(0, 710, __pyx_L1_error)
+  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_free, 723, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 723, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":720
+  /* "pyliblo3/_liblo.pyx":736
  *             self._server = NULL
  * 
  *     def start(self):             # <<<<<<<<<<<<<<
  *         """
- *         Start the server thread. liblo will now start to dispatch any messages
+ *         Start the server thread.
  */
-  __pyx_codeobj__61 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_start, 720, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__61)) __PYX_ERR(0, 720, __pyx_L1_error)
+  __pyx_codeobj__63 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_start, 736, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__63)) __PYX_ERR(0, 736, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":728
+  /* "pyliblo3/_liblo.pyx":745
  *         lo_server_thread_start(self._server_thread)
  * 
  *     def stop(self):             # <<<<<<<<<<<<<<
  *         """
  *         Stop the server thread.
  */
-  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_stop, 728, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 728, __pyx_L1_error)
+  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_stop, 745, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) __PYX_ERR(0, 745, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server,self._server_thread cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__63 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__63)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_codeobj__65 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__65)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -22274,71 +22804,71 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server,self._server_thread cannot be converted to a Python object for pickling"
  */
-  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_codeobj__66 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__66)) __PYX_ERR(2, 3, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":744
- *     Raised when trying to create an invalid :class:`Address` object.
+  /* "pyliblo3/_liblo.pyx":761
+ *     Raised when trying to create an invalid `Address` object.
  *     """
  *     def __init__(self, msg):             # <<<<<<<<<<<<<<
  *         self.msg = msg
  *     def __str__(self):
  */
-  __pyx_tuple__65 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_msg); if (unlikely(!__pyx_tuple__65)) __PYX_ERR(0, 744, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__65);
-  __Pyx_GIVEREF(__pyx_tuple__65);
-  __pyx_codeobj__66 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__65, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 744, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__66)) __PYX_ERR(0, 744, __pyx_L1_error)
+  __pyx_tuple__67 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_msg); if (unlikely(!__pyx_tuple__67)) __PYX_ERR(0, 761, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__67);
+  __Pyx_GIVEREF(__pyx_tuple__67);
+  __pyx_codeobj__68 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__67, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_init, 761, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__68)) __PYX_ERR(0, 761, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":746
+  /* "pyliblo3/_liblo.pyx":763
  *     def __init__(self, msg):
  *         self.msg = msg
  *     def __str__(self):             # <<<<<<<<<<<<<<
  *         return "address error: %s" % self.msg
  * 
  */
-  __pyx_codeobj__67 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_str, 746, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__67)) __PYX_ERR(0, 746, __pyx_L1_error)
+  __pyx_codeobj__69 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_str, 763, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__69)) __PYX_ERR(0, 763, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":800
+  /* "pyliblo3/_liblo.pyx":819
  *         lo_address_free(self._address)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
+ *         """This Address as a liblo URL"""
  *         cdef char *tmp = lo_address_get_url(self._address)
- *         cdef object r = tmp
  */
-  __pyx_codeobj__68 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_url, 800, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__68)) __PYX_ERR(0, 800, __pyx_L1_error)
+  __pyx_codeobj__70 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_url, 819, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__70)) __PYX_ERR(0, 819, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":806
+  /* "pyliblo3/_liblo.pyx":826
  *         return _decode(r)
  * 
  *     def get_hostname(self):             # <<<<<<<<<<<<<<
+ *         """The hostname of this Address"""
  *         return _decode(lo_address_get_hostname(self._address))
- * 
  */
-  __pyx_codeobj__69 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_hostname, 806, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__69)) __PYX_ERR(0, 806, __pyx_L1_error)
+  __pyx_codeobj__71 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_hostname, 826, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__71)) __PYX_ERR(0, 826, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":809
+  /* "pyliblo3/_liblo.pyx":830
  *         return _decode(lo_address_get_hostname(self._address))
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
+ *         """The port number of this Address"""
  *         cdef bytes s = lo_address_get_port(self._address)
- *         if s.isdigit():
  */
-  __pyx_codeobj__70 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_port, 809, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__70)) __PYX_ERR(0, 809, __pyx_L1_error)
+  __pyx_codeobj__72 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_port, 830, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__72)) __PYX_ERR(0, 830, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":816
+  /* "pyliblo3/_liblo.pyx":838
  *             return _decode(s)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         return lo_address_get_protocol(self._address)
- * 
+ *         """
+ *         The protocol used as an int
  */
-  __pyx_codeobj__71 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_protocol, 816, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__71)) __PYX_ERR(0, 816, __pyx_L1_error)
+  __pyx_codeobj__73 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_get_protocol, 838, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__73)) __PYX_ERR(0, 838, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._address cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__72 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__72)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_codeobj__74 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__74)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -22346,14 +22876,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._address cannot be converted to a Python object for pickling"
  */
-  __pyx_codeobj__73 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__73)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_codeobj__75 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__75)) __PYX_ERR(2, 3, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._blob cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__74 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__74)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_codeobj__76 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__76)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -22361,26 +22891,26 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._blob cannot be converted to a Python object for pickling"
  */
-  __pyx_codeobj__75 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__75)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_codeobj__77 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__77)) __PYX_ERR(2, 3, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":906
+  /* "pyliblo3/_liblo.pyx":940
  *         lo_message_free(self._message)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*args)
+ *         Append the given arguments to this message
  */
-  __pyx_tuple__76 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_args, __pyx_n_s_arg); if (unlikely(!__pyx_tuple__76)) __PYX_ERR(0, 906, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__76);
-  __Pyx_GIVEREF(__pyx_tuple__76);
-  __pyx_codeobj__77 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__76, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add, 906, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__77)) __PYX_ERR(0, 906, __pyx_L1_error)
+  __pyx_tuple__78 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_args, __pyx_n_s_arg); if (unlikely(!__pyx_tuple__78)) __PYX_ERR(0, 940, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__78);
+  __Pyx_GIVEREF(__pyx_tuple__78);
+  __pyx_codeobj__79 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__78, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add, 940, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__79)) __PYX_ERR(0, 940, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._message cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__78 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__78)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_codeobj__80 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__80)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -22388,26 +22918,26 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._message cannot be converted to a Python object for pickling"
  */
-  __pyx_codeobj__79 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__79)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_codeobj__81 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__81)) __PYX_ERR(2, 3, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":1039
+  /* "pyliblo3/_liblo.pyx":1085
  *         lo_bundle_free(self._bundle)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*messages)
+ *         Add one or more messages to this bundle
  */
-  __pyx_tuple__80 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_args, __pyx_n_s_messages, __pyx_n_s_m, __pyx_n_s_message); if (unlikely(!__pyx_tuple__80)) __PYX_ERR(0, 1039, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__80);
-  __Pyx_GIVEREF(__pyx_tuple__80);
-  __pyx_codeobj__81 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__80, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add, 1039, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__81)) __PYX_ERR(0, 1039, __pyx_L1_error)
+  __pyx_tuple__82 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_args, __pyx_n_s_messages, __pyx_n_s_m, __pyx_n_s_message); if (unlikely(!__pyx_tuple__82)) __PYX_ERR(0, 1085, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__82);
+  __Pyx_GIVEREF(__pyx_tuple__82);
+  __pyx_codeobj__83 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARARGS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__82, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyliblo3__liblo_pyx, __pyx_n_s_add, 1085, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__83)) __PYX_ERR(0, 1085, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._bundle cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_codeobj__82 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__82)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_codeobj__84 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__84)) __PYX_ERR(2, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -22415,17 +22945,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._bundle cannot be converted to a Python object for pickling"
  */
-  __pyx_codeobj__83 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__83)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_codeobj__85 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__85)) __PYX_ERR(2, 3, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_Callback(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_tuple__84 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__84)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__84);
-  __Pyx_GIVEREF(__pyx_tuple__84);
-  __pyx_codeobj__85 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__84, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Callback, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__85)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_tuple__86 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__86)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__86);
+  __Pyx_GIVEREF(__pyx_tuple__86);
+  __pyx_codeobj__87 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__86, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Callback, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__87)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -22495,15 +23025,15 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_8pyliblo3_6_liblo_Callback = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Callback_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Callback)) __PYX_ERR(0, 60, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Callback_spec, __pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_ptype_8pyliblo3_6_liblo_Callback = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Callback_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Callback)) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Callback_spec, __pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo_Callback = &__pyx_type_8pyliblo3_6_liblo_Callback;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo_Callback->tp_print = 0;
@@ -22513,22 +23043,22 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo_Callback->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Callback, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Callback, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Callback) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
   #endif
   __pyx_vtabptr_8pyliblo3_6_liblo__ServerBase = &__pyx_vtable_8pyliblo3_6_liblo__ServerBase;
   __pyx_vtable_8pyliblo3_6_liblo__ServerBase._check = (PyObject *(*)(struct __pyx_obj_8pyliblo3_6_liblo__ServerBase *))__pyx_f_8pyliblo3_6_liblo_11_ServerBase__check;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_8pyliblo3_6_liblo__ServerBase = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo__ServerBase_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo__ServerBase)) __PYX_ERR(0, 340, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo__ServerBase_spec, __pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_ptype_8pyliblo3_6_liblo__ServerBase = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo__ServerBase_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo__ServerBase)) __PYX_ERR(0, 359, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo__ServerBase_spec, __pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 359, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo__ServerBase = &__pyx_type_8pyliblo3_6_liblo__ServerBase;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 359, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo__ServerBase->tp_print = 0;
@@ -22538,24 +23068,24 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo__ServerBase->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_vtabptr_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_vtabptr_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 359, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 359, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ServerBase, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ServerBase, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 359, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo__ServerBase) < 0) __PYX_ERR(0, 359, __pyx_L1_error)
   #endif
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_8pyliblo3_6_liblo_Address = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Address_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Address)) __PYX_ERR(0, 750, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Address_spec, __pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 750, __pyx_L1_error)
+  __pyx_ptype_8pyliblo3_6_liblo_Address = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Address_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Address)) __PYX_ERR(0, 767, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Address_spec, __pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 767, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo_Address = &__pyx_type_8pyliblo3_6_liblo_Address;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 750, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 767, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo_Address->tp_print = 0;
@@ -22565,33 +23095,23 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo_Address->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  #if CYTHON_UPDATE_DESCRIPTOR_DOC
-  {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 750, __pyx_L1_error)
-    if (__Pyx_IS_TYPE(wrapper, &PyWrapperDescr_Type)) {
-      __pyx_wrapperbase_8pyliblo3_6_liblo_7Address___init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
-      __pyx_wrapperbase_8pyliblo3_6_liblo_7Address___init__.doc = __pyx_doc_8pyliblo3_6_liblo_7Address___init__;
-      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_8pyliblo3_6_liblo_7Address___init__;
-    }
-  }
-  #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Address, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 750, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Address, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 767, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 750, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Address) < 0) __PYX_ERR(0, 767, __pyx_L1_error)
   #endif
   __pyx_vtabptr_8pyliblo3_6_liblo_Message = &__pyx_vtable_8pyliblo3_6_liblo_Message;
   __pyx_vtable_8pyliblo3_6_liblo_Message._add = (PyObject *(*)(struct __pyx_obj_8pyliblo3_6_liblo_Message *, PyObject *, PyObject *))__pyx_f_8pyliblo3_6_liblo_7Message__add;
   __pyx_vtable_8pyliblo3_6_liblo_Message._add_auto = (PyObject *(*)(struct __pyx_obj_8pyliblo3_6_liblo_Message *, PyObject *))__pyx_f_8pyliblo3_6_liblo_7Message__add_auto;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_8pyliblo3_6_liblo_Message = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Message_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Message)) __PYX_ERR(0, 882, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Message_spec, __pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 882, __pyx_L1_error)
+  __pyx_ptype_8pyliblo3_6_liblo_Message = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Message_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Message)) __PYX_ERR(0, 917, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Message_spec, __pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 917, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo_Message = &__pyx_type_8pyliblo3_6_liblo_Message;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 882, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 917, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo_Message->tp_print = 0;
@@ -22601,34 +23121,24 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo_Message->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  #if CYTHON_UPDATE_DESCRIPTOR_DOC
-  {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Message, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 882, __pyx_L1_error)
-    if (__Pyx_IS_TYPE(wrapper, &PyWrapperDescr_Type)) {
-      __pyx_wrapperbase_8pyliblo3_6_liblo_7Message___init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
-      __pyx_wrapperbase_8pyliblo3_6_liblo_7Message___init__.doc = __pyx_doc_8pyliblo3_6_liblo_7Message___init__;
-      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_8pyliblo3_6_liblo_7Message___init__;
-    }
-  }
-  #endif
-  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo_Message, __pyx_vtabptr_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 882, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo_Message, __pyx_vtabptr_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 917, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 882, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 917, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Message, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 882, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Message, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 917, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 882, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Message) < 0) __PYX_ERR(0, 917, __pyx_L1_error)
   #endif
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_8pyliblo3_6_liblo_Bundle = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Bundle_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Bundle)) __PYX_ERR(0, 1002, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Bundle_spec, __pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1002, __pyx_L1_error)
+  __pyx_ptype_8pyliblo3_6_liblo_Bundle = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Bundle_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Bundle)) __PYX_ERR(0, 1041, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Bundle_spec, __pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1041, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo_Bundle = &__pyx_type_8pyliblo3_6_liblo_Bundle;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1002, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1041, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo_Bundle->tp_print = 0;
@@ -22638,29 +23148,19 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo_Bundle->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  #if CYTHON_UPDATE_DESCRIPTOR_DOC
-  {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Bundle, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 1002, __pyx_L1_error)
-    if (__Pyx_IS_TYPE(wrapper, &PyWrapperDescr_Type)) {
-      __pyx_wrapperbase_8pyliblo3_6_liblo_6Bundle___init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
-      __pyx_wrapperbase_8pyliblo3_6_liblo_6Bundle___init__.doc = __pyx_doc_8pyliblo3_6_liblo_6Bundle___init__;
-      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_8pyliblo3_6_liblo_6Bundle___init__;
-    }
-  }
-  #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Bundle, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1002, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Bundle, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1041, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1002, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Bundle) < 0) __PYX_ERR(0, 1041, __pyx_L1_error)
   #endif
   __pyx_vtabptr_8pyliblo3_6_liblo_Server = &__pyx_vtable_8pyliblo3_6_liblo_Server;
   __pyx_vtable_8pyliblo3_6_liblo_Server.__pyx_base = *__pyx_vtabptr_8pyliblo3_6_liblo__ServerBase;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 564, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 589, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_ptype_8pyliblo3_6_liblo_Server = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_Server_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Server)) __PYX_ERR(0, 564, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Server_spec, __pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 564, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_Server)) __PYX_ERR(0, 589, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_Server_spec, __pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 589, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo_Server = &__pyx_type_8pyliblo3_6_liblo_Server;
   #endif
@@ -22668,7 +23168,7 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_ptype_8pyliblo3_6_liblo_Server->tp_base = __pyx_ptype_8pyliblo3_6_liblo__ServerBase;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 564, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 589, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo_Server->tp_print = 0;
@@ -22678,33 +23178,23 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo_Server->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  #if CYTHON_UPDATE_DESCRIPTOR_DOC
-  {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Server, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 564, __pyx_L1_error)
-    if (__Pyx_IS_TYPE(wrapper, &PyWrapperDescr_Type)) {
-      __pyx_wrapperbase_8pyliblo3_6_liblo_6Server___init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
-      __pyx_wrapperbase_8pyliblo3_6_liblo_6Server___init__.doc = __pyx_doc_8pyliblo3_6_liblo_6Server___init__;
-      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_8pyliblo3_6_liblo_6Server___init__;
-    }
-  }
-  #endif
-  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo_Server, __pyx_vtabptr_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 564, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo_Server, __pyx_vtabptr_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 589, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 564, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 589, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Server, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 564, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Server, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 589, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 564, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_Server) < 0) __PYX_ERR(0, 589, __pyx_L1_error)
   #endif
   __pyx_vtabptr_8pyliblo3_6_liblo_ServerThread = &__pyx_vtable_8pyliblo3_6_liblo_ServerThread;
   __pyx_vtable_8pyliblo3_6_liblo_ServerThread.__pyx_base = *__pyx_vtabptr_8pyliblo3_6_liblo__ServerBase;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 648, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 668, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_ptype_8pyliblo3_6_liblo_ServerThread = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo_ServerThread_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_ServerThread)) __PYX_ERR(0, 648, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_ServerThread_spec, __pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 648, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo_ServerThread)) __PYX_ERR(0, 668, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo_ServerThread_spec, __pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 668, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo_ServerThread = &__pyx_type_8pyliblo3_6_liblo_ServerThread;
   #endif
@@ -22712,7 +23202,7 @@ static int __Pyx_modinit_type_init_code(void) {
   __pyx_ptype_8pyliblo3_6_liblo_ServerThread->tp_base = __pyx_ptype_8pyliblo3_6_liblo__ServerBase;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 648, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 668, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo_ServerThread->tp_print = 0;
@@ -22722,34 +23212,24 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo_ServerThread->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  #if CYTHON_UPDATE_DESCRIPTOR_DOC
-  {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_ServerThread, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 648, __pyx_L1_error)
-    if (__Pyx_IS_TYPE(wrapper, &PyWrapperDescr_Type)) {
-      __pyx_wrapperbase_8pyliblo3_6_liblo_12ServerThread___init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
-      __pyx_wrapperbase_8pyliblo3_6_liblo_12ServerThread___init__.doc = __pyx_doc_8pyliblo3_6_liblo_12ServerThread___init__;
-      ((PyWrapperDescrObject *)wrapper)->d_base = &__pyx_wrapperbase_8pyliblo3_6_liblo_12ServerThread___init__;
-    }
-  }
-  #endif
-  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_vtabptr_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 648, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_vtabptr_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 668, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 648, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 668, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ServerThread, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 648, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_ServerThread, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 668, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 648, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo_ServerThread) < 0) __PYX_ERR(0, 668, __pyx_L1_error)
   #endif
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_8pyliblo3_6_liblo__Blob = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo__Blob_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo__Blob)) __PYX_ERR(0, 853, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo__Blob_spec, __pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 853, __pyx_L1_error)
+  __pyx_ptype_8pyliblo3_6_liblo__Blob = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_8pyliblo3_6_liblo__Blob_spec, NULL); if (unlikely(!__pyx_ptype_8pyliblo3_6_liblo__Blob)) __PYX_ERR(0, 888, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_8pyliblo3_6_liblo__Blob_spec, __pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 888, __pyx_L1_error)
   #else
   __pyx_ptype_8pyliblo3_6_liblo__Blob = &__pyx_type_8pyliblo3_6_liblo__Blob;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 853, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 888, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
   __pyx_ptype_8pyliblo3_6_liblo__Blob->tp_print = 0;
@@ -22759,9 +23239,9 @@ static int __Pyx_modinit_type_init_code(void) {
     __pyx_ptype_8pyliblo3_6_liblo__Blob->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Blob, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 853, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Blob, (PyObject *) __pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 888, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 853, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_8pyliblo3_6_liblo__Blob) < 0) __PYX_ERR(0, 888, __pyx_L1_error)
   #endif
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -23104,142 +23584,154 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "pyliblo3/_liblo.pyx":12
+  /* "pyliblo3/_liblo.pyx":17
  * #
  * 
- * __version__ = '0.10.1'             # <<<<<<<<<<<<<<
+ * __version__ = '0.16.1'             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_s_0_10_1) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_kp_s_0_16_1) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":25
+  /* "pyliblo3/_liblo.pyx":30
  * from _liblo cimport *
  * 
  * import inspect as _inspect             # <<<<<<<<<<<<<<
  * import weakref as _weakref
  * 
  */
-  __pyx_t_2 = __Pyx_patch_inspect(__Pyx_ImportDottedModule(__pyx_n_s_inspect_2, NULL)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_patch_inspect(__Pyx_ImportDottedModule(__pyx_n_s_inspect_2, NULL)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_inspect, __pyx_t_2) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_inspect, __pyx_t_2) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":26
+  /* "pyliblo3/_liblo.pyx":31
  * 
  * import inspect as _inspect
  * import weakref as _weakref             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_ImportDottedModule(__pyx_n_s_weakref_2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_ImportDottedModule(__pyx_n_s_weakref_2, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_weakref, __pyx_t_2) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_weakref, __pyx_t_2) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":29
+  /* "pyliblo3/_liblo.pyx":34
+ * 
+ * 
+ * def _protostr_to_int(str proto):             # <<<<<<<<<<<<<<
+ *     if proto == 'UDP':
+ *         return LO_UDP
+ */
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_1_protostr_to_int, 0, __pyx_n_s_protostr_to_int, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__14)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_protostr_to_int, __pyx_t_2) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "pyliblo3/_liblo.pyx":45
  * 
  * 
  * class _weakref_method:             # <<<<<<<<<<<<<<
  *     """
  *     Weak reference to a function, including support for bound methods.
  */
-  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_weakref_method, __pyx_n_s_weakref_method, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_Weak_reference_to_a_function_in); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_weakref_method, __pyx_n_s_weakref_method, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_Weak_reference_to_a_function_in); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "pyliblo3/_liblo.pyx":33
+  /* "pyliblo3/_liblo.pyx":49
  *     Weak reference to a function, including support for bound methods.
  *     """
  *     __slots__ = ('_func', 'obj')             # <<<<<<<<<<<<<<
  * 
  *     def __init__(self, f):
  */
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_slots, __pyx_tuple__13) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_slots, __pyx_tuple__15) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":35
+  /* "pyliblo3/_liblo.pyx":51
  *     __slots__ = ('_func', 'obj')
  * 
  *     def __init__(self, f):             # <<<<<<<<<<<<<<
  *         if _inspect.ismethod(f):
  *             self._func = f.__func__
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_1__init__, 0, __pyx_n_s_weakref_method___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_1__init__, 0, __pyx_n_s_weakref_method___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__17)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":43
+  /* "pyliblo3/_liblo.pyx":59
  *             self.obj = None
  * 
  *     @property             # <<<<<<<<<<<<<<
  *     def func(self):
  *         if self.obj:
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_3func, 0, __pyx_n_s_weakref_method_func, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__17)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_3func, 0, __pyx_n_s_weakref_method_func, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__19)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_property, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_builtin_property, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_func_3, __pyx_t_4) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_func_3, __pyx_t_4) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":50
+  /* "pyliblo3/_liblo.pyx":66
  *             return self._func
  * 
  *     def __call__(self, *args, **kwargs):             # <<<<<<<<<<<<<<
  *         return self.func(*args, **kwargs)
  * 
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_5__call__, 0, __pyx_n_s_weakref_method___call, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__19)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_15_weakref_method_5__call__, 0, __pyx_n_s_weakref_method___call, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_call, __pyx_t_4) < 0) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_call, __pyx_t_4) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":29
+  /* "pyliblo3/_liblo.pyx":45
  * 
  * 
  * class _weakref_method:             # <<<<<<<<<<<<<<
  *     """
  *     Weak reference to a function, including support for bound methods.
  */
-  __pyx_t_4 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_weakref_method, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_weakref_method, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_weakref_method, __pyx_t_4) < 0) __PYX_ERR(0, 29, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_weakref_method, __pyx_t_4) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":54
+  /* "pyliblo3/_liblo.pyx":70
  * 
  * 
  * class struct:             # <<<<<<<<<<<<<<
  *     def __init__(self, **kwargs):
  *         for k, v in kwargs.items():
  */
-  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_struct, __pyx_n_s_struct, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, (PyObject *) NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_struct, __pyx_n_s_struct, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, (PyObject *) NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
 
-  /* "pyliblo3/_liblo.pyx":55
+  /* "pyliblo3/_liblo.pyx":71
  * 
  * class struct:
  *     def __init__(self, **kwargs):             # <<<<<<<<<<<<<<
  *         for k, v in kwargs.items():
  *             setattr(self, k, v)
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6struct_1__init__, 0, __pyx_n_s_struct___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6struct_1__init__, 0, __pyx_n_s_struct___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":54
+  /* "pyliblo3/_liblo.pyx":70
  * 
  * 
  * class struct:             # <<<<<<<<<<<<<<
  *     def __init__(self, **kwargs):
  *         for k, v in kwargs.items():
  */
-  __pyx_t_4 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_struct, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_struct, __pyx_empty_tuple, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_struct, __pyx_t_4) < 0) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_struct, __pyx_t_4) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
@@ -23248,7 +23740,7 @@ if (!__Pyx_RefNanny) {
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_8Callback_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_8Callback_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__25)); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Callback, __pyx_n_s_reduce_cython, __pyx_t_2) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -23260,308 +23752,309 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_Callback__set_state(self, __pyx_state)
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_8Callback_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__25)); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 16, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_8Callback_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Callback___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__27)); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Callback, __pyx_n_s_setstate_cython, __pyx_t_2) < 0) __PYX_ERR(2, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Callback);
 
-  /* "pyliblo3/_liblo.pyx":100
+  /* "pyliblo3/_liblo.pyx":123
  * 
  * # liblo protocol constants
  * UDP  = LO_UDP             # <<<<<<<<<<<<<<
  * TCP  = LO_TCP
  * UNIX = LO_UNIX
  */
-  __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_UDP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_UDP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_UDP, __pyx_t_2) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_UDP, __pyx_t_2) < 0) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":101
+  /* "pyliblo3/_liblo.pyx":124
  * # liblo protocol constants
  * UDP  = LO_UDP
  * TCP  = LO_TCP             # <<<<<<<<<<<<<<
  * UNIX = LO_UNIX
  * 
  */
-  __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_TCP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 101, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_TCP); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_TCP, __pyx_t_2) < 0) __PYX_ERR(0, 101, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_TCP, __pyx_t_2) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":102
+  /* "pyliblo3/_liblo.pyx":125
  * UDP  = LO_UDP
  * TCP  = LO_TCP
  * UNIX = LO_UNIX             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_UNIX); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 102, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From___pyx_anon_enum(LO_UNIX); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_UNIX, __pyx_t_2) < 0) __PYX_ERR(0, 102, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_UNIX, __pyx_t_2) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":120
+  /* "pyliblo3/_liblo.pyx":143
  *     return <double>tt.sec + (<double>(tt.frac) / 4294967296.0)
  * 
  * def time():             # <<<<<<<<<<<<<<
  *     """
- *     Return the current time as a floating point number (seconds since
+ *     Return the current time as a floating point number (seconds since January 1, 1900).
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_1time, 0, __pyx_n_s_time, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__27)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_3time, 0, __pyx_n_s_time, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__29)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 143, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_time, __pyx_t_2) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_time, __pyx_t_2) < 0) __PYX_ERR(0, 143, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":177
+  /* "pyliblo3/_liblo.pyx":202
  * 
  * 
  * def send(target, *args):             # <<<<<<<<<<<<<<
  *     """
- *     send(target, *messages)
+ *     Send a message without requiring a server
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_3send, 0, __pyx_n_s_send, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__29)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 177, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_5send, 0, __pyx_n_s_send, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__31)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_send, __pyx_t_2) < 0) __PYX_ERR(0, 177, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_send, __pyx_t_2) < 0) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":206
+  /* "pyliblo3/_liblo.pyx":233
  * ################################################################################
  * 
  * class ServerError(Exception):             # <<<<<<<<<<<<<<
  *     """
  *     Raised when creating a liblo OSC server fails.
  */
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0]));
   __Pyx_GIVEREF((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0]));
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])))) __PYX_ERR(0, 206, __pyx_L1_error);
-  __pyx_t_4 = __Pyx_PEP560_update_bases(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 206, __pyx_L1_error)
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])))) __PYX_ERR(0, 233, __pyx_L1_error);
+  __pyx_t_4 = __Pyx_PEP560_update_bases(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_CalculateMetaclass(NULL, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CalculateMetaclass(NULL, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_Py3MetaclassPrepare(__pyx_t_3, __pyx_t_4, __pyx_n_s_ServerError, __pyx_n_s_ServerError, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_Raised_when_creating_a_liblo_OS); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_Py3MetaclassPrepare(__pyx_t_3, __pyx_t_4, __pyx_n_s_ServerError, __pyx_n_s_ServerError, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_Raised_when_creating_a_liblo_OS); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   if (__pyx_t_4 != __pyx_t_2) {
-    if (unlikely((PyDict_SetItemString(__pyx_t_5, "__orig_bases__", __pyx_t_2) < 0))) __PYX_ERR(0, 206, __pyx_L1_error)
+    if (unlikely((PyDict_SetItemString(__pyx_t_5, "__orig_bases__", __pyx_t_2) < 0))) __PYX_ERR(0, 233, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":210
+  /* "pyliblo3/_liblo.pyx":237
  *     Raised when creating a liblo OSC server fails.
  *     """
  *     def __init__(self, num, msg, where):             # <<<<<<<<<<<<<<
  *         self.num = num
  *         self.msg = msg
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11ServerError_1__init__, 0, __pyx_n_s_ServerError___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__31)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 210, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11ServerError_1__init__, 0, __pyx_n_s_ServerError___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__33)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_5, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 210, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_5, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":214
+  /* "pyliblo3/_liblo.pyx":241
  *         self.msg = msg
  *         self.where = where
  *     def __str__(self):             # <<<<<<<<<<<<<<
  *         s = "server error %d" % self.num
  *         if self.where: s += " in %s" % self.where
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11ServerError_3__str__, 0, __pyx_n_s_ServerError___str, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__33)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 214, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11ServerError_3__str__, 0, __pyx_n_s_ServerError___str, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__35)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_5, __pyx_n_s_str, __pyx_t_2) < 0) __PYX_ERR(0, 214, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_5, __pyx_n_s_str, __pyx_t_2) < 0) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pyliblo3/_liblo.pyx":206
+  /* "pyliblo3/_liblo.pyx":233
  * ################################################################################
  * 
  * class ServerError(Exception):             # <<<<<<<<<<<<<<
  *     """
  *     Raised when creating a liblo OSC server fails.
  */
-  __pyx_t_2 = __Pyx_Py3ClassCreate(__pyx_t_3, __pyx_n_s_ServerError, __pyx_t_4, __pyx_t_5, NULL, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3ClassCreate(__pyx_t_3, __pyx_n_s_ServerError, __pyx_t_4, __pyx_t_5, NULL, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ServerError, __pyx_t_2) < 0) __PYX_ERR(0, 206, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ServerError, __pyx_t_2) < 0) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":296
+  /* "pyliblo3/_liblo.pyx":323
  * # decorator to register callbacks
  * 
  * class make_method:             # <<<<<<<<<<<<<<
  *     """
- *     A decorator that serves as a more convenient alternative to
+ *     A decorator that serves as a more convenient alternative to [Server.add_method](#add_method).
  */
-  __pyx_t_4 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_make_method, __pyx_n_s_make_method, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_A_decorator_that_serves_as_a_mo); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 296, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_make_method, __pyx_n_s_make_method, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_A_decorator_that_serves_as_a_mo); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 323, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
 
-  /* "pyliblo3/_liblo.pyx":303
+  /* "pyliblo3/_liblo.pyx":338
  *     # counter to keep track of the order in which the callback functions where
  *     # defined
  *     _counter = 0             # <<<<<<<<<<<<<<
  * 
  *     def __init__(self, path, types, user_data=None):
  */
-  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_n_s_counter_2, __pyx_int_0) < 0) __PYX_ERR(0, 303, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_n_s_counter_2, __pyx_int_0) < 0) __PYX_ERR(0, 338, __pyx_L1_error)
 
-  /* "pyliblo3/_liblo.pyx":305
+  /* "pyliblo3/_liblo.pyx":340
  *     _counter = 0
  * 
  *     def __init__(self, path, types, user_data=None):             # <<<<<<<<<<<<<<
- *         """
- *         make_method(path, typespec[, user_data])
+ *         self.spec = struct(counter=make_method._counter,
+ *                            path=path,
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11make_method_1__init__, 0, __pyx_n_s_make_method___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__35)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11make_method_1__init__, 0, __pyx_n_s_make_method___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__37)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 340, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_3, __pyx_tuple__36);
-  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 305, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_3, __pyx_tuple__38);
+  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 340, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":328
+  /* "pyliblo3/_liblo.pyx":347
  *         make_method._counter += 1
  * 
  *     def __call__(self, f):             # <<<<<<<<<<<<<<
  *         # we can't access the Server object here, because at the time the
  *         # decorator is run it doesn't even exist yet, so we store the
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11make_method_3__call__, 0, __pyx_n_s_make_method___call, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__37)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 328, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11make_method_3__call__, 0, __pyx_n_s_make_method___call, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__39)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_n_s_call, __pyx_t_3) < 0) __PYX_ERR(0, 328, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_4, __pyx_n_s_call, __pyx_t_3) < 0) __PYX_ERR(0, 347, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":296
+  /* "pyliblo3/_liblo.pyx":323
  * # decorator to register callbacks
  * 
  * class make_method:             # <<<<<<<<<<<<<<
  *     """
- *     A decorator that serves as a more convenient alternative to
+ *     A decorator that serves as a more convenient alternative to [Server.add_method](#add_method).
  */
-  __pyx_t_3 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_make_method, __pyx_empty_tuple, __pyx_t_4, NULL, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 296, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_make_method, __pyx_empty_tuple, __pyx_t_4, NULL, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 323, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_make_method, __pyx_t_3) < 0) __PYX_ERR(0, 296, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_make_method, __pyx_t_3) < 0) __PYX_ERR(0, 323, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":354
+  /* "pyliblo3/_liblo.pyx":373
  *             raise RuntimeError("Server method called after free()")
  * 
  *     def register_methods(self, obj=None):             # <<<<<<<<<<<<<<
  *         """
- *         register_methods(obj=None)
+ *         Called internally during init if reg_methods is True
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_3register_methods, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_register_methods, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__39)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_3register_methods, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_register_methods, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__41)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__36);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_register_methods, __pyx_t_4) < 0) __PYX_ERR(0, 354, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__38);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_register_methods, __pyx_t_4) < 0) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":381
+  /* "pyliblo3/_liblo.pyx":397
  *             self.add_method(e.spec.path, e.spec.types, e.name, e.spec.user_data)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         cdef char *tmp = lo_server_get_url(self._server)
+ *         """
+ *         Returns the url of the server
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_5get_url, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_get_url, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__41)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 381, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_5get_url, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_get_url, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__43)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 397, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_get_url, __pyx_t_4) < 0) __PYX_ERR(0, 381, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_get_url, __pyx_t_4) < 0) __PYX_ERR(0, 397, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":388
+  /* "pyliblo3/_liblo.pyx":410
  *         return _decode(r)
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_port(self._server)
+ *         """
+ *         Returns the port number of this server
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_7get_port, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_get_port, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__42)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 388, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_7get_port, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_get_port, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__44)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 410, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_get_port, __pyx_t_4) < 0) __PYX_ERR(0, 388, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_get_port, __pyx_t_4) < 0) __PYX_ERR(0, 410, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":392
+  /* "pyliblo3/_liblo.pyx":420
  *         return lo_server_get_port(self._server)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         self._check()
- *         return lo_server_get_protocol(self._server)
+ *         """
+ *         Returns the protocol of this server, as an int
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_9get_protocol, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_get_protocol, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__43)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 392, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_9get_protocol, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_get_protocol, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__45)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_get_protocol, __pyx_t_4) < 0) __PYX_ERR(0, 392, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_get_protocol, __pyx_t_4) < 0) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":396
+  /* "pyliblo3/_liblo.pyx":432
  *         return lo_server_get_protocol(self._server)
  * 
  *     def fileno(self):             # <<<<<<<<<<<<<<
  *         """
- *         Return the file descriptor of the server socket, or -1 if not
+ *         Return the file descriptor of the server socket
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_11fileno, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_fileno, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__44)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 396, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_11fileno, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_fileno, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__46)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 432, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_fileno, __pyx_t_4) < 0) __PYX_ERR(0, 396, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_fileno, __pyx_t_4) < 0) __PYX_ERR(0, 432, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":404
+  /* "pyliblo3/_liblo.pyx":442
  *         return lo_server_get_socket_fd(self._server)
  * 
- *     def add_method(self, path, typespec, func, user_data=None):             # <<<<<<<<<<<<<<
+ *     def add_method(self, str path, str typespec, func, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_method(path, typespec, func, user_data=None)
+ *         Register a callback for OSC messages with matching path and argument types.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_13add_method, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_add_method, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__46)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 404, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_13add_method, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_add_method, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__48)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__36);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_add_method, __pyx_t_4) < 0) __PYX_ERR(0, 404, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__38);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_add_method, __pyx_t_4) < 0) __PYX_ERR(0, 442, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":460
+  /* "pyliblo3/_liblo.pyx":489
  *         lo_server_add_method(self._server, p, t, _msg_callback, <void*>cb)
  * 
- *     def del_method(self, path, typespec):             # <<<<<<<<<<<<<<
+ *     def del_method(self, path, typespec=None):             # <<<<<<<<<<<<<<
  *         """
- *         del_method(path, typespec)
+ *         Delete a callback function
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_15del_method, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_del_method, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__48)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 460, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_15del_method, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_del_method, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__50)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 489, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_del_method, __pyx_t_4) < 0) __PYX_ERR(0, 460, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__38);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_del_method, __pyx_t_4) < 0) __PYX_ERR(0, 489, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":491
+  /* "pyliblo3/_liblo.pyx":523
  *         lo_server_del_method(self._server, p, t)
  * 
  *     def add_bundle_handlers(self, start_handler, end_handler, user_data=None):             # <<<<<<<<<<<<<<
  *         """
- *         add_bundle_handlers(start_handler, end_handler, user_data=None)
+ *         Add bundle notification handlers.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_17add_bundle_handlers, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_add_bundle_handlers, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__50)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_17add_bundle_handlers, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_add_bundle_handlers, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__52)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__36);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_add_bundle_handlers, __pyx_t_4) < 0) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__38);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_add_bundle_handlers, __pyx_t_4) < 0) __PYX_ERR(0, 523, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
-  /* "pyliblo3/_liblo.pyx":516
+  /* "pyliblo3/_liblo.pyx":543
  *                                       _bundle_end_callback, <void*>cb_data)
  * 
  *     def send(self, target, *args):             # <<<<<<<<<<<<<<
  *         """
- *         send(target, *messages)
+ *         Send a message or bundle from this server to the the given target.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_19send, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_send, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__52)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 516, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_19send, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase_send, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__54)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 543, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_send, __pyx_t_4) < 0) __PYX_ERR(0, 516, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo__ServerBase, __pyx_n_s_send, __pyx_t_4) < 0) __PYX_ERR(0, 543, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo__ServerBase);
 
@@ -23570,7 +24063,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__53)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_21__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__55)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_4) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -23581,48 +24074,48 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__54)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_11_ServerBase_23__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerBase___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__56)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_4) < 0) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":571
- *     and never blocks.
+  /* "pyliblo3/_liblo.pyx":608
+ * 
  *     """
- *     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):             # <<<<<<<<<<<<<<
- *         """
- *         Server(port[, proto])
+ *     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):             # <<<<<<<<<<<<<<
+ *         cdef char *cs
+ * 
  */
-  __pyx_t_4 = __Pyx_PyInt_From___pyx_anon_enum(LO_DEFAULT); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 571, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From___pyx_anon_enum(LO_DEFAULT); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 608, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_k__4 = __pyx_t_4;
   __Pyx_GIVEREF(__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":610
+  /* "pyliblo3/_liblo.pyx":631
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_5free, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server_free, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__55)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 610, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_5free, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server_free, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__57)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 631, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Server, __pyx_n_s_free, __pyx_t_4) < 0) __PYX_ERR(0, 610, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Server, __pyx_n_s_free, __pyx_t_4) < 0) __PYX_ERR(0, 631, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Server);
 
-  /* "pyliblo3/_liblo.pyx":619
+  /* "pyliblo3/_liblo.pyx":641
  *             self._server = NULL
  * 
  *     def recv(self, timeout=None):             # <<<<<<<<<<<<<<
  *         """
- *         recv(timeout=None)
+ *         Receive and dispatch one OSC message.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_7recv, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server_recv, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__57)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 619, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_7recv, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server_recv, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__59)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 641, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__36);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Server, __pyx_n_s_recv, __pyx_t_4) < 0) __PYX_ERR(0, 619, __pyx_L1_error)
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_4, __pyx_tuple__38);
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Server, __pyx_n_s_recv, __pyx_t_4) < 0) __PYX_ERR(0, 641, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Server);
 
@@ -23631,7 +24124,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_9__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__58)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_9__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__60)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_4) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -23642,60 +24135,60 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server cannot be converted to a Python object for pickling"
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_11__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__59)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Server_11__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Server___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__61)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_4) < 0) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":662
+  /* "pyliblo3/_liblo.pyx":699
  *     cdef lo_server_thread _server_thread
  * 
- *     def __init__(self, port=None, proto=LO_DEFAULT, **kwargs):             # <<<<<<<<<<<<<<
- *         """
- *         ServerThread(port[, proto])
+ *     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):             # <<<<<<<<<<<<<<
+ *         cdef char *cs
+ * 
  */
-  __pyx_t_4 = __Pyx_PyInt_From___pyx_anon_enum(LO_DEFAULT); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 662, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From___pyx_anon_enum(LO_DEFAULT); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 699, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_k__5 = __pyx_t_4;
   __Pyx_GIVEREF(__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":710
+  /* "pyliblo3/_liblo.pyx":723
  *         self.free()
  * 
  *     def free(self):             # <<<<<<<<<<<<<<
  *         """
- *         Free the underlying server object and close its port.  Note that this
+ *         Free the underlying server object and close its port.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_5free, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread_free, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__60)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 710, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_5free, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread_free, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__62)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 723, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_n_s_free, __pyx_t_4) < 0) __PYX_ERR(0, 710, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_n_s_free, __pyx_t_4) < 0) __PYX_ERR(0, 723, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_ServerThread);
 
-  /* "pyliblo3/_liblo.pyx":720
+  /* "pyliblo3/_liblo.pyx":736
  *             self._server = NULL
  * 
  *     def start(self):             # <<<<<<<<<<<<<<
  *         """
- *         Start the server thread. liblo will now start to dispatch any messages
+ *         Start the server thread.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_7start, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread_start, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__61)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 720, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_7start, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread_start, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__63)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 736, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_n_s_start, __pyx_t_4) < 0) __PYX_ERR(0, 720, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_n_s_start, __pyx_t_4) < 0) __PYX_ERR(0, 736, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_ServerThread);
 
-  /* "pyliblo3/_liblo.pyx":728
+  /* "pyliblo3/_liblo.pyx":745
  *         lo_server_thread_start(self._server_thread)
  * 
  *     def stop(self):             # <<<<<<<<<<<<<<
  *         """
  *         Stop the server thread.
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_9stop, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread_stop, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__62)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 728, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_9stop, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread_stop, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__64)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 745, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_n_s_stop, __pyx_t_4) < 0) __PYX_ERR(0, 728, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_ServerThread, __pyx_n_s_stop, __pyx_t_4) < 0) __PYX_ERR(0, 745, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_ServerThread);
 
@@ -23704,7 +24197,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "self._server,self._server_thread cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__63)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_11__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__65)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_4) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -23715,135 +24208,135 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._server,self._server_thread cannot be converted to a Python object for pickling"
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__64)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12ServerThread_13__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_ServerThread___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__66)); if (unlikely(!__pyx_t_4)) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_4) < 0) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":740
+  /* "pyliblo3/_liblo.pyx":757
  * ################################################################################
  * 
  * class AddressError(Exception):             # <<<<<<<<<<<<<<
  *     """
- *     Raised when trying to create an invalid :class:`Address` object.
+ *     Raised when trying to create an invalid `Address` object.
  */
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 740, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 757, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0]));
   __Pyx_GIVEREF((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0]));
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, ((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])))) __PYX_ERR(0, 740, __pyx_L1_error);
-  __pyx_t_3 = __Pyx_PEP560_update_bases(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 740, __pyx_L1_error)
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, ((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])))) __PYX_ERR(0, 757, __pyx_L1_error);
+  __pyx_t_3 = __Pyx_PEP560_update_bases(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 757, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_CalculateMetaclass(NULL, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 740, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CalculateMetaclass(NULL, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 757, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = __Pyx_Py3MetaclassPrepare(__pyx_t_5, __pyx_t_3, __pyx_n_s_AddressError, __pyx_n_s_AddressError, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_Raised_when_trying_to_create_an); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 740, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3MetaclassPrepare(__pyx_t_5, __pyx_t_3, __pyx_n_s_AddressError, __pyx_n_s_AddressError, (PyObject *) NULL, __pyx_n_s_pyliblo3__liblo, __pyx_kp_s_Raised_when_trying_to_create_an); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 757, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (__pyx_t_3 != __pyx_t_4) {
-    if (unlikely((PyDict_SetItemString(__pyx_t_2, "__orig_bases__", __pyx_t_4) < 0))) __PYX_ERR(0, 740, __pyx_L1_error)
+    if (unlikely((PyDict_SetItemString(__pyx_t_2, "__orig_bases__", __pyx_t_4) < 0))) __PYX_ERR(0, 757, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":744
- *     Raised when trying to create an invalid :class:`Address` object.
+  /* "pyliblo3/_liblo.pyx":761
+ *     Raised when trying to create an invalid `Address` object.
  *     """
  *     def __init__(self, msg):             # <<<<<<<<<<<<<<
  *         self.msg = msg
  *     def __str__(self):
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12AddressError_1__init__, 0, __pyx_n_s_AddressError___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__66)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 744, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12AddressError_1__init__, 0, __pyx_n_s_AddressError___init, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__68)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 761, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 744, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 761, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":746
+  /* "pyliblo3/_liblo.pyx":763
  *     def __init__(self, msg):
  *         self.msg = msg
  *     def __str__(self):             # <<<<<<<<<<<<<<
  *         return "address error: %s" % self.msg
  * 
  */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12AddressError_3__str__, 0, __pyx_n_s_AddressError___str, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__67)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 746, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_12AddressError_3__str__, 0, __pyx_n_s_AddressError___str, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__69)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 763, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_str, __pyx_t_4) < 0) __PYX_ERR(0, 746, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_2, __pyx_n_s_str, __pyx_t_4) < 0) __PYX_ERR(0, 763, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pyliblo3/_liblo.pyx":740
+  /* "pyliblo3/_liblo.pyx":757
  * ################################################################################
  * 
  * class AddressError(Exception):             # <<<<<<<<<<<<<<
  *     """
- *     Raised when trying to create an invalid :class:`Address` object.
+ *     Raised when trying to create an invalid `Address` object.
  */
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_5, __pyx_n_s_AddressError, __pyx_t_3, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 740, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_5, __pyx_n_s_AddressError, __pyx_t_3, __pyx_t_2, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 757, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_AddressError, __pyx_t_4) < 0) __PYX_ERR(0, 740, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_AddressError, __pyx_t_4) < 0) __PYX_ERR(0, 757, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":753
+  /* "pyliblo3/_liblo.pyx":793
  *     cdef lo_address _address
  * 
  *     def __init__(self, addr, addr2=None, proto=LO_UDP):             # <<<<<<<<<<<<<<
- *         """
- *         Address(hostname, port[, proto])
+ *         if isinstance(proto, str):
+ *             proto = _protostr_to_int(proto)
  */
-  __pyx_t_3 = __Pyx_PyInt_From___pyx_anon_enum(LO_UDP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 753, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From___pyx_anon_enum(LO_UDP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 793, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_k__6 = __pyx_t_3;
   __Pyx_GIVEREF(__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":800
+  /* "pyliblo3/_liblo.pyx":819
  *         lo_address_free(self._address)
  * 
  *     def get_url(self):             # <<<<<<<<<<<<<<
+ *         """This Address as a liblo URL"""
  *         cdef char *tmp = lo_address_get_url(self._address)
- *         cdef object r = tmp
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_5get_url, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_url, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__68)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 800, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_5get_url, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_url, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__70)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 819, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_url, __pyx_t_3) < 0) __PYX_ERR(0, 800, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_url, __pyx_t_3) < 0) __PYX_ERR(0, 819, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Address);
 
-  /* "pyliblo3/_liblo.pyx":806
+  /* "pyliblo3/_liblo.pyx":826
  *         return _decode(r)
  * 
  *     def get_hostname(self):             # <<<<<<<<<<<<<<
+ *         """The hostname of this Address"""
  *         return _decode(lo_address_get_hostname(self._address))
- * 
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_7get_hostname, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_hostname, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__69)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 806, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_7get_hostname, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_hostname, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__71)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 826, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_hostname, __pyx_t_3) < 0) __PYX_ERR(0, 806, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_hostname, __pyx_t_3) < 0) __PYX_ERR(0, 826, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Address);
 
-  /* "pyliblo3/_liblo.pyx":809
+  /* "pyliblo3/_liblo.pyx":830
  *         return _decode(lo_address_get_hostname(self._address))
  * 
  *     def get_port(self):             # <<<<<<<<<<<<<<
+ *         """The port number of this Address"""
  *         cdef bytes s = lo_address_get_port(self._address)
- *         if s.isdigit():
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_9get_port, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_port, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__70)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 809, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_9get_port, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_port, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__72)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 830, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_port, __pyx_t_3) < 0) __PYX_ERR(0, 809, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_port, __pyx_t_3) < 0) __PYX_ERR(0, 830, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Address);
 
-  /* "pyliblo3/_liblo.pyx":816
+  /* "pyliblo3/_liblo.pyx":838
  *             return _decode(s)
  * 
  *     def get_protocol(self):             # <<<<<<<<<<<<<<
- *         return lo_address_get_protocol(self._address)
- * 
+ *         """
+ *         The protocol used as an int
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_11get_protocol, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_protocol, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__71)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 816, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_11get_protocol, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address_get_protocol, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__73)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 838, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_protocol, __pyx_t_3) < 0) __PYX_ERR(0, 816, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Address, __pyx_n_s_get_protocol, __pyx_t_3) < 0) __PYX_ERR(0, 838, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Address);
 
@@ -23852,7 +24345,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "self._address cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_13__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__72)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_13__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__74)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_3) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -23863,7 +24356,7 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._address cannot be converted to a Python object for pickling"
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_15__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__73)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Address_15__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Address___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__75)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_3) < 0) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -23873,7 +24366,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "self._blob cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Blob___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__74)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_5_Blob_5__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Blob___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__76)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_3) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -23884,21 +24377,21 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._blob cannot be converted to a Python object for pickling"
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Blob___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__75)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_5_Blob_7__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Blob___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__77)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_3) < 0) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":906
+  /* "pyliblo3/_liblo.pyx":940
  *         lo_message_free(self._message)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*args)
+ *         Append the given arguments to this message
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Message_5add, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Message_add, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__77)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 906, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Message_5add, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Message_add, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__79)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 940, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Message, __pyx_n_s_add, __pyx_t_3) < 0) __PYX_ERR(0, 906, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Message, __pyx_n_s_add, __pyx_t_3) < 0) __PYX_ERR(0, 940, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Message);
 
@@ -23907,7 +24400,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "self._message cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Message_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Message___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__78)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Message_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Message___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__80)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_3) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -23918,21 +24411,21 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._message cannot be converted to a Python object for pickling"
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Message_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Message___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__79)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7Message_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Message___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__81)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_3) < 0) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyliblo3/_liblo.pyx":1039
+  /* "pyliblo3/_liblo.pyx":1085
  *         lo_bundle_free(self._bundle)
  * 
  *     def add(self, *args):             # <<<<<<<<<<<<<<
  *         """
- *         add(*messages)
+ *         Add one or more messages to this bundle
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Bundle_5add, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Bundle_add, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__81)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1039, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Bundle_5add, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Bundle_add, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__83)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1085, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Bundle, __pyx_n_s_add, __pyx_t_3) < 0) __PYX_ERR(0, 1039, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_8pyliblo3_6_liblo_Bundle, __pyx_n_s_add, __pyx_t_3) < 0) __PYX_ERR(0, 1085, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   PyType_Modified(__pyx_ptype_8pyliblo3_6_liblo_Bundle);
 
@@ -23941,7 +24434,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "self._bundle cannot be converted to a Python object for pickling"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Bundle___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__82)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Bundle_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Bundle___reduce_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__84)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_3) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -23952,7 +24445,7 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "self._bundle cannot be converted to a Python object for pickling"
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Bundle___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__83)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_6Bundle_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Bundle___setstate_cython, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__85)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_3) < 0) __PYX_ERR(2, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -23962,15 +24455,15 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_5__pyx_unpickle_Callback, 0, __pyx_n_s_pyx_unpickle_Callback, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__85)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_New(&__pyx_mdef_8pyliblo3_6_liblo_7__pyx_unpickle_Callback, 0, __pyx_n_s_pyx_unpickle_Callback, NULL, __pyx_n_s_pyliblo3__liblo, __pyx_d, ((PyObject *)__pyx_codeobj__87)); if (unlikely(!__pyx_t_3)) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Callback, __pyx_t_3) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   /* "pyliblo3/_liblo.pyx":1
- * #             # <<<<<<<<<<<<<<
- * # pyliblo - Python bindings for the liblo OSC library
+ * # cython: embedsignature=True             # <<<<<<<<<<<<<<
  * #
+ * # pyliblo3 - Python bindings for the lublo OSC library, based on pyliblo
  */
   __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -24432,32 +24925,6 @@ bad:
 #endif
 #endif
 
-/* RaiseArgTupleInvalid */
-static void __Pyx_RaiseArgtupleInvalid(
-    const char* func_name,
-    int exact,
-    Py_ssize_t num_min,
-    Py_ssize_t num_max,
-    Py_ssize_t num_found)
-{
-    Py_ssize_t num_expected;
-    const char *more_or_less;
-    if (num_found < num_min) {
-        num_expected = num_min;
-        more_or_less = "at least";
-    } else {
-        num_expected = num_max;
-        more_or_less = "at most";
-    }
-    if (exact) {
-        more_or_less = "exactly";
-    }
-    PyErr_Format(PyExc_TypeError,
-                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                 func_name, more_or_less, num_expected,
-                 (num_expected == 1) ? "" : "s", num_found);
-}
-
 /* RaiseDoubleKeywords */
 static void __Pyx_RaiseDoubleKeywordsError(
     const char* func_name,
@@ -24628,73 +25095,126 @@ bad:
     return -1;
 }
 
-/* PyDictVersioning */
-#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj) {
-    PyObject *dict = Py_TYPE(obj)->tp_dict;
-    return likely(dict) ? __PYX_GET_DICT_VERSION(dict) : 0;
-}
-static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj) {
-    PyObject **dictptr = NULL;
-    Py_ssize_t offset = Py_TYPE(obj)->tp_dictoffset;
-    if (offset) {
-#if CYTHON_COMPILING_IN_CPYTHON
-        dictptr = (likely(offset > 0)) ? (PyObject **) ((char *)obj + offset) : _PyObject_GetDictPtr(obj);
-#else
-        dictptr = _PyObject_GetDictPtr(obj);
-#endif
-    }
-    return (dictptr && *dictptr) ? __PYX_GET_DICT_VERSION(*dictptr) : 0;
-}
-static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version) {
-    PyObject *dict = Py_TYPE(obj)->tp_dict;
-    if (unlikely(!dict) || unlikely(tp_dict_version != __PYX_GET_DICT_VERSION(dict)))
-        return 0;
-    return obj_dict_version == __Pyx_get_object_dict_version(obj);
-}
-#endif
-
-/* GetModuleGlobalName */
-#if CYTHON_USE_DICT_VERSIONS
-static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_version, PyObject **dict_cached_value)
-#else
-static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name)
-#endif
+/* RaiseArgTupleInvalid */
+static void __Pyx_RaiseArgtupleInvalid(
+    const char* func_name,
+    int exact,
+    Py_ssize_t num_min,
+    Py_ssize_t num_max,
+    Py_ssize_t num_found)
 {
-    PyObject *result;
-#if !CYTHON_AVOID_BORROWED_REFS
-#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030500A1 && PY_VERSION_HEX < 0x030d0000
-    result = _PyDict_GetItem_KnownHash(__pyx_d, name, ((PyASCIIObject *) name)->hash);
-    __PYX_UPDATE_DICT_CACHE(__pyx_d, result, *dict_cached_value, *dict_version)
-    if (likely(result)) {
-        return __Pyx_NewRef(result);
-    } else if (unlikely(PyErr_Occurred())) {
-        return NULL;
+    Py_ssize_t num_expected;
+    const char *more_or_less;
+    if (num_found < num_min) {
+        num_expected = num_min;
+        more_or_less = "at least";
+    } else {
+        num_expected = num_max;
+        more_or_less = "at most";
     }
-#elif CYTHON_COMPILING_IN_LIMITED_API
-    if (unlikely(!__pyx_m)) {
-        return NULL;
+    if (exact) {
+        more_or_less = "exactly";
     }
-    result = PyObject_GetAttr(__pyx_m, name);
-    if (likely(result)) {
-        return result;
+    PyErr_Format(PyExc_TypeError,
+                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
+                 func_name, more_or_less, num_expected,
+                 (num_expected == 1) ? "" : "s", num_found);
+}
+
+/* ArgTypeTest */
+static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact)
+{
+    __Pyx_TypeName type_name;
+    __Pyx_TypeName obj_type_name;
+    if (unlikely(!type)) {
+        PyErr_SetString(PyExc_SystemError, "Missing type object");
+        return 0;
     }
+    else if (exact) {
+        #if PY_MAJOR_VERSION == 2
+        if ((type == &PyBaseString_Type) && likely(__Pyx_PyBaseString_CheckExact(obj))) return 1;
+        #endif
+    }
+    else {
+        if (likely(__Pyx_TypeCheck(obj, type))) return 1;
+    }
+    type_name = __Pyx_PyType_GetName(type);
+    obj_type_name = __Pyx_PyType_GetName(Py_TYPE(obj));
+    PyErr_Format(PyExc_TypeError,
+        "Argument '%.200s' has incorrect type (expected " __Pyx_FMT_TYPENAME
+        ", got " __Pyx_FMT_TYPENAME ")", name, type_name, obj_type_name);
+    __Pyx_DECREF_TypeName(type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+    return 0;
+}
+
+/* JoinPyUnicode */
+static PyObject* __Pyx_PyUnicode_Join(PyObject* value_tuple, Py_ssize_t value_count, Py_ssize_t result_ulength,
+                                      Py_UCS4 max_char) {
+#if CYTHON_USE_UNICODE_INTERNALS && CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    PyObject *result_uval;
+    int result_ukind, kind_shift;
+    Py_ssize_t i, char_pos;
+    void *result_udata;
+    CYTHON_MAYBE_UNUSED_VAR(max_char);
+#if CYTHON_PEP393_ENABLED
+    result_uval = PyUnicode_New(result_ulength, max_char);
+    if (unlikely(!result_uval)) return NULL;
+    result_ukind = (max_char <= 255) ? PyUnicode_1BYTE_KIND : (max_char <= 65535) ? PyUnicode_2BYTE_KIND : PyUnicode_4BYTE_KIND;
+    kind_shift = (result_ukind == PyUnicode_4BYTE_KIND) ? 2 : result_ukind - 1;
+    result_udata = PyUnicode_DATA(result_uval);
 #else
-    result = PyDict_GetItem(__pyx_d, name);
-    __PYX_UPDATE_DICT_CACHE(__pyx_d, result, *dict_cached_value, *dict_version)
-    if (likely(result)) {
-        return __Pyx_NewRef(result);
-    }
+    result_uval = PyUnicode_FromUnicode(NULL, result_ulength);
+    if (unlikely(!result_uval)) return NULL;
+    result_ukind = sizeof(Py_UNICODE);
+    kind_shift = (result_ukind == 4) ? 2 : result_ukind - 1;
+    result_udata = PyUnicode_AS_UNICODE(result_uval);
 #endif
+    assert(kind_shift == 2 || kind_shift == 1 || kind_shift == 0);
+    char_pos = 0;
+    for (i=0; i < value_count; i++) {
+        int ukind;
+        Py_ssize_t ulength;
+        void *udata;
+        PyObject *uval = PyTuple_GET_ITEM(value_tuple, i);
+        if (unlikely(__Pyx_PyUnicode_READY(uval)))
+            goto bad;
+        ulength = __Pyx_PyUnicode_GET_LENGTH(uval);
+        if (unlikely(!ulength))
+            continue;
+        if (unlikely((PY_SSIZE_T_MAX >> kind_shift) - ulength < char_pos))
+            goto overflow;
+        ukind = __Pyx_PyUnicode_KIND(uval);
+        udata = __Pyx_PyUnicode_DATA(uval);
+        if (!CYTHON_PEP393_ENABLED || ukind == result_ukind) {
+            memcpy((char *)result_udata + (char_pos << kind_shift), udata, (size_t) (ulength << kind_shift));
+        } else {
+            #if PY_VERSION_HEX >= 0x030d0000
+            if (unlikely(PyUnicode_CopyCharacters(result_uval, char_pos, uval, 0, ulength) < 0)) goto bad;
+            #elif CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030300F0 || defined(_PyUnicode_FastCopyCharacters)
+            _PyUnicode_FastCopyCharacters(result_uval, char_pos, uval, 0, ulength);
+            #else
+            Py_ssize_t j;
+            for (j=0; j < ulength; j++) {
+                Py_UCS4 uchar = __Pyx_PyUnicode_READ(ukind, udata, j);
+                __Pyx_PyUnicode_WRITE(result_ukind, result_udata, char_pos+j, uchar);
+            }
+            #endif
+        }
+        char_pos += ulength;
+    }
+    return result_uval;
+overflow:
+    PyErr_SetString(PyExc_OverflowError, "join() result is too long for a Python string");
+bad:
+    Py_DECREF(result_uval);
+    return NULL;
 #else
-    result = PyObject_GetItem(__pyx_d, name);
-    __PYX_UPDATE_DICT_CACHE(__pyx_d, result, *dict_cached_value, *dict_version)
-    if (likely(result)) {
-        return __Pyx_NewRef(result);
-    }
-    PyErr_Clear();
+    CYTHON_UNUSED_VAR(max_char);
+    CYTHON_UNUSED_VAR(result_ulength);
+    CYTHON_UNUSED_VAR(value_count);
+    return PyUnicode_Join(__pyx_empty_unicode, value_tuple);
 #endif
-    return __Pyx_GetBuiltinName(name);
 }
 
 /* PyFunctionFastCall */
@@ -24948,6 +25468,242 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_FastCallDict(PyObject *func, PyObj
     #endif
 }
 
+/* PyObjectCallOneArg */
+static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg) {
+    PyObject *args[2] = {NULL, arg};
+    return __Pyx_PyObject_FastCall(func, args+1, 1 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET);
+}
+
+/* RaiseException */
+#if PY_MAJOR_VERSION < 3
+static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause) {
+    __Pyx_PyThreadState_declare
+    CYTHON_UNUSED_VAR(cause);
+    Py_XINCREF(type);
+    if (!value || value == Py_None)
+        value = NULL;
+    else
+        Py_INCREF(value);
+    if (!tb || tb == Py_None)
+        tb = NULL;
+    else {
+        Py_INCREF(tb);
+        if (!PyTraceBack_Check(tb)) {
+            PyErr_SetString(PyExc_TypeError,
+                "raise: arg 3 must be a traceback or None");
+            goto raise_error;
+        }
+    }
+    if (PyType_Check(type)) {
+#if CYTHON_COMPILING_IN_PYPY
+        if (!value) {
+            Py_INCREF(Py_None);
+            value = Py_None;
+        }
+#endif
+        PyErr_NormalizeException(&type, &value, &tb);
+    } else {
+        if (value) {
+            PyErr_SetString(PyExc_TypeError,
+                "instance exception may not have a separate value");
+            goto raise_error;
+        }
+        value = type;
+        type = (PyObject*) Py_TYPE(type);
+        Py_INCREF(type);
+        if (!PyType_IsSubtype((PyTypeObject *)type, (PyTypeObject *)PyExc_BaseException)) {
+            PyErr_SetString(PyExc_TypeError,
+                "raise: exception class must be a subclass of BaseException");
+            goto raise_error;
+        }
+    }
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrRestore(type, value, tb);
+    return;
+raise_error:
+    Py_XDECREF(value);
+    Py_XDECREF(type);
+    Py_XDECREF(tb);
+    return;
+}
+#else
+static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause) {
+    PyObject* owned_instance = NULL;
+    if (tb == Py_None) {
+        tb = 0;
+    } else if (tb && !PyTraceBack_Check(tb)) {
+        PyErr_SetString(PyExc_TypeError,
+            "raise: arg 3 must be a traceback or None");
+        goto bad;
+    }
+    if (value == Py_None)
+        value = 0;
+    if (PyExceptionInstance_Check(type)) {
+        if (value) {
+            PyErr_SetString(PyExc_TypeError,
+                "instance exception may not have a separate value");
+            goto bad;
+        }
+        value = type;
+        type = (PyObject*) Py_TYPE(value);
+    } else if (PyExceptionClass_Check(type)) {
+        PyObject *instance_class = NULL;
+        if (value && PyExceptionInstance_Check(value)) {
+            instance_class = (PyObject*) Py_TYPE(value);
+            if (instance_class != type) {
+                int is_subclass = PyObject_IsSubclass(instance_class, type);
+                if (!is_subclass) {
+                    instance_class = NULL;
+                } else if (unlikely(is_subclass == -1)) {
+                    goto bad;
+                } else {
+                    type = instance_class;
+                }
+            }
+        }
+        if (!instance_class) {
+            PyObject *args;
+            if (!value)
+                args = PyTuple_New(0);
+            else if (PyTuple_Check(value)) {
+                Py_INCREF(value);
+                args = value;
+            } else
+                args = PyTuple_Pack(1, value);
+            if (!args)
+                goto bad;
+            owned_instance = PyObject_Call(type, args, NULL);
+            Py_DECREF(args);
+            if (!owned_instance)
+                goto bad;
+            value = owned_instance;
+            if (!PyExceptionInstance_Check(value)) {
+                PyErr_Format(PyExc_TypeError,
+                             "calling %R should have returned an instance of "
+                             "BaseException, not %R",
+                             type, Py_TYPE(value));
+                goto bad;
+            }
+        }
+    } else {
+        PyErr_SetString(PyExc_TypeError,
+            "raise: exception class must be a subclass of BaseException");
+        goto bad;
+    }
+    if (cause) {
+        PyObject *fixed_cause;
+        if (cause == Py_None) {
+            fixed_cause = NULL;
+        } else if (PyExceptionClass_Check(cause)) {
+            fixed_cause = PyObject_CallObject(cause, NULL);
+            if (fixed_cause == NULL)
+                goto bad;
+        } else if (PyExceptionInstance_Check(cause)) {
+            fixed_cause = cause;
+            Py_INCREF(fixed_cause);
+        } else {
+            PyErr_SetString(PyExc_TypeError,
+                            "exception causes must derive from "
+                            "BaseException");
+            goto bad;
+        }
+        PyException_SetCause(value, fixed_cause);
+    }
+    PyErr_SetObject(type, value);
+    if (tb) {
+      #if PY_VERSION_HEX >= 0x030C00A6
+        PyException_SetTraceback(value, tb);
+      #elif CYTHON_FAST_THREAD_STATE
+        PyThreadState *tstate = __Pyx_PyThreadState_Current;
+        PyObject* tmp_tb = tstate->curexc_traceback;
+        if (tb != tmp_tb) {
+            Py_INCREF(tb);
+            tstate->curexc_traceback = tb;
+            Py_XDECREF(tmp_tb);
+        }
+#else
+        PyObject *tmp_type, *tmp_value, *tmp_tb;
+        PyErr_Fetch(&tmp_type, &tmp_value, &tmp_tb);
+        Py_INCREF(tb);
+        PyErr_Restore(tmp_type, tmp_value, tb);
+        Py_XDECREF(tmp_tb);
+#endif
+    }
+bad:
+    Py_XDECREF(owned_instance);
+    return;
+}
+#endif
+
+/* PyDictVersioning */
+#if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_tp_dict_version(PyObject *obj) {
+    PyObject *dict = Py_TYPE(obj)->tp_dict;
+    return likely(dict) ? __PYX_GET_DICT_VERSION(dict) : 0;
+}
+static CYTHON_INLINE PY_UINT64_T __Pyx_get_object_dict_version(PyObject *obj) {
+    PyObject **dictptr = NULL;
+    Py_ssize_t offset = Py_TYPE(obj)->tp_dictoffset;
+    if (offset) {
+#if CYTHON_COMPILING_IN_CPYTHON
+        dictptr = (likely(offset > 0)) ? (PyObject **) ((char *)obj + offset) : _PyObject_GetDictPtr(obj);
+#else
+        dictptr = _PyObject_GetDictPtr(obj);
+#endif
+    }
+    return (dictptr && *dictptr) ? __PYX_GET_DICT_VERSION(*dictptr) : 0;
+}
+static CYTHON_INLINE int __Pyx_object_dict_version_matches(PyObject* obj, PY_UINT64_T tp_dict_version, PY_UINT64_T obj_dict_version) {
+    PyObject *dict = Py_TYPE(obj)->tp_dict;
+    if (unlikely(!dict) || unlikely(tp_dict_version != __PYX_GET_DICT_VERSION(dict)))
+        return 0;
+    return obj_dict_version == __Pyx_get_object_dict_version(obj);
+}
+#endif
+
+/* GetModuleGlobalName */
+#if CYTHON_USE_DICT_VERSIONS
+static PyObject *__Pyx__GetModuleGlobalName(PyObject *name, PY_UINT64_T *dict_version, PyObject **dict_cached_value)
+#else
+static CYTHON_INLINE PyObject *__Pyx__GetModuleGlobalName(PyObject *name)
+#endif
+{
+    PyObject *result;
+#if !CYTHON_AVOID_BORROWED_REFS
+#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030500A1 && PY_VERSION_HEX < 0x030d0000
+    result = _PyDict_GetItem_KnownHash(__pyx_d, name, ((PyASCIIObject *) name)->hash);
+    __PYX_UPDATE_DICT_CACHE(__pyx_d, result, *dict_cached_value, *dict_version)
+    if (likely(result)) {
+        return __Pyx_NewRef(result);
+    } else if (unlikely(PyErr_Occurred())) {
+        return NULL;
+    }
+#elif CYTHON_COMPILING_IN_LIMITED_API
+    if (unlikely(!__pyx_m)) {
+        return NULL;
+    }
+    result = PyObject_GetAttr(__pyx_m, name);
+    if (likely(result)) {
+        return result;
+    }
+#else
+    result = PyDict_GetItem(__pyx_d, name);
+    __PYX_UPDATE_DICT_CACHE(__pyx_d, result, *dict_cached_value, *dict_version)
+    if (likely(result)) {
+        return __Pyx_NewRef(result);
+    }
+#endif
+#else
+    result = PyObject_GetItem(__pyx_d, name);
+    __PYX_UPDATE_DICT_CACHE(__pyx_d, result, *dict_cached_value, *dict_version)
+    if (likely(result)) {
+        return __Pyx_NewRef(result);
+    }
+    PyErr_Clear();
+#endif
+    return __Pyx_GetBuiltinName(name);
+}
+
 /* PyObjectSetAttrStr */
 #if CYTHON_USE_TYPE_SLOTS
 static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr_name, PyObject* value) {
@@ -24981,12 +25737,6 @@ static CYTHON_INLINE int __Pyx_IterFinish(void) {
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
     PyObject *arg[2] = {NULL, NULL};
     return __Pyx_PyObject_FastCall(func, arg + 1, 0 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET);
-}
-
-/* PyObjectCallOneArg */
-static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg) {
-    PyObject *args[2] = {NULL, arg};
-    return __Pyx_PyObject_FastCall(func, args+1, 1 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET);
 }
 
 /* PyObjectGetMethod */
@@ -25678,167 +26428,6 @@ static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, 
     return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
 }
 
-/* RaiseException */
-#if PY_MAJOR_VERSION < 3
-static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause) {
-    __Pyx_PyThreadState_declare
-    CYTHON_UNUSED_VAR(cause);
-    Py_XINCREF(type);
-    if (!value || value == Py_None)
-        value = NULL;
-    else
-        Py_INCREF(value);
-    if (!tb || tb == Py_None)
-        tb = NULL;
-    else {
-        Py_INCREF(tb);
-        if (!PyTraceBack_Check(tb)) {
-            PyErr_SetString(PyExc_TypeError,
-                "raise: arg 3 must be a traceback or None");
-            goto raise_error;
-        }
-    }
-    if (PyType_Check(type)) {
-#if CYTHON_COMPILING_IN_PYPY
-        if (!value) {
-            Py_INCREF(Py_None);
-            value = Py_None;
-        }
-#endif
-        PyErr_NormalizeException(&type, &value, &tb);
-    } else {
-        if (value) {
-            PyErr_SetString(PyExc_TypeError,
-                "instance exception may not have a separate value");
-            goto raise_error;
-        }
-        value = type;
-        type = (PyObject*) Py_TYPE(type);
-        Py_INCREF(type);
-        if (!PyType_IsSubtype((PyTypeObject *)type, (PyTypeObject *)PyExc_BaseException)) {
-            PyErr_SetString(PyExc_TypeError,
-                "raise: exception class must be a subclass of BaseException");
-            goto raise_error;
-        }
-    }
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrRestore(type, value, tb);
-    return;
-raise_error:
-    Py_XDECREF(value);
-    Py_XDECREF(type);
-    Py_XDECREF(tb);
-    return;
-}
-#else
-static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause) {
-    PyObject* owned_instance = NULL;
-    if (tb == Py_None) {
-        tb = 0;
-    } else if (tb && !PyTraceBack_Check(tb)) {
-        PyErr_SetString(PyExc_TypeError,
-            "raise: arg 3 must be a traceback or None");
-        goto bad;
-    }
-    if (value == Py_None)
-        value = 0;
-    if (PyExceptionInstance_Check(type)) {
-        if (value) {
-            PyErr_SetString(PyExc_TypeError,
-                "instance exception may not have a separate value");
-            goto bad;
-        }
-        value = type;
-        type = (PyObject*) Py_TYPE(value);
-    } else if (PyExceptionClass_Check(type)) {
-        PyObject *instance_class = NULL;
-        if (value && PyExceptionInstance_Check(value)) {
-            instance_class = (PyObject*) Py_TYPE(value);
-            if (instance_class != type) {
-                int is_subclass = PyObject_IsSubclass(instance_class, type);
-                if (!is_subclass) {
-                    instance_class = NULL;
-                } else if (unlikely(is_subclass == -1)) {
-                    goto bad;
-                } else {
-                    type = instance_class;
-                }
-            }
-        }
-        if (!instance_class) {
-            PyObject *args;
-            if (!value)
-                args = PyTuple_New(0);
-            else if (PyTuple_Check(value)) {
-                Py_INCREF(value);
-                args = value;
-            } else
-                args = PyTuple_Pack(1, value);
-            if (!args)
-                goto bad;
-            owned_instance = PyObject_Call(type, args, NULL);
-            Py_DECREF(args);
-            if (!owned_instance)
-                goto bad;
-            value = owned_instance;
-            if (!PyExceptionInstance_Check(value)) {
-                PyErr_Format(PyExc_TypeError,
-                             "calling %R should have returned an instance of "
-                             "BaseException, not %R",
-                             type, Py_TYPE(value));
-                goto bad;
-            }
-        }
-    } else {
-        PyErr_SetString(PyExc_TypeError,
-            "raise: exception class must be a subclass of BaseException");
-        goto bad;
-    }
-    if (cause) {
-        PyObject *fixed_cause;
-        if (cause == Py_None) {
-            fixed_cause = NULL;
-        } else if (PyExceptionClass_Check(cause)) {
-            fixed_cause = PyObject_CallObject(cause, NULL);
-            if (fixed_cause == NULL)
-                goto bad;
-        } else if (PyExceptionInstance_Check(cause)) {
-            fixed_cause = cause;
-            Py_INCREF(fixed_cause);
-        } else {
-            PyErr_SetString(PyExc_TypeError,
-                            "exception causes must derive from "
-                            "BaseException");
-            goto bad;
-        }
-        PyException_SetCause(value, fixed_cause);
-    }
-    PyErr_SetObject(type, value);
-    if (tb) {
-      #if PY_VERSION_HEX >= 0x030C00A6
-        PyException_SetTraceback(value, tb);
-      #elif CYTHON_FAST_THREAD_STATE
-        PyThreadState *tstate = __Pyx_PyThreadState_Current;
-        PyObject* tmp_tb = tstate->curexc_traceback;
-        if (tb != tmp_tb) {
-            Py_INCREF(tb);
-            tstate->curexc_traceback = tb;
-            Py_XDECREF(tmp_tb);
-        }
-#else
-        PyObject *tmp_type, *tmp_value, *tmp_tb;
-        PyErr_Fetch(&tmp_type, &tmp_value, &tmp_tb);
-        Py_INCREF(tb);
-        PyErr_Restore(tmp_type, tmp_value, tb);
-        Py_XDECREF(tmp_tb);
-#endif
-    }
-bad:
-    Py_XDECREF(owned_instance);
-    return;
-}
-#endif
-
 /* pybytes_as_double */
 static double __Pyx_SlowPyString_AsDouble(PyObject *obj) {
     PyObject *float_value;
@@ -26249,30 +26838,6 @@ static CYTHON_INLINE int __Pyx_PyObject_Append(PyObject* L, PyObject* x) {
     }
     return 0;
 }
-
-/* DictGetItem */
-#if PY_MAJOR_VERSION >= 3 && !CYTHON_COMPILING_IN_PYPY
-static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key) {
-    PyObject *value;
-    value = PyDict_GetItemWithError(d, key);
-    if (unlikely(!value)) {
-        if (!PyErr_Occurred()) {
-            if (unlikely(PyTuple_Check(key))) {
-                PyObject* args = PyTuple_Pack(1, key);
-                if (likely(args)) {
-                    PyErr_SetObject(PyExc_KeyError, args);
-                    Py_DECREF(args);
-                }
-            } else {
-                PyErr_SetObject(PyExc_KeyError, key);
-            }
-        }
-        return NULL;
-    }
-    Py_INCREF(value);
-    return value;
-}
-#endif
 
 /* FixUpExtensionType */
 #if CYTHON_USE_TYPE_SPECS
@@ -31919,7 +32484,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__86);
+        name = __Pyx_NewRef(__pyx_n_s__88);
     }
     return name;
 }

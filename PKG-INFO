@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: pyliblo3
-Version: 0.9.2
+Version: 0.16.1
 Summary: fork of pyliblo (Python bindings for the liblo OSC library)
 Home-page: http://das.nasophon.de/pyliblo/
 Author: Dominic Sacre

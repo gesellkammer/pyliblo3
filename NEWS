@@ -1,3 +1,8 @@
+2024: pyliblo3 can build binary wheels for all platforms
+  * Including native wheels for macos arm64
+  * All dependencies (the liblo library itself) are included
+    within the wheels
+    
 2020: pyliblo3 can build manylinux wheels
 
 2019: pyliblo3 is forked from pylibo
