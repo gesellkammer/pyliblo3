@@ -1,0 +1,2 @@
+pyliblo3
+emlib>=0.16.0
