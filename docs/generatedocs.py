@@ -4,19 +4,17 @@ import argparse
 import sys
 from pathlib import Path
 import logging
+import shutil
 
 try:
     import pyliblo3 as liblo
     from emlib import doctools
 except ImportError:
     import textwrap
-    msg = ("**WARNING**: Trying to update documentation, but the python present in the current environment"
-           " does not have the needed packages (pyliblo3, emlib). Documentation will not be"
-           " updated")
-    print()
-    print("\n".join(textwrap.wrap(msg, width=72)))
-    print()
-    sys.exit(0)
+    print("\n**WARNING**: Failed to update documentation. The python present in the current environment"
+           " does not have the needed packages (pyliblo3, emlib)\n")
+    sys.exit(1)
+
 
 def findRoot():
     p = Path(__file__).parent
@@ -30,23 +28,22 @@ def findRoot():
     
 
 def main(dest: Path):
-    config = doctools.RenderConfig(splitName=True, includeInheritedMethods=False, )
-    modules = {'Reference': liblo._liblo}
-    for name, module in modules.items():
-        docs = doctools.generateDocsForModule(module,
-                                              renderConfig=config,
-                                              title=name,
-                                              includeCustomExceptions=False)
-        open(dest/f"{name}.md", "w").write(docs)
-    
+    config = doctools.RenderConfig(splitName=True, includeInheritedMethods=False)
+    markdown = doctools.generateDocsForModule(liblo._liblo, renderConfig=config, title='Reference', includeCustomExceptions=False)
+    open(dest/"Reference.md", "w").write(markdown)
+
     
 if __name__ == "__main__":
+    logging.basicConfig(level="DEBUG")
+    doctools.logger.setLevel("DEBUG")
     root = findRoot()
     docsfolder = root / "docs"
     print("Documentation folder", docsfolder)
-    logging.basicConfig(level="DEBUG")
-    doctools.logger.setLevel("DEBUG")
     assert docsfolder.exists()
     main(docsfolder)
-    os.chdir(root)
-    os.system("mkdocs build")
+
+    if not shutil.which('mkdocs'):
+        print("\n**WARNING**: mkdocs not found, cannot generate HTML docs")
+    else:
+        os.chdir(root)
+        os.system("mkdocs build")
