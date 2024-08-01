@@ -31,7 +31,7 @@ def findRoot():
 
 def main(dest: Path):
     config = doctools.RenderConfig(splitName=True, includeInheritedMethods=False, )
-    modules = {'liblo': liblo._liblo}
+    modules = {'Reference': liblo._liblo}
     for name, module in modules.items():
         docs = doctools.generateDocsForModule(module,
                                               renderConfig=config,
