@@ -1,12 +1,12 @@
 Metadata-Version: 1.0
 Name: pyliblo3
 Version: 0.16.1
-Summary: fork of pyliblo (Python bindings for the liblo OSC library)
-Home-page: http://das.nasophon.de/pyliblo/
+Summary: fork of pyliblo (http://das.nasophon.de/pyliblo/)
+Home-page: https://github.com/gesellkammer/pyliblo3
 Author: Dominic Sacre
 Author-email: dominic.sacre@gmx.de
 Maintainer: Eduardo Moguillansky
-Maintainer-email: eduardo.moguillansky@gmail.com
+Maintainer-email: 
 License: LGPL
 Description: UNKNOWN
 Platform: UNKNOWN
