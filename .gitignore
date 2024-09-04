@@ -13,6 +13,6 @@ dist/
 .deps
 .idea
 .mypy*
-src/liblo.c
+pyliblo3/*.c
 wheelhouse/
 *.kate*
