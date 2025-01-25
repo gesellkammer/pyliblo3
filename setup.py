@@ -8,9 +8,9 @@ import os
 import shutil
 import subprocess
 
-VERSION = '0.16.2'
+VERSION = '0.16.3'
 
-platformname = platform.system()
+platformname = platform.system().lower()
 
 include_dirs = ["pyliblo3"]
 library_dirs = []
@@ -27,7 +27,7 @@ def append_if_exists(lst: list[str], path: str) -> None:
         print(f"***** Path does not exists, skipping: '{path}'")
 
 
-if platformname == 'Darwin':
+if platformname == 'darwin':
     libraries.append('lo')
     brewpath = shutil.which("brew")
     if brewpath:
@@ -45,7 +45,7 @@ if platformname == 'Darwin':
         '-Werror-implicit-function-declaration',
         '-Wfatal-errors'
     ]
-elif platformname == 'Linux':
+elif platformname == 'linux':
     libraries.append('lo')
     include_dirs.extend(['/usr/include', '/usr/local/include'])
     library_dirs.append("/usr/local/lib")
@@ -54,7 +54,7 @@ elif platformname == 'Linux':
         '-Werror-implicit-function-declaration',
         '-Wfatal-errors'
     ]
-elif platformname == "Windows":
+elif platformname == "windows":
     libraries.append('liblo')
     # Default install directory for liblo built from source
     # See also the wheel build script where we add the .../lib and .../bin
