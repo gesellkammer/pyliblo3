@@ -1,4 +1,8 @@
 
+UDP = 1
+UNIX = 2
+TCP = 4
+
 class Callback:
     def __init__(self, func: Callable, user_data: Any): ...
 
