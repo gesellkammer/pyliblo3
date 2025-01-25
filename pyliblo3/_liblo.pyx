@@ -271,7 +271,7 @@ cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
         elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
         elif t == 't': v = _timetag_to_double(argv[i].t)
         elif t == 'b':
-            v = bytes(<unsigned char*>lo_blob_dataptr(argv[i]))
+            v = bytes(<unsigned char*>lo_blob_dataptr(<lo_blob>argv[i]))
         else:
             v = None  # unhandled data type
 
