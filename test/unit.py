@@ -68,6 +68,7 @@ class ServerTestCase(ServerTestCaseBase):
         self.server.add_method('/foo', 'i', self.callback, "data")
         self.server.send(str(portnum), '/foo', 123)
         assert self.server.recv() == True
+        assert self.cb is not None and isinstance(self.cb, Arguments), f".cb is not set, {self.cb=}"
         assert self.cb.path == '/foo'
         assert self.cb.args[0] == 123
         assert self.cb.types == 'i'
@@ -199,31 +200,6 @@ class ServerCreationTestCase(unittest.TestCase):
     def testPortProto(self):
         s = liblo.Server(1234, liblo.TCP)
         assert matchHost(s.url, r'osc\.tcp://.*:1234/')
-
-
-class ServerTCPTestCase(ServerTestCaseBase):
-    def setUp(self):
-        ServerTestCaseBase.setUp(self)
-        self.server = liblo.Server('1234', liblo.TCP)
-
-    def tearDown(self):
-        del self.server
-
-    def testSendReceive(self):
-        self.server.add_method('/foo', 'i', self.callback)
-        liblo.send(self.server.url, '/foo', 123)
-        assert self.server.recv() == True
-        assert self.cb.path == '/foo'
-        assert self.cb.args[0] == 123
-        assert self.cb.types == 'i'
-
-    #def testNotReachable(self):
-    #    try:
-    #        self.server.send('osc.tcp://192.168.23.42:4711', '/foo', 23, 42)
-    #    except IOError:
-    #        pass
-    #    else:
-    #        assert False
 
 
 class ServerThreadTestCase(ServerTestCaseBase):
