@@ -971,7 +971,7 @@ cdef class Message:
         if t == 'i':
             lo_message_add_int32(self._message, int(value))
         elif t == 'h':
-            lo_message_add_int64(self._message, long(value))
+            lo_message_add_int64(self._message, int(value))
         elif t == 'f':
             lo_message_add_float(self._message, float(value))
         elif t == 'd':
@@ -1012,7 +1012,7 @@ cdef class Message:
             lo_message_add_true(self._message)
         elif value is False:
             lo_message_add_false(self._message)
-        elif isinstance(value, (int, long)):
+        elif isinstance(value, (int)):
             try:
                 lo_message_add_int32(self._message, <int32_t>value)
             except OverflowError:
@@ -1067,7 +1067,7 @@ cdef class Bundle:
 
         if len(messages) and not isinstance(messages[0], Message):
             t = messages[0]
-            if isinstance(t, (float, int, long)):
+            if isinstance(t, (float, int)):
                 tt = _double_to_timetag(t)
             elif isinstance(t, tuple) and len(t) == 2:
                 tt.sec, tt.frac = t
