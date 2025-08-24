@@ -95,7 +95,7 @@ cdef class Callback:
             numargs -= 1
         self.numargs = numargs
         self.has_varargs = 1 if spec.varargs is not None else 0
-        
+
 
 cdef inline str _decode(s):
     # convert to standard string type, depending on python version
@@ -282,7 +282,7 @@ cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
     free(url)
 
     cb = <Callback>cb_data
-    
+
     func_args = (_decode(<char*>path),
                  args,
                  _decode(<char*>types),
@@ -295,7 +295,7 @@ cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
         r = cb.func(*func_args)
     else:
         r = cb.func(*func_args[0:cb.numargs])
-    
+
     return r if r is not None else 0
 
 
@@ -971,7 +971,7 @@ cdef class Message:
         if t == 'i':
             lo_message_add_int32(self._message, int(value))
         elif t == 'h':
-            lo_message_add_int64(self._message, int(value))
+            lo_message_add_int64(self._message, <int64_t>(value))
         elif t == 'f':
             lo_message_add_float(self._message, float(value))
         elif t == 'd':
