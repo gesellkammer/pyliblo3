@@ -49,7 +49,7 @@ elif platformname == 'linux':
     libraries.append('lo')
     include_dirs.extend(['/usr/include', '/usr/local/include'])
     append_if_exists(library_dirs, "/usr/local/lib")
-    append_if_exists(library_dirst,"/usr/local/lib64")
+    append_if_exists(library_dirs, "/usr/local/lib64")
     
     compile_args += [
         '-fno-strict-aliasing',
