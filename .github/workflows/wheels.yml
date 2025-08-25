@@ -64,6 +64,8 @@ jobs:
             CIBW_ARCHS_WINDOWS: AMD64
             CIBW_SKIP: 'pp* *686* *-musllinux_*'
             # CIBW_BEFORE_ALL_LINUX: yum search liblo; yum install -y liblo-devel
+            # This extra dir is needed since liblo is installed in lib64 by cibuildwheel and
+            # without this auditwheel fails because it does not find liblo.so.7
             CIBW_ENVIRONMENT_LINUX: LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib64
             CIBW_BEFORE_ALL_LINUX: git clone https://github.com/radarsat1/liblo --depth 1; cd liblo; mkdir linuxbuild; cd linuxbuild; cmake ../cmake; cmake --build . --config Release; cmake --install .; ldconfig
             # CIBW_BEFORE_ALL_MACOS: brew install liblo
