@@ -48,7 +48,9 @@ if platformname == 'darwin':
 elif platformname == 'linux':
     libraries.append('lo')
     include_dirs.extend(['/usr/include', '/usr/local/include'])
-    library_dirs.append("/usr/local/lib")
+    append_if_exists(library_dirs, "/usr/local/lib")
+    append_if_exists(library_dirst,"/usr/local/lib64")
+    
     compile_args += [
         '-fno-strict-aliasing',
         '-Werror-implicit-function-declaration',
