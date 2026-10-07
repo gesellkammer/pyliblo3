@@ -14,11 +14,10 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "LGPL-2.1-or-later" }
 authors = [
+    { name = "Eduardo Moguillansky", email = "eduardo.moguillansky@gmail.com" },
     { name = "Dominic Sacre", email = "dominic.sacre@gmx.de" },
 ]
-maintainers = [
-    { name = "Eduardo Moguillansky", email = "eduardo.moguillansky@gmail.com" },
-]
+
 urls = { Homepage = "https://github.com/gesellkammer/pyliblo3" }
 classifiers = [
     "Development Status :: 5 - Production/Stable",
