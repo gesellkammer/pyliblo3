@@ -655,7 +655,7 @@ _ServerBase.get_protocol(self)
 Returns the protocol of this server, as an int
 
 
-This will be one of `LO_TCP`, `LO_TCP` or `LO_UNIX`
+This will be one of `LO_UDP`, `LO_TCP` or `LO_UNIX`
 
 
 

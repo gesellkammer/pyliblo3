@@ -1,10 +1,52 @@
 [build-system]
-
 requires = [
-    "setuptools>=42",
+    "setuptools>=61",
+    "Cython>=3.0",
     "wheel",
-    "cython>=3.0"
 ]
-
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "pyliblo3"
+version = "0.16.4"
+description = "Python bindings for the liblo OSC library"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "LGPL-2.1-or-later" }
+authors = [
+    { name = "Dominic Sacre", email = "dominic.sacre@gmx.de" },
+]
+maintainers = [
+    { name = "Eduardo Moguillansky", email = "eduardo.moguillansky@gmail.com" },
+]
+urls = { Homepage = "https://github.com/gesellkammer/pyliblo3" }
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Cython",
+    "Topic :: Multimedia :: Sound/Audio",
+]
+
+[tool.setuptools]
+packages = ["pyliblo3"]
+script-files = [
+    "scripts/send_osc.py",
+    "scripts/dump_osc.py",
+]
+
+[tool.setuptools.package-data]
+pyliblo3 = ["*.pyi", "*.pxd"]
+
+# Keep generated C sources and .pyx out of the wheel (they belong in the
+# sdist via MANIFEST.in / ext sources). The .pxd/.pyi above stay in the wheel
+# for downstream cimport / typing support.
+[tool.setuptools.exclude-package-data]
+pyliblo3 = ["*.c", "*.pyx"]

@@ -2,6 +2,7 @@ site/
 *.egg*
 build/
 dist/
+PKG-INFO
 *.o
 *.lo
 *.la

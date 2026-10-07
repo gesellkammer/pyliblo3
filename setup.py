@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from setuptools import setup, Extension
+"""Build logic that cannot be expressed declaratively in pyproject.toml.
 
-import platform 
-import glob
+All package metadata lives in pyproject.toml ([project] table). This file
+only defines the platform-specific C extension for liblo.
+"""
+from setuptools import Extension, setup
+
+import platform
 import os
 import shutil
 import subprocess
 
-VERSION = '0.16.4'
+from Cython.Build import cythonize
 
 platformname = platform.system().lower()
 
@@ -24,7 +28,7 @@ def append_if_exists(lst: list[str], path: str) -> None:
             lst.append(path)
             print(f"~~~~~ Added path: {path}")
     else:
-        print(f"***** Path does not exists, skipping: '{path}'")
+        print(f"***** Path does not exist, skipping: '{path}'")
 
 
 if platformname == 'darwin':
@@ -36,10 +40,10 @@ if platformname == 'darwin':
         append_if_exists(library_dirs, brewprefix + "/lib")
     include_dirs.append("/usr/local/include/")
     append_if_exists(include_dirs, "/opt/local/include/")
-        
+
     library_dirs.append("/usr/local/lib")
     append_if_exists(library_dirs, "/opt/local/lib")
-        
+
     compile_args += [
         '-fno-strict-aliasing',
         '-Werror-implicit-function-declaration',
@@ -50,7 +54,7 @@ elif platformname == 'linux':
     include_dirs.extend(['/usr/include', '/usr/local/include'])
     append_if_exists(library_dirs, "/usr/local/lib")
     append_if_exists(library_dirs, "/usr/local/lib64")
-    
+
     compile_args += [
         '-fno-strict-aliasing',
         '-Werror-implicit-function-declaration',
@@ -68,34 +72,21 @@ elif platformname == "windows":
 else:
     pass
 
-# read the contents of your README file
-thisdir = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(thisdir, 'README.md')) as f:
-    long_description = f.read()
-
 setup(
-    name='pyliblo3',
-    python_requires='>=3.9',
-    version=VERSION,
-    scripts=glob.glob("scripts/*.py"),
-    ext_modules=[
-        Extension(
-            'pyliblo3._liblo', 
-            #sources = ['src/liblo.pyx', 'src/liblo.pxd'],
-            sources = ['pyliblo3/_liblo.pyx'],
-            extra_compile_args=compile_args,
-            libraries=libraries,
-            library_dirs=library_dirs,
-            include_dirs=include_dirs)
-    ],
-    packages=['pyliblo3'],
-    author='Dominic Sacre',
-    author_email='dominic.sacre@gmx.de',
-    maintainer='Eduardo Moguillansky',
-    maintainer_email='eduardo.moguillansky@gmail.com',
-    url='https://github.com/gesellkammer/pyliblo3',
-    description='Python bindings for the liblo OSC library',
-    long_description=long_description,
-    long_description_content_type='text/markdown',
-    license='LGPL',
+    ext_modules=cythonize(
+        [
+            Extension(
+                'pyliblo3._liblo',
+                sources=['pyliblo3/_liblo.pyx'],
+                extra_compile_args=compile_args,
+                libraries=libraries,
+                library_dirs=library_dirs,
+                include_dirs=include_dirs)
+        ],
+        language_level=3,
+        # Lets `from _liblo cimport *` in _liblo.pyx resolve
+        # pyliblo3/_liblo.pxd (previously handled implicitly via
+        # Extension include_dirs by setuptools' legacy .pyx support).
+        include_path=["pyliblo3"],
+    ),
 )

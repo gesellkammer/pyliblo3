@@ -14,12 +14,7 @@
 # License, or (at your option) any later version.
 #
 
-__version__ = '0.16.1'
-
-
-from cpython cimport PY_VERSION_HEX
-cdef extern from 'Python.h':
-    void PyEval_InitThreads()
+from cpython.bytes cimport PyBytes_FromStringAndSize
 
 from libc.stdlib cimport malloc, free
 from libc.math cimport modf
@@ -58,8 +53,11 @@ class _weakref_method:
 
     @property
     def func(self):
-        if self.obj:
-            return self._func.__get__(self.obj(), self.obj().__class__)
+        if self.obj is not None:
+            obj = self.obj()
+            if obj is None:
+                raise ReferenceError("the object owning this callback no longer exists")
+            return self._func.__get__(obj, type(obj))
         else:
             return self._func
 
@@ -88,7 +86,7 @@ cdef class Callback:
 
     def __init__(self, func, user_data):
         self.func = _weakref_method(func)
-        self.user_data = user_data,
+        self.user_data = user_data
         spec = _inspect.getfullargspec(func)
         numargs = len(spec.args)
         if _inspect.ismethod(func):
@@ -98,15 +96,13 @@ cdef class Callback:
 
 
 cdef inline str _decode(s):
-    # convert to standard string type, depending on python version
-    if PY_VERSION_HEX >= 0x03000000 and isinstance(s, bytes):
+    if isinstance(s, bytes):
         return s.decode()
     else:
         return s
 
 cdef bytes _encode(s):
-    # convert unicode to bytestring
-    if isinstance(s, unicode):
+    if isinstance(s, str):
         return s.encode()
     else:
         return s
@@ -120,9 +116,21 @@ cdef class Bundle
 
 
 # liblo protocol constants
+cdef int _LO_DEFAULT = LO_DEFAULT
+
 UDP  = LO_UDP
 TCP  = LO_TCP
 UNIX = LO_UNIX
+
+globals().update(LO_UDP=UDP, LO_TCP=TCP, LO_UNIX=UNIX, LO_DEFAULT=_LO_DEFAULT)
+
+__all__ = [
+    'UDP', 'TCP', 'UNIX',
+    'LO_UDP', 'LO_TCP', 'LO_UNIX', 'LO_DEFAULT',
+    'time', 'send',
+    'Server', 'ServerThread', 'Address', 'Message', 'Bundle',
+    'ServerError', 'AddressError', 'make_method', 'Callback', 'struct',
+]
 
 
 ################################################################################
@@ -172,6 +180,9 @@ cdef _send(target, _ServerBase src, args):
 
     # 'from' parameter is NULL if no server was specified
     from_server = src._server if src else NULL
+
+    if not args:
+        raise TypeError("no message or path was given")
 
     if isinstance(args[0], (Message, Bundle)):
         # args is already a list of Messages/Bundles
@@ -271,7 +282,9 @@ cdef int _msg_callback(const_char *path, const_char *types, lo_arg **argv,
         elif t == 'm': v = (argv[i].m[0], argv[i].m[1], argv[i].m[2], argv[i].m[3])
         elif t == 't': v = _timetag_to_double(argv[i].t)
         elif t == 'b':
-            v = bytes(<unsigned char*>lo_blob_dataptr(<lo_blob>argv[i]))
+            blob = <lo_blob>argv[i]
+            v = PyBytes_FromStringAndSize(<char*>lo_blob_dataptr(blob),
+                                          <Py_ssize_t>lo_blob_datasize(blob))
         else:
             v = None  # unhandled data type
 
@@ -382,7 +395,7 @@ cdef class _ServerBase:
         This function is usually called automatically by the server's
         constructor, unless its *reg_methods* parameter was set to `False`.
         """
-        if obj == None:
+        if obj is None:
             obj = self
         # find and register methods that were defined using decorators
         methods = []
@@ -422,7 +435,7 @@ cdef class _ServerBase:
         """
         Returns the protocol of this server, as an int
 
-        This will be one of `LO_TCP`, `LO_TCP` or `LO_UNIX`
+        This will be one of `LO_UDP`, `LO_TCP` or `LO_UNIX`
 
         Returns:
             (int) the protocol as an int
@@ -458,7 +471,7 @@ cdef class _ServerBase:
         cdef char *p
         cdef char *t
 
-        if isinstance(path, (bytes, unicode)):
+        if isinstance(path, (bytes, str)):
             s = _encode(path)
             p = s
         elif path is None:
@@ -466,7 +479,7 @@ cdef class _ServerBase:
         else:
             raise TypeError("path must be a string or None")
 
-        if isinstance(typespec, (bytes, unicode)):
+        if isinstance(typespec, (bytes, str)):
             s2 = _encode(typespec)
             t = s2
         elif typespec is None:
@@ -502,18 +515,18 @@ cdef class _ServerBase:
         cdef char *p
         cdef char *t
 
-        if isinstance(path, (bytes, unicode)):
+        if isinstance(path, (bytes, str)):
             s = _encode(path)
             p = s
-        elif path == None:
+        elif path is None:
             p = NULL
         else:
             raise TypeError("path must be a string or None")
 
-        if isinstance(typespec, (bytes, unicode)):
+        if isinstance(typespec, (bytes, str)):
             s2 = _encode(typespec)
             t = s2
-        elif typespec == None:
+        elif typespec is None:
             t = NULL
         else:
             raise TypeError("typespec must be a string or None")
@@ -609,7 +622,7 @@ cdef class Server(_ServerBase):
     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):
         cdef char *cs
 
-        if port != None:
+        if port is not None:
             p = _encode(str(port));
             cs = p
         else:
@@ -655,7 +668,7 @@ cdef class Server(_ServerBase):
         """
         cdef int t, r
         self._check()
-        if timeout != None:
+        if timeout is not None:
             t = timeout
             with nogil:
                 r = lo_server_recv_noblock(self._server, t)
@@ -700,14 +713,14 @@ cdef class ServerThread(_ServerBase):
     def __init__(self, port=None, proto=LO_DEFAULT, reg_methods=True):
         cdef char *cs
 
-        if port != None:
+        if port is not None:
             p = _encode(str(port));
             cs = p
         else:
             cs = NULL
 
-        # make sure python can handle threading
-        PyEval_InitThreads()
+        if isinstance(proto, str):
+            proto = _protostr_to_int(proto)
 
         global __exception
         __exception = None
@@ -795,7 +808,7 @@ cdef class Address:
         if isinstance(proto, str):
             proto = _protostr_to_int(proto)
 
-        if addr2:
+        if addr2 is not None:
             # Address(host, port[, proto])
             s = _encode(addr)
             s2 = _encode(str(addr2))
@@ -899,7 +912,7 @@ cdef class _Blob:
         # copy each element of arr to a C array
         p = <unsigned char*>malloc(size)
         try:
-            if isinstance(arr[0], (str, unicode)):
+            if isinstance(arr[0], str):
                 # use ord() if arr is a string (but not bytes)
                 for i from 0 <= i < size:
                     p[i] = ord(arr[i])
@@ -952,7 +965,7 @@ cdef class Message:
         """
         for arg in args:
             if (isinstance(arg, tuple) and len(arg) <= 2 and
-                    isinstance(arg[0], (bytes, unicode)) and len(arg[0]) == 1):
+                    isinstance(arg[0], (bytes, str)) and len(arg[0]) == 1):
                 # type explicitly specified
                 if len(arg) == 2:
                     self._add(arg[0], arg[1])
@@ -1019,10 +1032,10 @@ cdef class Message:
                 lo_message_add_int64(self._message, <int64_t>value)
         elif isinstance(value, float):
             lo_message_add_float(self._message, float(value))
-        elif isinstance(value, (bytes, unicode)):
+        elif isinstance(value, (bytes, str)):
             s = _encode(value)
             lo_message_add_string(self._message, s)
-        elif value == None:
+        elif value is None:
             lo_message_add_nil(self._message)
         elif value == float('inf'):
             lo_message_add_infinitum(self._message)
@@ -1099,6 +1112,9 @@ cdef class Bundle:
             args: either a Message or a set or arguments passed directly to `Message` to create
                 a `Message` which is added to this `Bundle`
         """
+        if not args:
+            raise TypeError("no message or path was given")
+
         if isinstance(args[0], Message):
             # args is already a list of Messages
             messages = args

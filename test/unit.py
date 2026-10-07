@@ -14,7 +14,6 @@
 import unittest
 import re
 import time
-import sys
 import pyliblo3 as liblo
 import platform
 
@@ -72,24 +71,18 @@ class ServerTestCase(ServerTestCaseBase):
         assert self.cb.path == '/foo'
         assert self.cb.args[0] == 123
         assert self.cb.types == 'i'
-        assert self.cb.data == ("data",)
+        assert self.cb.data == "data"
         assert matchHost(self.cb.src.get_url(), fr'osc\.udp://.*:{portnum}/')
 
     def testSendBlob(self):
         self.server.add_method('/blob', 'b', self.callback)
         self.server.send(str(portnum), '/blob', [4, 8, 15, 16, 23, 42])
         assert self.server.recv() == True
-        if sys.hexversion < 0x03000000:
-            assert list(self.cb.args[0]) == [4, 8, 15, 16, 23, 42]
-        else:
-            assert self.cb.args[0] == b'\x04\x08\x0f\x10\x17\x2a'
+        assert self.cb.args[0] == b'\x04\x08\x0f\x10\x17\x2a'
 
     def testSendVarious(self):
         self.server.add_method('/blah', 'ihfdscb', self.callback)
-        if sys.hexversion < 0x03000000:
-            self.server.send(portnum, '/blah', 123, 2**42, 123.456, 666.666, "hello", ('c', 'x'), (12, 34, 56))
-        else:
-            self.server.send(portnum, '/blah', 123, ('h', 2**42), 123.456, 666.666, "hello", ('c', 'x'), (12, 34, 56))
+        self.server.send(portnum, '/blah', 123, ('h', 2**42), 123.456, 666.666, "hello", ('c', 'x'), (12, 34, 56))
         assert self.server.recv() == True
         assert self.cb.types == 'ihfdscb'
         assert len(self.cb.args) == len(self.cb.types)
@@ -99,10 +92,7 @@ class ServerTestCase(ServerTestCaseBase):
         assert approx(self.cb.args[3], 666.666)
         assert self.cb.args[4] == "hello"
         assert self.cb.args[5] == 'x'
-        if sys.hexversion < 0x03000000:
-            assert list(self.cb.args[6]) == [12, 34, 56]
-        else:
-            assert self.cb.args[6] == b'\x0c\x22\x38'
+        assert self.cb.args[6] == b'\x0c\x22\x38'
 
     def testSendOthers(self):
         self.server.add_method('/blubb', 'tmSTFNI', self.callback)
